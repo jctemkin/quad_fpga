@@ -21,12 +21,19 @@
 
   <sourceproject xmlns="http://www.xilinx.com/XMLSchema" xil_pn:fileType="FILE_XISE" xil_pn:name="quad_fpga.xise"/>
 
-  <files xmlns="http://www.xilinx.com/XMLSchema"/>
+  <files xmlns="http://www.xilinx.com/XMLSchema">
+    <file xil_pn:fileType="FILE_DIRECTORY" xil_pn:name="isim"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="spi_module_stx_beh.prj"/>
+    <file xil_pn:fileType="FILE_INI" xil_pn:name="xilinxsim.ini"/>
+  </files>
 
   <transforms xmlns="http://www.xilinx.com/XMLSchema">
-    <transform xil_pn:name="TRAN_SubProjectAbstractToPreProxy">
+    <transform xil_pn:end_ts="1349916826" xil_pn:in_ck="3835236939522292507" xil_pn:name="TRAN_copyAbstractToPostAbstractSimulation" xil_pn:start_ts="1349916826">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
+      <outfile xil_pn:name="pcm_gen.vhd"/>
+      <outfile xil_pn:name="spi_module.vhd"/>
+      <outfile xil_pn:name="spi_tb.vhd"/>
     </transform>
   </transforms>
 
