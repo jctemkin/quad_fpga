@@ -80,31 +80,62 @@ BEGIN
 		sck <= '1';
 		cs <= '1';
 		mosi <= '1';
-		read_data <= 0x"AC";
+		read_data <= x"AC";
 		
       wait for 2*sckp;
-		cs <= '0'; wait for 50 ns;
 		
-		sck <= '0';
-		mosi <= '1'; wait for sckp; sck <= '1'; wait for sckp; sck <= '0';
-		mosi <= '1'; wait for sckp; sck <= '1'; wait for sckp; sck <= '0';
-		mosi <= '0'; wait for sckp; sck <= '1'; wait for sckp; sck <= '0';
-		mosi <= '1'; wait for sckp; sck <= '1'; wait for sckp; sck <= '0';
-		mosi <= '0'; wait for sckp; sck <= '1'; wait for sckp; sck <= '0';
-		mosi <= '0'; wait for sckp; sck <= '1'; wait for sckp; sck <= '0';
-		mosi <= '1'; wait for sckp; sck <= '1'; wait for sckp; sck <= '0';
-		mosi <= '1'; wait for sckp; sck <= '1'; wait for sckp; sck <= '0';
+		-- begin read operation
+		cs <= '0'; wait for 50 ns; sck <= '0';
 		
-		wait for sckp; sck <= '1'; wait for sckp; sck <= '0';
-		wait for sckp; sck <= '1'; wait for sckp; sck <= '0';
-		wait for sckp; sck <= '1'; wait for sckp; sck <= '0';
-		wait for sckp; sck <= '1'; wait for sckp; sck <= '0';
-		wait for sckp; sck <= '1'; wait for sckp; sck <= '0';
-		wait for sckp; sck <= '1'; wait for sckp; sck <= '0';
-		wait for sckp; sck <= '1'; wait for sckp; sck <= '0';
-		wait for sckp; sck <= '1'; wait for sckp;
+		mosi <= '1'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
+		mosi <= '1'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
+		mosi <= '0'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
+		mosi <= '1'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
+		mosi <= '0'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
+		mosi <= '0'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
+		mosi <= '1'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
+		mosi <= '1'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
+		
+		wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
+		wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
+		wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
+		wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
+		wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
+		wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
+		wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
+		wait for sckp/2; sck <= '1';
 		
 		wait for 50 ns; cs <= '1';
+		
+		
+		wait for 200 ns;
+		
+		-- begin write operation
+		cs <= '0'; wait for 50 ns; sck <= '0';
+		
+		mosi <= '0'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
+		mosi <= '1'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
+		mosi <= '0'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
+		mosi <= '1'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
+		mosi <= '0'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
+		mosi <= '1'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
+		mosi <= '0'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
+		mosi <= '1'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
+		
+		mosi <= '0'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
+		mosi <= '1'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
+		mosi <= '1'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
+		mosi <= '1'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
+		mosi <= '0'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
+		mosi <= '1'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
+		mosi <= '1'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
+		mosi <= '1'; wait for sckp/2; sck <= '1';
+		
+		wait for 50 ns; cs <= '1';
+		
+		
+		
+		
       wait;
 		
    end process;

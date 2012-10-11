@@ -40,21 +40,27 @@ architecture Behavioral of spi_module is
 	signal wr_flag_sck: std_logic;
 	signal wr_flag_clk: std_logic;
 	signal wr_flag_clk_sync: std_logic;
+	
+	signal read_mode: std_logic;
+	
+	
 begin
 		
 	-- SPI process
 	process(cs, sck)
 	begin
-		if cs = '1' then
+		if cs = '0' then
 			if rising_edge(sck) then
 				
 				if rx_shift = '1' then
 					rx_shift_reg <= rx_shift_reg(6 downto 0) & mosi; 
 				end if;
 				
-				if (bits_received = x"0F") then
+				if (bits_received = x"0F") and (read_mode = '1') then
 					wr_flag_sck <= NOT wr_flag_sck;
 					write_data_reg <= rx_shift_reg;
+				elsif (bits_received = x"07") then
+					read_mode <= NOT rx_shift_reg(6);
 				end if;
 				
 				bits_received <= std_logic_vector(unsigned(bits_received) + 1);
@@ -79,6 +85,10 @@ begin
 			
 		else
 			bits_received <= (others => '0');
+			read_mode <= '0';
+			rx_shift_reg <= (others => '0');
+			tx_shift_reg <= (others => '0');
+			wr_flag_sck <= '0';
 		end if;
 		
 	end process;
@@ -93,7 +103,7 @@ begin
 		end if;
 	end process;
 	
-	write_enable <= wr_flag_clk XOR wr_flag_clk_sync;
+	write_enable <= wr_flag_clk_sync AND NOT wr_flag_clk;
 	
 	
 	-- Control signals
@@ -101,19 +111,21 @@ begin
 	--tx_load <= '0' when bits_received = x"00" else '1';
 	
 	
-	tx_load <= (not cs) when (unsigned(bits_received) = 8);
+	tx_load <= (not cs and not read_mode) when (unsigned(bits_received) = 8) else '0';
 	
 	
-	tx_shift <= NOT cs when (unsigned(bits_received) > 8) else '0';
-	rx_shift <= NOT cs when (unsigned(bits_received) < 8) else '0';
+	tx_shift <= ((NOT cs) AND NOT read_mode) when (unsigned(bits_received) > 8) else '0';
+	rx_shift <= NOT cs when (unsigned(bits_received) < 8) else read_mode;
 	
 	
 	save_wr_addr <= NOT rx_shift_reg(7) when (unsigned(bits_received) = 8) else '0';
 	
-	miso <= 	'Z' when NOT (tx_shift = '1' OR tx_load = '1') else
+	miso <= 	'Z' when NOT (tx_shift = '1' OR (tx_load = '1' AND sck = '0')) OR (read_mode = '1') else
 				tx_shift_reg(7);
 				
-				
+	read_addr <= rx_shift_reg(5 downto 0);
+	write_data <= write_data_reg;
+	write_addr <= wr_addr_reg;
 	
 end Behavioral;
 
