@@ -5,7 +5,7 @@
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
 <messages>
-<msg type="warning" file="HDLCompiler" num="960" delta="unknown" >"/home/jenn/quad/quad_fpga/spi_module.vhd" Line 73: Expression has incompatible type
+<msg type="warning" file="HDLCompiler" num="960" delta="unknown" >"/home/jenn/git/quad_fpga/spi_module.vhd" Line 73: Expression has incompatible type
 </msg>
 
 </messages>

@@ -21,7 +21,7 @@
 #include <malloc.h>
 #define alloca _alloca
 #endif
-static const char *ng0 = "/home/jenn/quad/quad_fpga/spi_tb.vhd";
+static const char *ng0 = "/home/jenn/git/quad_fpga/spi_tb.vhd";
 
 
 
@@ -146,7 +146,7 @@ LAB4:    xsi_set_current_line(80, ng0);
     *((unsigned char *)t7) = (unsigned char)3;
     xsi_driver_first_trans_fast(t2);
     xsi_set_current_line(83, ng0);
-    t2 = (t0 + 7376);
+    t2 = (t0 + 7352);
     t5 = (t0 + 4912);
     t6 = (t5 + 56U);
     t7 = *((char **)t6);

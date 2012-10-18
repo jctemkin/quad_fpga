@@ -21,7 +21,7 @@
 #include <malloc.h>
 #define alloca _alloca
 #endif
-static const char *ng0 = "/home/jenn/quad/quad_fpga/spi_module.vhd";
+static const char *ng0 = "/home/jenn/git/quad_fpga/spi_module.vhd";
 extern char *IEEE_P_2592010699;
 extern char *IEEE_P_1242562249;
 
@@ -159,7 +159,7 @@ LAB10:
 LAB9:    xsi_set_current_line(59, ng0);
     t1 = (t0 + 3912U);
     t2 = *((char **)t1);
-    t1 = (t0 + 13371);
+    t1 = (t0 + 13339);
     t4 = 1;
     if (8U == 8U)
         goto LAB19;
@@ -176,7 +176,7 @@ LAB18:    if (t3 != 0)
 
 LAB15:    t1 = (t0 + 3912U);
     t2 = *((char **)t1);
-    t1 = (t0 + 13379);
+    t1 = (t0 + 13347);
     t3 = 1;
     if (8U == 8U)
         goto LAB27;
@@ -190,7 +190,7 @@ LAB26:
 LAB14:    xsi_set_current_line(66, ng0);
     t1 = (t0 + 3912U);
     t2 = *((char **)t1);
-    t1 = (t0 + 13272U);
+    t1 = (t0 + 13240U);
     t6 = ieee_p_1242562249_sub_1006216973935652998_1035706684(IEEE_P_1242562249, t17, t2, t1, 1);
     t7 = (t0 + 9160);
     t10 = (t7 + 56U);
@@ -532,7 +532,7 @@ static void work_a_3415757621_3212880686_p_3(char *t0)
 LAB0:    xsi_set_current_line(114, ng0);
     t1 = (t0 + 3912U);
     t2 = *((char **)t1);
-    t1 = (t0 + 13272U);
+    t1 = (t0 + 13240U);
     t3 = ieee_p_1242562249_sub_3307759752501503797_1035706684(IEEE_P_1242562249, t2, t1, 8);
     if (t3 != 0)
         goto LAB3;
@@ -599,7 +599,7 @@ static void work_a_3415757621_3212880686_p_4(char *t0)
 LAB0:    xsi_set_current_line(117, ng0);
     t1 = (t0 + 3912U);
     t2 = *((char **)t1);
-    t1 = (t0 + 13272U);
+    t1 = (t0 + 13240U);
     t3 = ieee_p_1242562249_sub_3307759752501539734_1035706684(IEEE_P_1242562249, t2, t1, 8);
     if (t3 != 0)
         goto LAB3;
@@ -664,7 +664,7 @@ static void work_a_3415757621_3212880686_p_5(char *t0)
 LAB0:    xsi_set_current_line(118, ng0);
     t1 = (t0 + 3912U);
     t2 = *((char **)t1);
-    t1 = (t0 + 13272U);
+    t1 = (t0 + 13240U);
     t3 = ieee_p_1242562249_sub_3307759752501467860_1035706684(IEEE_P_1242562249, t2, t1, 8);
     if (t3 != 0)
         goto LAB3;
@@ -730,7 +730,7 @@ static void work_a_3415757621_3212880686_p_6(char *t0)
 LAB0:    xsi_set_current_line(121, ng0);
     t1 = (t0 + 3912U);
     t2 = *((char **)t1);
-    t1 = (t0 + 13272U);
+    t1 = (t0 + 13240U);
     t3 = ieee_p_1242562249_sub_3307759752501503797_1035706684(IEEE_P_1242562249, t2, t1, 8);
     if (t3 != 0)
         goto LAB3;

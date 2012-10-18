@@ -1,5 +1,5 @@
 ISim log file
-Running: /home/jenn/quad/quad_fpga/spi_tb_isim_beh.exe -intstyle ise -gui -tclbatch isim.cmd -view /home/jenn/quad/quad_fpga/sdfs.wcfg -wdb /home/jenn/quad/quad_fpga/spi_tb_isim_beh.wdb 
+Running: /home/jenn/git/quad_fpga/spi_tb_isim_beh.exe -intstyle ise -gui -tclbatch isim.cmd -view /home/jenn/git/quad_fpga/sdfs.wcfg -wdb /home/jenn/git/quad_fpga/spi_tb_isim_beh.wdb 
 ISim O.61xd (signature 0xb4d1ced7)
 WARNING: A WEBPACK license was found.
 WARNING: Please use Xilinx License Configuration Manager to check out a full ISim license.
