@@ -42,6 +42,9 @@
     <transform xil_pn:end_ts="1350584278" xil_pn:in_ck="3835236939522292507" xil_pn:name="TRAN_copyAbstractToPostAbstractSimulation" xil_pn:start_ts="1350584278">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForInputs"/>
+      <status xil_pn:value="InputAdded"/>
+      <status xil_pn:value="InputChanged"/>
       <outfile xil_pn:name="pcm_gen.vhd"/>
       <outfile xil_pn:name="spi_module.vhd"/>
       <outfile xil_pn:name="spi_tb.vhd"/>
@@ -61,6 +64,7 @@
     <transform xil_pn:end_ts="1350584278" xil_pn:in_ck="3835236939522292507" xil_pn:name="TRAN_copyPostAbstractToPreSimulation" xil_pn:start_ts="1350584278">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForPredecessor"/>
       <outfile xil_pn:name="pcm_gen.vhd"/>
       <outfile xil_pn:name="spi_module.vhd"/>
       <outfile xil_pn:name="spi_tb.vhd"/>
@@ -68,6 +72,7 @@
     <transform xil_pn:end_ts="1350584281" xil_pn:in_ck="3835236939522292507" xil_pn:name="TRAN_ISimulateBehavioralModelRunFuse" xil_pn:prop_ck="-4852070346826095538" xil_pn:start_ts="1350584278">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForPredecessor"/>
       <status xil_pn:value="OutOfDateForOutputs"/>
       <status xil_pn:value="OutputChanged"/>
       <outfile xil_pn:name="fuse.log"/>
@@ -80,6 +85,7 @@
     <transform xil_pn:end_ts="1350584282" xil_pn:in_ck="-7868406126363437584" xil_pn:name="TRAN_ISimulateBehavioralModel" xil_pn:prop_ck="-6987686293618254160" xil_pn:start_ts="1350584281">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForPredecessor"/>
       <status xil_pn:value="OutOfDateForOutputs"/>
       <status xil_pn:value="OutputChanged"/>
       <outfile xil_pn:name="isim.cmd"/>
