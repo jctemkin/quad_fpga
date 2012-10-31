@@ -1,6 +1,36 @@
+--------------------------------------------------------------------------------
+-- Company: 
+-- Engineer:
+--
+-- Create Date:   15:57:36 10/31/2012
+-- Design Name:   
+-- Module Name:   /home/jenn/quad/quad_fpga/spi_test.vhd
+-- Project Name:  quad_fpga
+-- Target Device:  
+-- Tool versions:  
+-- Description:   
+-- 
+-- VHDL Test Bench Created by ISE for module: spi_test_module
+-- 
+-- Dependencies:
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+--
+-- Notes: 
+-- This testbench has been automatically generated using types std_logic and
+-- std_logic_vector for the ports of the unit under test.  Xilinx recommends
+-- that these types always be used for the top-level I/O of a design in order
+-- to guarantee that the testbench will bind correctly to the post-implementation 
+-- simulation model.
+--------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
  
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--USE ieee.numeric_std.ALL;
  
 ENTITY spi_test IS
 END spi_test;
@@ -9,111 +39,56 @@ ARCHITECTURE behavior OF spi_test IS
  
     -- Component Declaration for the Unit Under Test (UUT)
  
-    COMPONENT spi_slave
+    COMPONENT spi_test_module
     PORT(
-         clk_i : IN  std_logic;
-         spi_ssel_i : IN  std_logic;
-         spi_sck_i : IN  std_logic;
-         spi_mosi_i : IN  std_logic;
-         spi_miso_o : OUT  std_logic;
-         di_req_o : OUT  std_logic;
-         di_i : IN  std_logic_vector(31 downto 0);
-         wren_i : IN  std_logic;
-         wr_ack_o : OUT  std_logic;
-         do_valid_o : OUT  std_logic;
-         do_o : OUT  std_logic_vector(31 downto 0);
-         do_transfer_o : OUT  std_logic;
-         wren_o : OUT  std_logic;
-         rx_bit_next_o : OUT  std_logic;
-         state_dbg_o : OUT  std_logic_vector(3 downto 0);
-         sh_reg_dbg_o : OUT  std_logic_vector(31 downto 0)
+         sclk : IN  std_logic;
+         ssel : IN  std_logic;
+         miso : OUT  std_logic;
+         mosi : IN  std_logic;
+         clk : IN  std_logic
         );
     END COMPONENT;
-	 
-	 
-	 component reg_file is
-    Port ( rd_addr : in  STD_LOGIC_VECTOR (7 downto 0);
-			  rd_en: in std_logic;
-			  wr_addr : in  STD_LOGIC_VECTOR (7 downto 0);
-           wr_data : in  STD_LOGIC_VECTOR (7 downto 0);
-			  wr_en: in std_logic;
-           clk : in  STD_LOGIC;
-			  rd_data : out  STD_LOGIC_VECTOR (7 downto 0));
-	end component;
     
 
    --Inputs
-   signal clk_i : std_logic := '0';
-   signal spi_ssel_i : std_logic := '0';
-   signal spi_sck_i : std_logic := '0';
-   signal spi_mosi_i : std_logic := '0';
-   signal di_i : std_logic_vector(31 downto 0) := (others => '0');
-   signal wren_i : std_logic := '0';
+   signal sclk : std_logic := '0';
+   signal ssel : std_logic := '0';
+   signal mosi : std_logic := '0';
+   signal clk : std_logic := '0';
 
  	--Outputs
-   signal spi_miso_o : std_logic;
-   signal di_req_o : std_logic;
-   signal wr_ack_o : std_logic;
-   signal do_valid_o : std_logic;
-   signal do_o : std_logic_vector(31 downto 0);
-   signal do_transfer_o : std_logic;
-   signal wren_o : std_logic;
-   signal rx_bit_next_o : std_logic;
-   signal state_dbg_o : std_logic_vector(3 downto 0);
-   signal sh_reg_dbg_o : std_logic_vector(31 downto 0);
+   signal miso : std_logic;
 
    -- Clock period definitions
-   constant clk_i_period : time := 10 ns;
-
-
-	--regfile signals
-	signal rf_rd_addr: std_logic_vector(7 downto 0);
-	signal rf_wr_addr: std_logic_vector(7 downto 0);
-	
+   constant sclk_period : time := 125 ns; --8MHz
+   constant clk_period : time := 50 ns; --20MHz
  
 BEGIN
  
 	-- Instantiate the Unit Under Test (UUT)
-   uut: spi_slave PORT MAP (
-          clk_i => clk_i,
-          spi_ssel_i => spi_ssel_i,
-          spi_sck_i => spi_sck_i,
-          spi_mosi_i => spi_mosi_i,
-          spi_miso_o => spi_miso_o,
-          di_req_o => di_req_o,
-          di_i => di_i,
-          wren_i => wren_i,
-          wr_ack_o => wr_ack_o,
-          do_valid_o => do_valid_o,
-          do_o => do_o,
-          do_transfer_o => do_transfer_o,
-          wren_o => wren_o,
-          rx_bit_next_o => rx_bit_next_o,
-          state_dbg_o => state_dbg_o,
-          sh_reg_dbg_o => sh_reg_dbg_o
+   uut: spi_test_module PORT MAP (
+          sclk => sclk,
+          ssel => ssel,
+          miso => miso,
+          mosi => mosi,
+          clk => clk
         );
 
-	regs: reg_file port map (
-			 rd_addr => rf_rd_addr,
-			 rd_en => di_req_o,
-			 wr_addr => rf_wr_addr,
-          wr_data => do_o,
-			 wr_en => do_valid_o,
-          clk => clk_i,
-			 rd_data => di_i
-			);
-
-
-	--Read/write address reg control
-
-
    -- Clock process definitions
-   clk_i_process :process
+   sclk_process :process
    begin
-		clk_i <= '0';
-		wait for clk_i_period/2;
-		clk_i <= '1';
-		wait for clk_i_period/2;
+		sclk <= '0';
+		wait for sclk_period/2;
+		sclk <= '1';
+		wait for sclk_period/2;
+   end process;
+ 
+   clk_process :process
+   begin
+		clk <= '0';
+		wait for clk_period/2;
+		clk <= '1';
+		wait for clk_period/2;
    end process;
  
 
@@ -123,7 +98,7 @@ BEGIN
       -- hold reset state for 100 ns.
       wait for 100 ns;	
 
-      wait for clk_i_period*10;
+      wait for sclk_period*10;
 
       -- insert stimulus here 
 
