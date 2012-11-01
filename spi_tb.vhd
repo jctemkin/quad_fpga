@@ -1,67 +1,88 @@
-
+--------------------------------------------------------------------------------
+-- Company: 
+-- Engineer:
+--
+-- Create Date:   22:04:48 10/31/2012
+-- Design Name:   
+-- Module Name:   /home/jenn/quad/quad_fpga/spi_tb.vhd
+-- Project Name:  quad_fpga
+-- Target Device:  
+-- Tool versions:  
+-- Description:   
+-- 
+-- VHDL Test Bench Created by ISE for module: spi_test_module
+-- 
+-- Dependencies:
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+--
+-- Notes: 
+-- This testbench has been automatically generated using types std_logic and
+-- std_logic_vector for the ports of the unit under test.  Xilinx recommends
+-- that these types always be used for the top-level I/O of a design in order
+-- to guarantee that the testbench will bind correctly to the post-implementation 
+-- simulation model.
+--------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
-
-
+ 
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--USE ieee.numeric_std.ALL;
+ 
 ENTITY spi_tb IS
 END spi_tb;
  
 ARCHITECTURE behavior OF spi_tb IS 
  
-    COMPONENT spi_module
+    -- Component Declaration for the Unit Under Test (UUT)
+ 
+    COMPONENT spi_test_module
     PORT(
-         sck : IN  std_logic;
-         cs : IN  std_logic;
-         mosi : IN  std_logic;
+         sclk : IN  std_logic;
+         ssel : IN  std_logic;
          miso : OUT  std_logic;
-         rst : IN  std_logic;
-         clk : IN  std_logic;
-         read_addr : OUT  std_logic_vector(5 downto 0);
-         read_data : IN  std_logic_vector(7 downto 0);
-         write_addr : OUT  std_logic_vector(5 downto 0);
-         write_data : OUT  std_logic_vector(7 downto 0);
-         write_enable : OUT  std_logic
+         mosi : IN  std_logic;
+         clk : IN  std_logic
         );
     END COMPONENT;
     
 
    --Inputs
-   signal sck : std_logic := '0';
-   signal cs : std_logic := '0';
+   signal sclk : std_logic := '0';
+   signal ssel : std_logic := '0';
    signal mosi : std_logic := '0';
-   signal rst : std_logic := '0';
    signal clk : std_logic := '0';
-   signal read_data : std_logic_vector(7 downto 0) := (others => '0');
 
  	--Outputs
    signal miso : std_logic;
-   signal read_addr : std_logic_vector(5 downto 0);
-   signal write_addr : std_logic_vector(5 downto 0);
-   signal write_data : std_logic_vector(7 downto 0);
-   signal write_enable : std_logic;
 
    -- Clock period definitions
-   constant clk_period : time := 84 ns;
-	constant sckp : time := 125 ns;
+   constant sclk_period : time := 10 ns;
+   constant clk_period : time := 10 ns;
  
 BEGIN
  
 	-- Instantiate the Unit Under Test (UUT)
-   uut: spi_module PORT MAP (
-          sck => sck,
-          cs => cs,
-          mosi => mosi,
+   uut: spi_test_module PORT MAP (
+          sclk => sclk,
+          ssel => ssel,
           miso => miso,
-          rst => rst,
-          clk => clk,
-          read_addr => read_addr,
-          read_data => read_data,
-          write_addr => write_addr,
-          write_data => write_data,
-          write_enable => write_enable
+          mosi => mosi,
+          clk => clk
         );
 
    -- Clock process definitions
+   sclk_process :process
+   begin
+		sclk <= '0';
+		wait for sclk_period/2;
+		sclk <= '1';
+		wait for sclk_period/2;
+   end process;
+ 
    clk_process :process
    begin
 		clk <= '0';
@@ -74,70 +95,14 @@ BEGIN
    -- Stimulus process
    stim_proc: process
    begin		
-		-- hold reset state for 100 ns.
+      -- hold reset state for 100 ns.
       wait for 100 ns;	
-		
-		sck <= '1';
-		cs <= '1';
-		mosi <= '1';
-		read_data <= x"AC";
-		
-      wait for 2*sckp;
-		
-		-- begin read operation
-		cs <= '0'; wait for 50 ns; sck <= '0';
-		
-		mosi <= '1'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
-		mosi <= '1'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
-		mosi <= '0'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
-		mosi <= '1'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
-		mosi <= '0'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
-		mosi <= '0'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
-		mosi <= '1'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
-		mosi <= '1'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
-		
-		wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
-		wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
-		wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
-		wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
-		wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
-		wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
-		wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
-		wait for sckp/2; sck <= '1';
-		
-		wait for 50 ns; cs <= '1';
-		
-		
-		wait for 200 ns;
-		
-		-- begin write operation
-		cs <= '0'; wait for 50 ns; sck <= '0';
-		
-		mosi <= '0'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
-		mosi <= '1'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
-		mosi <= '0'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
-		mosi <= '1'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
-		mosi <= '0'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
-		mosi <= '1'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
-		mosi <= '0'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
-		mosi <= '1'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
-		
-		mosi <= '0'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
-		mosi <= '1'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
-		mosi <= '1'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
-		mosi <= '1'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
-		mosi <= '0'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
-		mosi <= '1'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
-		mosi <= '1'; wait for sckp/2; sck <= '1'; wait for sckp/2; sck <= '0';
-		mosi <= '1'; wait for sckp/2; sck <= '1';
-		
-		wait for 50 ns; cs <= '1';
-		
-		
-		
-		
+
+      wait for sclk_period*10;
+
+      -- insert stimulus here 
+
       wait;
-		
    end process;
 
 END;

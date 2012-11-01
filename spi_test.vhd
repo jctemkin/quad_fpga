@@ -45,16 +45,18 @@ ARCHITECTURE behavior OF spi_test IS
          ssel : IN  std_logic;
          miso : OUT  std_logic;
          mosi : IN  std_logic;
-         clk : IN  std_logic
+         clk : IN  std_logic;
+			rst: in std_logic
         );
     END COMPONENT;
     
 
    --Inputs
-   signal sclk : std_logic := '0';
-   signal ssel : std_logic := '0';
+   signal sclk : std_logic := '1';
+   signal ssel : std_logic := '1';
    signal mosi : std_logic := '0';
    signal clk : std_logic := '0';
+	signal rst : std_logic := '0';
 
  	--Outputs
    signal miso : std_logic;
@@ -62,6 +64,10 @@ ARCHITECTURE behavior OF spi_test IS
    -- Clock period definitions
    constant sclk_period : time := 125 ns; --8MHz
    constant clk_period : time := 50 ns; --20MHz
+	
+	
+	--Other signals!
+	signal test_output: std_logic_vector(15 downto 0) := (others => '0');
  
 BEGIN
  
@@ -71,18 +77,11 @@ BEGIN
           ssel => ssel,
           miso => miso,
           mosi => mosi,
-          clk => clk
+          clk => clk,
+			 rst => rst
         );
 
-   -- Clock process definitions
-   sclk_process :process
-   begin
-		sclk <= '0';
-		wait for sclk_period/2;
-		sclk <= '1';
-		wait for sclk_period/2;
-   end process;
- 
+   -- Clock process definitions 
    clk_process :process
    begin
 		clk <= '0';
@@ -95,12 +94,53 @@ BEGIN
    -- Stimulus process
    stim_proc: process
    begin		
-      -- hold reset state for 100 ns.
-      wait for 100 ns;	
+      rst <= '1';
+		wait for 100 ns;
+		rst <= '0';
+      wait for sclk_period*4;
+				
+		--Transmit write request on address 01 with data AA.
+		test_output <= X"01AA";
+		ssel <= '0'; wait for sclk_period/2;
+		for i in 15 downto 0 loop
+			sclk <= '0';
+			mosi <= test_output(i);
+			wait for sclk_period/2;
+			sclk <= '1';
+			wait for sclk_period/2;		
+		end loop;
+		wait for sclk_period/2; ssel <= '1';
 
-      wait for sclk_period*10;
+		wait for 3*sclk_period;	
 
-      -- insert stimulus here 
+		--Transmit a read request on address 01
+		test_output <= X"81AA";
+		ssel <= '0'; wait for sclk_period/2;
+		for i in 15 downto 0 loop
+			sclk <= '0';
+			mosi <= test_output(i);
+			wait for sclk_period/2;
+			sclk <= '1';
+			wait for sclk_period/2;		
+		end loop;
+		wait for sclk_period/2; ssel <= '1';
+		
+		
+		
+		wait for 6*sclk_period;	
+
+		--Transmit a read request on address 01
+		test_output <= X"81AA";
+		ssel <= '0'; wait for sclk_period/2;
+		for i in 15 downto 0 loop
+			sclk <= '0';
+			mosi <= test_output(i);
+			wait for sclk_period/2;
+			sclk <= '1';
+			wait for sclk_period/2;		
+		end loop;
+		wait for sclk_period/2; ssel <= '1';
+
 
       wait;
    end process;
