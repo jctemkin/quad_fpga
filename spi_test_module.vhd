@@ -42,7 +42,7 @@ architecture Behavioral of spi_test_module is
 	signal spi_do: std_logic_vector(7 downto 0);
 	signal spi_wr_en: std_logic := '0';
 	signal spi_do_valid: std_logic;
-	signal spi_do_valid_strobe: std_logic := '0';
+	signal spi_miso: std_logic;
 
 	--Holds address byte from SPI.
 	signal addr_hold: std_logic_vector(7 downto 0) := (others => '0');
@@ -61,6 +61,11 @@ architecture Behavioral of spi_test_module is
 	--register file signals
 	signal reg_wr_en: std_logic;
 	
+	
+	--Signals for generating do_valid.
+	signal do_valid: std_logic := '0';
+	signal sclk_del_reg: std_logic := '1';
+	signal sclk_count: integer range 0 to 15;
 	
 	--FIFO component declaration
 	component fifo is
@@ -82,26 +87,28 @@ begin
 
 
 	spi_slave: entity work.spi_slave(rtl)
-		generic map (N => 8, CPOL => '1', CPHA => '1', PREFETCH => 2)
+		generic map (N => 8, CPOL => '1', CPHA => '1', PREFETCH => 1)
 		port map(
 			clk_i => clk,
 			spi_ssel_i => ssel,
 			spi_sck_i => sclk,
 			spi_mosi_i => mosi,
-			spi_miso_o => miso,
+			spi_miso_o => spi_miso,
 			di_req_o => spi_di_req,
 			di_i => spi_di,
 			wren_i => spi_wr_en,
 			do_valid_o => spi_do_valid,
 			do_o => spi_do
 		);
+		
+		miso <= spi_miso AND NOT ssel;	--Prevents blips on MISO after SSEL has been raised.
 
 
 	regs: entity work.reg_file(Behavioral)
 		generic map (addr_len => 8, data_len => 8)
 		port map(
-			rd_addr => addr_hold,
-			rd_en=> spi_di_req_strobe,
+			rd_addr => '0' & addr_hold(6 downto 0),
+			rd_en=> do_valid,
 			wr_addr => fifo_out(15 downto 8),
 			wr_data => fifo_out(7 downto 0),
 			wr_en=> reg_wr_en,
@@ -127,39 +134,66 @@ begin
 	begin
 		if rising_edge(clk) then
 		
+			--Generate our own do_valid signal, since the one given takes an extra 3 clock cycles.
+			sclk_del_reg <= sclk;
+			if ssel = '1' then	--reset counter if ssel goes high
+				sclk_count <= 0;
+				do_valid <= '0';
+				fifo_wr_en <= '0';
+				holding_addr <= '0';
+				
+			elsif sclk_del_reg = '0' and sclk = '1' then	--detect a rising edge on sclk
+				sclk_count <= sclk_count + 1;
+				
+				if sclk_count = 7 and do_valid = '0' then
+					do_valid <= '1';
+					addr_hold <= spi_do;
+					holding_addr <= '1';
+				
+				elsif sclk_count = 15 and do_valid = '0' then
+					do_valid <= '1';
+					if addr_hold(7) = '0' then
+						fifo_wr_en <= '1';
+					end if;
+				
+				else
+					do_valid <= '0';
+					
+				end if;
+			else
+			do_valid <= '0';
+			fifo_wr_en <= '0';
+			end if;				
+			
 		
 			--Handle writes to SPI module.
-			spi_di_req_strobe <= spi_di_req_strobe XOR spi_di_req;
-			spi_wr_en <= spi_di_req_strobe;
+			spi_wr_en <= do_valid;
 		
 		
 			--Handle writing to the FIFO.
-			--Generate a 1-cycle strobe for spi_do_valid.
-			spi_do_valid_strobe <= spi_do_valid_strobe XOR spi_do_valid;
-			
-			--When a byte has been received,
-			if spi_do_valid_strobe = '1' then
-				--If an address byte has already been received,
-				if holding_addr = '1' then
-					--and if the address byte contains a write flag,
-					if addr_hold(7) = '0' then
-						fifo_wr_en <= '1';	--Write to the FIFO.
-					else
-						addr_hold <= (others => '0'); --Otherwise, clear the register.
-					end if;
-
-					holding_addr <= '0';	--Clear the holding_addr flag, regardless.
-					
-				--If no address byte has been received yet, save the address byte.
-				else
-					addr_hold <= spi_do;
-					holding_addr <= '1';
-				end if;
-				
-			--If we're still waiting for a byte, be sure to clear the fifo write enable.
-			else
-				fifo_wr_en <= '0';
-			end if;
+	
+--			--When a byte has been received,
+--			if do_valid = '1' then
+--				--If an address byte has already been received,
+--				if holding_addr = '1' then
+--					--and if the address byte contains a write flag,
+--					if addr_hold(7) = '0' then
+--						fifo_wr_en <= '1';	--Write to the FIFO.
+--					end if;
+--
+--					holding_addr <= '0';	--Clear the holding_addr flag, regardless.
+--					addr_hold <= (others => '0'); --Clear the register.
+--					
+--				--If no address byte has been received yet, save the address byte.
+--				else
+--					addr_hold <= spi_do;
+--					holding_addr <= '1';
+--				end if;
+--				
+--			--If we're still waiting for a byte, be sure to clear the fifo write enable.
+--			else
+--				fifo_wr_en <= '0';
+--			end if;
 			
 						
 						

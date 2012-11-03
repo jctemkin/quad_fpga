@@ -13,7 +13,7 @@
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="19" />
+   <WVObjectSize size="18" />
    <wvobject fp_name="/spi_test/sclk" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">sclk</obj_property>
       <obj_property name="ObjectShortName">sclk</obj_property>
@@ -49,25 +49,17 @@
       <obj_property name="ObjectShortName">spi_do[7:0]</obj_property>
       <obj_property name="Radix">HEXRADIX</obj_property>
    </wvobject>
-   <wvobject fp_name="/spi_test/uut/spi_di_req" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">spi_di_req</obj_property>
-      <obj_property name="ObjectShortName">spi_di_req</obj_property>
+   <wvobject fp_name="/spi_test/uut/do_valid" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">do_valid</obj_property>
+      <obj_property name="ObjectShortName">do_valid</obj_property>
    </wvobject>
    <wvobject fp_name="/spi_test/uut/spi_wr_en" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">spi_wr_en</obj_property>
       <obj_property name="ObjectShortName">spi_wr_en</obj_property>
    </wvobject>
-   <wvobject fp_name="/spi_test/uut/spi_di_req_strobe" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">spi_di_req_strobe</obj_property>
-      <obj_property name="ObjectShortName">spi_di_req_strobe</obj_property>
-   </wvobject>
-   <wvobject fp_name="/spi_test/uut/spi_do_valid" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">spi_do_valid</obj_property>
-      <obj_property name="ObjectShortName">spi_do_valid</obj_property>
-   </wvobject>
-   <wvobject fp_name="/spi_test/uut/spi_do_valid_strobe" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">spi_do_valid_strobe</obj_property>
-      <obj_property name="ObjectShortName">spi_do_valid_strobe</obj_property>
+   <wvobject fp_name="/spi_test/uut/spi_di_req" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">spi_di_req</obj_property>
+      <obj_property name="ObjectShortName">spi_di_req</obj_property>
    </wvobject>
    <wvobject fp_name="/spi_test/uut/addr_hold" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">addr_hold[7:0]</obj_property>
@@ -79,8 +71,8 @@
       <obj_property name="ObjectShortName">holding_addr</obj_property>
    </wvobject>
    <wvobject fp_name="/spi_test/uut/regs/regs" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">regs[0:256]</obj_property>
-      <obj_property name="ObjectShortName">regs[0:256]</obj_property>
+      <obj_property name="ElementShortName">regs[0:255]</obj_property>
+      <obj_property name="ObjectShortName">regs[0:255]</obj_property>
       <obj_property name="Radix">HEXRADIX</obj_property>
       <wvobject fp_name="/spi_test/uut/regs/regs[0]" type="array" db_ref_id="1">
          <obj_property name="ElementShortName">[0]</obj_property>
@@ -1362,11 +1354,6 @@
          <obj_property name="ObjectShortName">regs[255]</obj_property>
          <obj_property name="Radix">HEXRADIX</obj_property>
       </wvobject>
-      <wvobject fp_name="/spi_test/uut/regs/regs[256]" type="array" db_ref_id="1">
-         <obj_property name="ElementShortName">[256]</obj_property>
-         <obj_property name="ObjectShortName">regs[256]</obj_property>
-         <obj_property name="Radix">HEXRADIX</obj_property>
-      </wvobject>
    </wvobject>
    <wvobject fp_name="/spi_test/uut/regs/rd_en" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">rd_en</obj_property>
@@ -1381,5 +1368,9 @@
       <obj_property name="ElementShortName">rd_data[7:0]</obj_property>
       <obj_property name="ObjectShortName">rd_data[7:0]</obj_property>
       <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/spi_test/uut/spi_slave/prefetch" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">prefetch</obj_property>
+      <obj_property name="ObjectShortName">prefetch</obj_property>
    </wvobject>
 </wave_config>

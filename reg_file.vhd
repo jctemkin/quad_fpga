@@ -19,7 +19,7 @@ end reg_file;
 
 architecture Behavioral of reg_file is
 
-	type register_type is array(0 to (2 ** addr_len)) of std_logic_vector((data_len - 1) downto 0);
+	type register_type is array(0 to ((2 ** addr_len) - 1)) of std_logic_vector((data_len - 1) downto 0);
 	signal regs: register_type := (others => (others => '0'));
 	
 	signal rd_data_reg: std_logic_vector((data_len - 1) downto 0) := (others => '0');
