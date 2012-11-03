@@ -101,7 +101,8 @@ begin
 			do_o => spi_do
 		);
 		
-		miso <= spi_miso AND NOT ssel;	--Prevents blips on MISO after SSEL has been raised.
+		miso <= spi_miso when ssel = '0' else
+					'Z';
 
 
 	regs: entity work.reg_file(Behavioral)

@@ -28,9 +28,7 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
  
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---USE ieee.numeric_std.ALL;
+USE ieee.numeric_std.ALL;
  
 ENTITY spi_test IS
 END spi_test;
@@ -99,6 +97,21 @@ BEGIN
 		rst <= '0';
       wait for sclk_period*4;
 				
+				
+		for j in 0 to 255 loop
+			test_output <= std_logic_vector(to_unsigned(j, 8)) & std_logic_vector(to_unsigned(j, 8));
+			ssel <= '0'; wait for sclk_period/4;
+			for i in 15 downto 0 loop
+				sclk <= '0';
+				mosi <= test_output(i);
+				wait for sclk_period/2;
+				sclk <= '1';
+				wait for sclk_period/2;		
+			end loop;
+			wait for sclk_period/4; ssel <= '1';
+			wait for 513 ns;
+		end loop;
+		
 		--Transmit write request on address 01 with data AA.
 		test_output <= X"01AA";
 		ssel <= '0'; wait for sclk_period/4;
