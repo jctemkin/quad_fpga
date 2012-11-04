@@ -19,7 +19,7 @@
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
---use IEEE.NUMERIC_STD.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 
 entity spi_test_module is
@@ -46,7 +46,6 @@ architecture Behavioral of spi_test_module is
 
 	--Holds address byte from SPI.
 	signal addr_hold: std_logic_vector(7 downto 0) := (others => '0');
-	signal holding_addr: std_logic := '0';
 
 	--fifo signals
 	signal fifo_out: std_logic_vector(15 downto 0);
@@ -60,12 +59,14 @@ architecture Behavioral of spi_test_module is
 
 	--register file signals
 	signal reg_wr_en: std_logic;
+	signal reg_rd_spi_busy: std_logic;
+	signal reg_rd_addr: std_logic_vector(6 downto 0);
 	
 	
 	--Signals for generating do_valid.
 	signal do_valid: std_logic := '0';
 	signal sclk_del_reg: std_logic := '1';
-	signal sclk_count: integer range 0 to 15;
+	signal sclk_count: std_logic_vector(10 downto 0) := (others => '0');
 	
 	--FIFO component declaration
 	component fifo is
@@ -106,11 +107,11 @@ begin
 
 
 	regs: entity work.reg_file(Behavioral)
-		generic map (addr_len => 8, data_len => 8)
+		generic map (addr_len => 7, data_len => 8)
 		port map(
-			rd_addr => '0' & addr_hold(6 downto 0),
+			rd_addr => reg_rd_addr,
 			rd_en=> do_valid,
-			wr_addr => fifo_out(15 downto 8),
+			wr_addr => fifo_out(14 downto 8),
 			wr_data => fifo_out(7 downto 0),
 			wr_en=> reg_wr_en,
 			clk => clk,
@@ -134,72 +135,58 @@ begin
 	process(clk)
 	begin
 		if rising_edge(clk) then
-		
+		------------------------------------------------------------------------------------------
+			--Handle address byte and writing from SPI to FIFO
+		------------------------------------------------------------------------------------------	
 			--Generate our own do_valid signal, since the one given takes an extra 3 clock cycles.
-			sclk_del_reg <= sclk;
-			if ssel = '1' then	--reset counter if ssel goes high
-				sclk_count <= 0;
+			sclk_del_reg <= sclk;	--Used to detect rising edge of SCLK.
+			
+			if ssel = '1' then		--If the transmission ends, reset values.
+				sclk_count <= (others => '0');
 				do_valid <= '0';
 				fifo_wr_en <= '0';
-				holding_addr <= '0';
+				addr_hold <= (others => '0');
 				
-			elsif sclk_del_reg = '0' and sclk = '1' then	--detect a rising edge on sclk
-				sclk_count <= sclk_count + 1;
+			elsif sclk_del_reg = '0' and sclk = '1' then	--Count each rising edge of SCLK.
+				sclk_count <= std_logic_vector(unsigned(sclk_count) + 1);
 				
-				if sclk_count = 7 and do_valid = '0' then
+				if sclk_count = "00000000111" then	--On the eighth tick of SCK, signal do_valid and hold the address byte.
 					do_valid <= '1';
 					addr_hold <= spi_do;
-					holding_addr <= '1';
 				
-				elsif sclk_count = 15 and do_valid = '0' then
+				elsif sclk_count(2 downto 0) = "111" then	--After subsequent bytes are received, signal do_valid,
 					do_valid <= '1';
-					if addr_hold(7) = '0' then
+					if addr_hold(7) = '0' then	--and write to FIFO if in write mode.
 						fifo_wr_en <= '1';
+					else
+						addr_hold <= std_logic_vector(unsigned(addr_hold) + 1);	--Also increment address pointer now if in read mode.
 					end if;
-				
-				else
-					do_valid <= '0';
 					
 				end if;
+				
+			elsif spi_wr_en = '1' and unsigned(sclk_count) > 8 then	--Increment address pointer later if in write mode.
+				if addr_hold(7) = '0' then
+					addr_hold <= std_logic_vector(unsigned(addr_hold) + 1);	
+				end if;
+				
+				do_valid <= '0';		--This is kind of messy, but I can't think of how to refactor this more neatly.
+				fifo_wr_en <= '0';
+			
 			else
-			do_valid <= '0';
-			fifo_wr_en <= '0';
+				do_valid <= '0';
+				fifo_wr_en <= '0';
 			end if;				
 			
 		
-			--Handle writes to SPI module.
+			------------------------------------------------------------------------------------------
+			--Handle writes from registers to SPI
+			------------------------------------------------------------------------------------------
 			spi_wr_en <= do_valid;
-		
-		
-			--Handle writing to the FIFO.
-	
---			--When a byte has been received,
---			if do_valid = '1' then
---				--If an address byte has already been received,
---				if holding_addr = '1' then
---					--and if the address byte contains a write flag,
---					if addr_hold(7) = '0' then
---						fifo_wr_en <= '1';	--Write to the FIFO.
---					end if;
---
---					holding_addr <= '0';	--Clear the holding_addr flag, regardless.
---					addr_hold <= (others => '0'); --Clear the register.
---					
---				--If no address byte has been received yet, save the address byte.
---				else
---					addr_hold <= spi_do;
---					holding_addr <= '1';
---				end if;
---				
---			--If we're still waiting for a byte, be sure to clear the fifo write enable.
---			else
---				fifo_wr_en <= '0';
---			end if;
 			
-						
-						
 			
-			--Handle moving data from FIFO to register file.
+			------------------------------------------------------------------------------------------
+			--Handle writes from FIFO to registers
+			------------------------------------------------------------------------------------------
 			--If the fifo won't be empty after this cycle's read, then read.
 			if fifo_empty = '0'  and not (fifo_read_en = '1' and fifo_almost_empty = '1') then	
 				fifo_read_en <= '1';
@@ -214,7 +201,9 @@ begin
 		end if;
 	end process;
 
-
+	reg_rd_spi_busy <= spi_wr_en OR do_valid;
+	reg_rd_addr <=	addr_hold(6 downto 0) when do_valid = '1' else
+						"0000000";
 
 end Behavioral;
 

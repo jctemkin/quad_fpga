@@ -96,245 +96,80 @@ BEGIN
 		wait for 100 ns;
 		rst <= '0';
       wait for sclk_period*4;
-				
-				
-		for j in 0 to 255 loop
-			test_output <= std_logic_vector(to_unsigned(j, 8)) & std_logic_vector(to_unsigned(j, 8));
-			ssel <= '0'; wait for sclk_period/4;
-			for i in 15 downto 0 loop
+		
+		
+		--Stream write test
+		test_output <= X"0000";
+		ssel <= '0'; wait for sclk_period/4;
+		for i in 7 downto 0 loop
+			sclk <= '0';
+			mosi <= test_output(i);
+			wait for sclk_period/2;
+			sclk <= '1';
+			wait for sclk_period/2;		
+		end loop;
+		
+		for j in 0 to 50 loop
+			test_output <= std_logic_vector(to_unsigned(j,16));
+			for i in 7 downto 0 loop
 				sclk <= '0';
 				mosi <= test_output(i);
 				wait for sclk_period/2;
 				sclk <= '1';
 				wait for sclk_period/2;		
 			end loop;
-			wait for sclk_period/4; ssel <= '1';
-			wait for 513 ns;
 		end loop;
+		wait for sclk_period/4; ssel <= '1';	
+		wait for 500 ns;
 		
-		--Transmit write request on address 01 with data AA.
-		test_output <= X"01AA";
+		
+		
+		--Stream read test
+		test_output <= X"0083";
 		ssel <= '0'; wait for sclk_period/4;
-		for i in 15 downto 0 loop
+		for i in 7 downto 0 loop
 			sclk <= '0';
 			mosi <= test_output(i);
 			wait for sclk_period/2;
 			sclk <= '1';
 			wait for sclk_period/2;		
 		end loop;
-		wait for sclk_period/4; ssel <= '1';
-
-		wait for 3*sclk_period;	
-
-		--Transmit a read request on address 01
-		test_output <= X"81AA";
-		ssel <= '0'; wait for sclk_period/4;
-		for i in 15 downto 0 loop
-			sclk <= '0';
-			mosi <= test_output(i);
-			wait for sclk_period/2;
-			sclk <= '1';
-			wait for sclk_period/2;		
+		
+		for j in 0 to 50 loop
+			test_output <= X"0000";
+			for i in 7 downto 0 loop
+				sclk <= '0';
+				mosi <= test_output(i);
+				wait for sclk_period/2;
+				sclk <= '1';
+				wait for sclk_period/2;		
+			end loop;
 		end loop;
-		wait for sclk_period/4; ssel <= '1';
+		wait for sclk_period/4; ssel <= '1';	
+		wait for 500 ns;
 		
 		
 		
-		wait for 6*sclk_period;	
-
-		--Transmit a read request on address 01
-		test_output <= X"81AA";
-		ssel <= '0'; wait for sclk_period/4;
-		for i in 15 downto 0 loop
-			sclk <= '0';
-			mosi <= test_output(i);
-			wait for sclk_period/2;
-			sclk <= '1';
-			wait for sclk_period/2;		
-		end loop;
-		wait for sclk_period/4; ssel <= '1';
-
-		wait for 6*sclk_period;	
-
-		--Transmit a read request on address 01
-		test_output <= X"81AA";
-		ssel <= '0'; wait for sclk_period/4;
-		for i in 15 downto 0 loop
-			sclk <= '0';
-			mosi <= test_output(i);
-			wait for sclk_period/2;
-			sclk <= '1';
-			wait for sclk_period/2;		
-		end loop;
-		wait for sclk_period/4; ssel <= '1';
 		
-				wait for 6*sclk_period;	
-
-		--Transmit a read request on address 01
-		test_output <= X"81AA";
-		ssel <= '0'; wait for sclk_period/4;
-		for i in 15 downto 0 loop
-			sclk <= '0';
-			mosi <= test_output(i);
-			wait for sclk_period/2;
-			sclk <= '1';
-			wait for sclk_period/2;		
-		end loop;
-		wait for sclk_period/4; ssel <= '1';
 		
-				wait for 6*sclk_period;	
-
-		--Transmit a read request on address 01
-		test_output <= X"81AA";
-		ssel <= '0'; wait for sclk_period/4;
-		for i in 15 downto 0 loop
-			sclk <= '0';
-			mosi <= test_output(i);
-			wait for sclk_period/2;
-			sclk <= '1';
-			wait for sclk_period/2;		
-		end loop;
-		wait for sclk_period/4; ssel <= '1';
 		
-				wait for 6*sclk_period;	
-
-		--Transmit a read request on address 01
-		test_output <= X"81AA";
-		ssel <= '0'; wait for sclk_period/4;
-		for i in 15 downto 0 loop
-			sclk <= '0';
-			mosi <= test_output(i);
-			wait for sclk_period/2;
-			sclk <= '1';
-			wait for sclk_period/2;		
-		end loop;
-		wait for sclk_period/4; ssel <= '1';
+--		for j in 0 to 255 loop
+--			test_output <= std_logic_vector(to_unsigned(j, 8)) & std_logic_vector(to_unsigned(j, 8));
+--			ssel <= '0'; wait for sclk_period/4;
+--			for i in 15 downto 0 loop
+--				sclk <= '0';
+--				mosi <= test_output(i);
+--				wait for sclk_period/2;
+--				sclk <= '1';
+--				wait for sclk_period/2;		
+--			end loop;
+--			wait for sclk_period/4; ssel <= '1';
+--			wait for 513 ns;
+--		end loop;
 		
-				wait for 6*sclk_period;	
-
-		--Transmit a read request on address 01
-		test_output <= X"81AA";
-		ssel <= '0'; wait for sclk_period/4;
-		for i in 15 downto 0 loop
-			sclk <= '0';
-			mosi <= test_output(i);
-			wait for sclk_period/2;
-			sclk <= '1';
-			wait for sclk_period/2;		
-		end loop;
-		wait for sclk_period/4; ssel <= '1';
 		
-				wait for 6*sclk_period;	
-
-		--Transmit a read request on address 01
-		test_output <= X"81AA";
-		ssel <= '0'; wait for sclk_period/4;
-		for i in 15 downto 0 loop
-			sclk <= '0';
-			mosi <= test_output(i);
-			wait for sclk_period/2;
-			sclk <= '1';
-			wait for sclk_period/2;		
-		end loop;
-		wait for sclk_period/4; ssel <= '1';
 		
-				wait for 6*sclk_period;	
 
-		--Transmit a read request on address 01
-		test_output <= X"81AA";
-		ssel <= '0'; wait for sclk_period/4;
-		for i in 15 downto 0 loop
-			sclk <= '0';
-			mosi <= test_output(i);
-			wait for sclk_period/2;
-			sclk <= '1';
-			wait for sclk_period/2;		
-		end loop;
-		wait for sclk_period/4; ssel <= '1';
-		
-				wait for 6*sclk_period;	
-
-		--Transmit a read request on address 01
-		test_output <= X"81AA";
-		ssel <= '0'; wait for sclk_period/4;
-		for i in 15 downto 0 loop
-			sclk <= '0';
-			mosi <= test_output(i);
-			wait for sclk_period/2;
-			sclk <= '1';
-			wait for sclk_period/2;		
-		end loop;
-		wait for sclk_period/4; ssel <= '1';
-		
-				wait for 6*sclk_period;	
-
-		--Transmit a read request on address 01
-		test_output <= X"81AA";
-		ssel <= '0'; wait for sclk_period/4;
-		for i in 15 downto 0 loop
-			sclk <= '0';
-			mosi <= test_output(i);
-			wait for sclk_period/2;
-			sclk <= '1';
-			wait for sclk_period/2;		
-		end loop;
-		wait for sclk_period/4; ssel <= '1';
-		
-				wait for 6*sclk_period;	
-
-		--Transmit a read request on address 01
-		test_output <= X"81AA";
-		ssel <= '0'; wait for sclk_period/4;
-		for i in 15 downto 0 loop
-			sclk <= '0';
-			mosi <= test_output(i);
-			wait for sclk_period/2;
-			sclk <= '1';
-			wait for sclk_period/2;		
-		end loop;
-		wait for sclk_period/4; ssel <= '1';
-		
-				wait for 6*sclk_period;	
-
-		--Transmit a read request on address 01
-		test_output <= X"81AA";
-		ssel <= '0'; wait for sclk_period/4;
-		for i in 15 downto 0 loop
-			sclk <= '0';
-			mosi <= test_output(i);
-			wait for sclk_period/2;
-			sclk <= '1';
-			wait for sclk_period/2;		
-		end loop;
-		wait for sclk_period/4; ssel <= '1';
-		
-				wait for 6*sclk_period;	
-
-		--Transmit a read request on address 01
-		test_output <= X"81AA";
-		ssel <= '0'; wait for sclk_period/4;
-		for i in 15 downto 0 loop
-			sclk <= '0';
-			mosi <= test_output(i);
-			wait for sclk_period/2;
-			sclk <= '1';
-			wait for sclk_period/2;		
-		end loop;
-		wait for sclk_period/4; ssel <= '1';
-		
-				wait for 6*sclk_period;	
-
-		--Transmit a read request on address 01
-		test_output <= X"81AA";
-		ssel <= '0'; wait for sclk_period/4;
-		for i in 15 downto 0 loop
-			sclk <= '0';
-			mosi <= test_output(i);
-			wait for sclk_period/2;
-			sclk <= '1';
-			wait for sclk_period/2;		
-		end loop;
-		wait for sclk_period/4; ssel <= '1';
 
       wait;
    end process;
