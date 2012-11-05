@@ -1,4 +1,4 @@
 work	"ipcore_dir/fifo.vhd"
+work	"mem_spi.vhd"
 work	"reg_file.vhd"
 work	"spi_slave.vhd"
-work	"spi_test_module.vhd"
