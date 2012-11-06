@@ -12,8 +12,9 @@ end pcm_gen;
 
 architecture Behavioral of pcm_gen is
 
-	signal pcm_count: integer range 0 to 2047 := 0;
-	signal pulse_width_reg: std_logic_vector(9 downto 0) := (others => '0');
+	signal pcm_out_reg: std_logic := '1';
+	signal pcm_count: std_logic_vector(11 downto 0) := (others => '0');
+	signal pulse_width_reg: std_logic_vector(11 downto 0) := (others => '0');
 
 begin
 	process (clk_1mhz)
@@ -21,24 +22,24 @@ begin
 		-- Generate PCM
 		if rising_edge(clk_1mhz) then		
 		
-			if ((pcm_count < (1000 + pulse_width_reg)) AND (pcm_count < 1800)) OR (pcm_count < 1000) then
-				pcm_out <= 1;
+			if (unsigned(pcm_count) < (1000 + unsigned(pulse_width_reg))) AND (unsigned(pcm_count) < 1800) then
+				pcm_out_reg <= '1';
 			else
-				pcm_out <= 0;
+				pcm_out_reg <= '0';
 			end if;
 			
 			-- Account for rollover
-			if (pcm_count > 1999) then
-				pcm_count <= 0;
-				pulse_width_reg <= pulse_width;
+			if (unsigned(pcm_count) > 1999) then
+				pcm_count <= (others => '0');
+				pulse_width_reg <= "00" & pulse_width;
 			else
-				pcm_count <= pcm_count + 1;
+				pcm_count <= std_logic_vector(unsigned(pcm_count) + 1);
 			end if;
 			
 		end if;
 			
 	end process;
 
+	pcm_out <= pcm_out_reg;
 
 end Behavioral;
-
