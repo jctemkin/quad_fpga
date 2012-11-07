@@ -1,0 +1,25 @@
+#-----------------------------------------------------------
+# PlanAhead v13.2 (64-bit)
+# Build 131561 by hdbuild on Thu Jun 16 16:53:07 PDT 2011
+# Start of session at: Wed Nov  7 11:50:48 2012
+# Process ID: 17668
+# Log file: /home/jenn/git/quad_fpga/planAhead_run_3/planAhead.log
+# Journal file: /home/jenn/git/quad_fpga/planAhead_run_3/planAhead.jou
+#-----------------------------------------------------------
+start_gui
+source /home/jenn/git/quad_fpga/pa.fromNetlist.tcl
+startgroup
+set_property loc PAD233 [get_ports sclk]
+endgroup
+startgroup
+set_property loc PAD234 [get_ports miso]
+endgroup
+startgroup
+set_property loc PAD228 [get_ports mosi]
+endgroup
+startgroup
+set_property loc PAD227 [get_ports ssel]
+endgroup
+save_design
+exit
+stop_gui

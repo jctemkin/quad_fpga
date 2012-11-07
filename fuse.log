@@ -1,0 +1,39 @@
+Running: /opt/Xilinx/13.2/ISE_DS/ISE/bin/lin64/unwrapped/fuse -intstyle ise -incremental -lib secureip -o /home/jenn/git/quad_fpga/spi_test_isim_beh.exe -prj /home/jenn/git/quad_fpga/spi_test_beh.prj work.spi_test 
+ISim O.61xd (signature 0xb4d1ced7)
+Number of CPUs detected in this system: 4
+Turning on mult-threading, number of parallel sub-compilation jobs: 8 
+Determining compilation order of HDL files
+Parsing VHDL file "/home/jenn/git/quad_fpga/ipcore_dir/fifo.vhd" into library work
+Parsing VHDL file "/home/jenn/git/quad_fpga/spi_slave.vhd" into library work
+WARNING:HDLCompiler:957 - "/home/jenn/git/quad_fpga/spi_slave.vhd" Line 361: Case choice must be a locally static expression
+WARNING:HDLCompiler:957 - "/home/jenn/git/quad_fpga/spi_slave.vhd" Line 369: Case choice must be a locally static expression
+WARNING:HDLCompiler:957 - "/home/jenn/git/quad_fpga/spi_slave.vhd" Line 378: Case choice must be a locally static expression
+Parsing VHDL file "/home/jenn/git/quad_fpga/reg_file.vhd" into library work
+Parsing VHDL file "/home/jenn/git/quad_fpga/spi_test_module.vhd" into library work
+WARNING:HDLCompiler:946 - "/home/jenn/git/quad_fpga/spi_test_module.vhd" Line 111: Actual for formal port rd_addr is neither a static name nor a globally static expression
+WARNING:HDLCompiler:946 - "/home/jenn/git/quad_fpga/spi_test_module.vhd" Line 124: Actual for formal port din is neither a static name nor a globally static expression
+Parsing VHDL file "/home/jenn/git/quad_fpga/spi_test.vhd" into library work
+Starting static elaboration
+Completed static elaboration
+Fuse Memory Usage: 78940 KB
+Fuse CPU Usage: 210 ms
+Compiling package standard
+Compiling package std_logic_1164
+Compiling package numeric_std
+Compiling package std_logic_arith
+Compiling package std_logic_unsigned
+Compiling architecture rtl of entity spi_slave [\spi_slave(8,'1','1',1)\]
+Compiling architecture behavioral of entity reg_file [\reg_file(8,8)\]
+Compiling architecture behavioral of entity fifo_generator_v8_2_bhv_ss [\fifo_generator_v8_2_bhv_ss(4,16...]
+Compiling architecture behavioral of entity fifo_generator_v8_2_conv [\fifo_generator_v8_2_conv(1,0,4,...]
+Compiling architecture behavioral of entity fifo_generator_v8_2 [\fifo_generator_v8_2(1,0,4,"Blan...]
+Compiling architecture fifo_a of entity fifo [fifo_default]
+Compiling architecture behavioral of entity spi_test_module [spi_test_module_default]
+Compiling architecture behavior of entity spi_test
+Time Resolution for simulation is 1ps.
+Waiting for 1 sub-compilation(s) to finish...
+Compiled 20 VHDL Units
+Built simulation executable /home/jenn/git/quad_fpga/spi_test_isim_beh.exe
+Fuse Memory Usage: 654724 KB
+Fuse CPU Usage: 500 ms
+GCC CPU Usage: 6490 ms

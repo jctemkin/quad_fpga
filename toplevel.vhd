@@ -28,6 +28,7 @@ architecture Behavioral of toplevel is
 	signal rd_addr: std_logic_vector(7 downto 0) := X"00";
 	signal rd_data: std_logic_vector(7 downto 0) := X"00";
 	signal rd_data_ready: std_logic := '0';
+	
 	signal fastclk: std_logic;
 	signal clk_reset: std_logic;
 	signal clk_locked: std_logic;

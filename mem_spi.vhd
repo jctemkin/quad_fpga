@@ -70,7 +70,7 @@ architecture Behavioral of mem_spi is
 	signal fifo_almost_empty: std_logic;
 	signal fifo_read_en: std_logic := '0';
 	signal fifo_wr_en: std_logic := '0';
-	signal fifo_rst: std_logic;
+	signal fifo_rst: std_logic := '0';
 
 	--register file signals
 	signal reg_wr_en: std_logic;

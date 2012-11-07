@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<Compat Version="1" Minor="4">
+	<CompatParts>
+	</CompatParts>
+	<ConfigModes>
+		<Mode Id="JTAG"/>
+	</ConfigModes>
+	<PortProps>
+		<Port Name="pcm_out[3]" OffChipTerm="FP_VTT_50"/>
+		<Port Name="pcm_out[2]" OffChipTerm="FP_VTT_50"/>
+		<Port Name="pcm_out[1]" OffChipTerm="FP_VTT_50"/>
+		<Port Name="pcm_out[0]" OffChipTerm="FP_VTT_50"/>
+		<Port Name="clk_12mhz" OffChipTerm="NONE"/>
+		<Port Name="ssel" OffChipTerm="NONE"/>
+		<Port Name="mosi" OffChipTerm="NONE"/>
+		<Port Name="sclk" OffChipTerm="NONE"/>
+		<Port Name="miso" OffChipTerm="FP_VTT_50"/>
+	</PortProps>
+</Compat>
+
