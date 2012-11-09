@@ -12,9 +12,9 @@
 		<Port Name="pcm_out[0]" OffChipTerm="FP_VTT_50"/>
 		<Port Name="clk_12mhz" OffChipTerm="NONE"/>
 		<Port Name="ssel" OffChipTerm="NONE"/>
+		<Port Name="miso" OffChipTerm="FP_VTT_50"/>
 		<Port Name="mosi" OffChipTerm="NONE"/>
 		<Port Name="sclk" OffChipTerm="NONE"/>
-		<Port Name="miso" OffChipTerm="FP_VTT_50"/>
 	</PortProps>
 </Compat>
 

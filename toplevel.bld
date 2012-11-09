@@ -5,7 +5,7 @@ Command Line: /opt/Xilinx/13.2/ISE_DS/ISE/bin/lin64/unwrapped/ngdbuild -intstyle
 ise -dd _ngo -sd ipcore_dir -nt timestamp -uc toplevel.ucf -p xc6slx25-ftg256-3
 toplevel.ngc toplevel.ngd
 
-Reading NGO file "/home/jenn/git/quad_fpga/toplevel.ngc" ...
+Reading NGO file "/home/jenn/quad/quad_fpga/toplevel.ngc" ...
 Loading design module "ipcore_dir/fifo.ngc"...
 Gathering constraint information from source properties...
 Done.
@@ -41,10 +41,10 @@ NGDBUILD Design Results Summary:
   Number of errors:     0
   Number of warnings:   1
 
-Total memory usage is 261148 kilobytes
+Total memory usage is 261244 kilobytes
 
 Writing NGD file "toplevel.ngd" ...
-Total REAL time to NGDBUILD completion:  6 sec
-Total CPU time to NGDBUILD completion:   4 sec
+Total REAL time to NGDBUILD completion:  4 sec
+Total CPU time to NGDBUILD completion:   3 sec
 
 Writing NGDBUILD log file "toplevel.bld"...

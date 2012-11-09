@@ -1,7 +1,7 @@
 
 # PlanAhead Launch Script for Pre-Synthesis Floorplanning, created by Project Navigator
 
-create_project -name quad_fpga -dir "/home/jenn/git/quad_fpga/planAhead_run_1" -part xc6slx25ftg256-3
+create_project -name quad_fpga -dir "/home/jenn/quad/quad_fpga/planAhead_run_3" -part xc6slx25ftg256-3
 set_param project.pinAheadLayout yes
 set srcset [get_property srcset [current_run -impl]]
 set_property top toplevel $srcset
@@ -15,7 +15,6 @@ set_property library work $hdlfile
 set hdlfile [add_files [list {reg_file.vhd}]]
 set_property file_type VHDL $hdlfile
 set_property library work $hdlfile
-add_files [list {ipcore_dir/fifo.ngc}]
 set hdlfile [add_files [list {pcm_gen.vhd}]]
 set_property file_type VHDL $hdlfile
 set_property library work $hdlfile

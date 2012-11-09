@@ -1,39 +1,57 @@
-Running: /opt/Xilinx/13.2/ISE_DS/ISE/bin/lin64/unwrapped/fuse -intstyle ise -incremental -lib secureip -o /home/jenn/git/quad_fpga/spi_test_isim_beh.exe -prj /home/jenn/git/quad_fpga/spi_test_beh.prj work.spi_test 
+Running: /opt/Xilinx/13.2/ISE_DS/ISE/bin/lin64/unwrapped/fuse -intstyle ise -incremental -lib secureip -o /home/jenn/quad/quad_fpga/testbench_isim_beh.exe -prj /home/jenn/quad/quad_fpga/testbench_beh.prj work.testbench 
 ISim O.61xd (signature 0xb4d1ced7)
 Number of CPUs detected in this system: 4
 Turning on mult-threading, number of parallel sub-compilation jobs: 8 
 Determining compilation order of HDL files
-Parsing VHDL file "/home/jenn/git/quad_fpga/ipcore_dir/fifo.vhd" into library work
-Parsing VHDL file "/home/jenn/git/quad_fpga/spi_slave.vhd" into library work
-WARNING:HDLCompiler:957 - "/home/jenn/git/quad_fpga/spi_slave.vhd" Line 361: Case choice must be a locally static expression
-WARNING:HDLCompiler:957 - "/home/jenn/git/quad_fpga/spi_slave.vhd" Line 369: Case choice must be a locally static expression
-WARNING:HDLCompiler:957 - "/home/jenn/git/quad_fpga/spi_slave.vhd" Line 378: Case choice must be a locally static expression
-Parsing VHDL file "/home/jenn/git/quad_fpga/reg_file.vhd" into library work
-Parsing VHDL file "/home/jenn/git/quad_fpga/spi_test_module.vhd" into library work
-WARNING:HDLCompiler:946 - "/home/jenn/git/quad_fpga/spi_test_module.vhd" Line 111: Actual for formal port rd_addr is neither a static name nor a globally static expression
-WARNING:HDLCompiler:946 - "/home/jenn/git/quad_fpga/spi_test_module.vhd" Line 124: Actual for formal port din is neither a static name nor a globally static expression
-Parsing VHDL file "/home/jenn/git/quad_fpga/spi_test.vhd" into library work
+Parsing VHDL file "/home/jenn/quad/quad_fpga/ipcore_dir/fifo.vhd" into library work
+Parsing VHDL file "/home/jenn/quad/quad_fpga/spi_slave.vhd" into library work
+WARNING:HDLCompiler:957 - "/home/jenn/quad/quad_fpga/spi_slave.vhd" Line 361: Case choice must be a locally static expression
+WARNING:HDLCompiler:957 - "/home/jenn/quad/quad_fpga/spi_slave.vhd" Line 369: Case choice must be a locally static expression
+WARNING:HDLCompiler:957 - "/home/jenn/quad/quad_fpga/spi_slave.vhd" Line 378: Case choice must be a locally static expression
+Parsing VHDL file "/home/jenn/quad/quad_fpga/reg_file.vhd" into library work
+Parsing VHDL file "/home/jenn/quad/quad_fpga/pcm_gen.vhd" into library work
+Parsing VHDL file "/home/jenn/quad/quad_fpga/mem_spi.vhd" into library work
+WARNING:HDLCompiler:946 - "/home/jenn/quad/quad_fpga/mem_spi.vhd" Line 152: Actual for formal port din is neither a static name nor a globally static expression
+Parsing VHDL file "/home/jenn/quad/quad_fpga/ipcore_dir/clk_100mhz/example_design/clk_100mhz_exdes.vhd" into library work
+Parsing VHDL file "/home/jenn/quad/quad_fpga/ipcore_dir/clk_100mhz.vhd" into library work
+Parsing VHDL file "/home/jenn/quad/quad_fpga/toplevel.vhd" into library work
+Parsing VHDL file "/home/jenn/quad/quad_fpga/toplevel_test.vhd" into library work
 Starting static elaboration
 Completed static elaboration
-Fuse Memory Usage: 78940 KB
-Fuse CPU Usage: 210 ms
+Fuse Memory Usage: 96912 KB
+Fuse CPU Usage: 270 ms
 Compiling package standard
 Compiling package std_logic_1164
 Compiling package numeric_std
 Compiling package std_logic_arith
 Compiling package std_logic_unsigned
+Compiling package vcomponents
+Compiling package textio
+Compiling package vital_timing
+Compiling package vital_primitives
+Compiling package vpkg
+Compiling architecture ibufg_v of entity IBUFG [\IBUFG("DONT_CARE","0",true,"DEF...]
+Compiling architecture dcm_sp_clock_divide_by_2_v of entity dcm_sp_clock_divide_by_2 [dcm_sp_clock_divide_by_2_default]
+Compiling architecture dcm_sp_maximum_period_check_v of entity dcm_sp_maximum_period_check [\dcm_sp_maximum_period_check("*"...]
+Compiling architecture dcm_sp_maximum_period_check_v of entity dcm_sp_maximum_period_check [\dcm_sp_maximum_period_check("*"...]
+Compiling architecture dcm_sp_clock_lost_v of entity dcm_sp_clock_lost [dcm_sp_clock_lost_default]
+Compiling architecture dcm_sp_v of entity DCM_SP [\DCM_SP(true,"*",true,false,2.0,...]
+Compiling architecture bufg_v of entity BUFG [bufg_default]
+Compiling architecture xilinx of entity clk_100mhz [clk_100mhz_default]
 Compiling architecture rtl of entity spi_slave [\spi_slave(8,'1','1',1)\]
-Compiling architecture behavioral of entity reg_file [\reg_file(8,8)\]
+Compiling architecture behavioral of entity reg_file [\reg_file(7,8)\]
 Compiling architecture behavioral of entity fifo_generator_v8_2_bhv_ss [\fifo_generator_v8_2_bhv_ss(4,16...]
 Compiling architecture behavioral of entity fifo_generator_v8_2_conv [\fifo_generator_v8_2_conv(1,0,4,...]
 Compiling architecture behavioral of entity fifo_generator_v8_2 [\fifo_generator_v8_2(1,0,4,"Blan...]
 Compiling architecture fifo_a of entity fifo [fifo_default]
-Compiling architecture behavioral of entity spi_test_module [spi_test_module_default]
-Compiling architecture behavior of entity spi_test
+Compiling architecture behavioral of entity mem_spi [mem_spi_default]
+Compiling architecture behavioral of entity pcm_gen [pcm_gen_default]
+Compiling architecture behavioral of entity toplevel [toplevel_default]
+Compiling architecture behavior of entity testbench
 Time Resolution for simulation is 1ps.
-Waiting for 1 sub-compilation(s) to finish...
-Compiled 20 VHDL Units
-Built simulation executable /home/jenn/git/quad_fpga/spi_test_isim_beh.exe
-Fuse Memory Usage: 654724 KB
-Fuse CPU Usage: 500 ms
-GCC CPU Usage: 6490 ms
+Waiting for 6 sub-compilation(s) to finish...
+Compiled 45 VHDL Units
+Built simulation executable /home/jenn/quad/quad_fpga/testbench_isim_beh.exe
+Fuse Memory Usage: 687104 KB
+Fuse CPU Usage: 710 ms
+GCC CPU Usage: 2340 ms

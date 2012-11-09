@@ -3,11 +3,11 @@
 <!--The data in this file is primarily intended for consumption by Xilinx tools.
 The structure and the elements are likely to change over the next few releases.
 This means code written to parse this file will need to be revisited each subsequent release.-->
-<application name="pn" timeStamp="Wed Nov  7 12:10:48 2012">
+<application name="pn" timeStamp="Thu Nov  8 17:50:32 2012">
 <section name="Project Information" visible="false">
 <property name="ProjectID" value="FA4F06E52F86657846F8DFEEA488ADA3" type="project"/>
-<property name="ProjectIteration" value="1" type="project"/>
-<property name="ProjectFile" value="/home/jenn/git/quad_fpga/quad_fpga.xise" type="project"/>
+<property name="ProjectIteration" value="2" type="project"/>
+<property name="ProjectFile" value="/home/jenn/quad/quad_fpga/quad_fpga.xise" type="project"/>
 <property name="ProjectCreationTimestamp" value="2012-10-07T17:54:34" type="project"/>
 </section>
 <section name="Project Statistics" visible="true">
@@ -29,11 +29,12 @@ This means code written to parse this file will need to be revisited each subseq
 <property name="PROP_UserConstraintEditorPreference" value="Text Editor" type="process"/>
 <property name="PROP_intProjectCreationTimestamp" value="2012-10-07T17:54:34" type="design"/>
 <property name="PROP_intWbtProjectID" value="FA4F06E52F86657846F8DFEEA488ADA3" type="design"/>
-<property name="PROP_intWbtProjectIteration" value="1" type="process"/>
+<property name="PROP_intWbtProjectIteration" value="2" type="process"/>
 <property name="PROP_intWorkingDirLocWRTProjDir" value="Same" type="design"/>
 <property name="PROP_intWorkingDirUsed" value="No" type="design"/>
 <property name="PROP_lockPinsUcfFile" value="changed" type="process"/>
 <property name="PROP_selectedSimRootSourceNode_behav" value="work.testbench" type="process"/>
+<property name="PROP_xilxBitgCfg_Rate_spartan6" value="10" type="process"/>
 <property name="PROP_xilxSynthRegBalancing" value="Yes" type="process"/>
 <property name="PROP_xstPackIORegister" value="Yes" type="process"/>
 <property name="PROP_AutoTop" value="false" type="design"/>
@@ -43,7 +44,7 @@ This means code written to parse this file will need to be revisited each subseq
 <property name="PROPEXT_xilxPARextraEffortLevel_spartan6" value="Normal" type="process"/>
 <property name="PROP_DevDevice" value="xc6slx25" type="design"/>
 <property name="PROP_DevFamilyPMName" value="spartan6" type="design"/>
-<property name="PROP_ISimSimulationRunTime_behav_tb" value="6 ms" type="process"/>
+<property name="PROP_ISimSimulationRunTime_behav_tb" value="8 ms" type="process"/>
 <property name="PROP_DevPackage" value="ftg256" type="design"/>
 <property name="PROP_Synthesis_Tool" value="XST (VHDL/Verilog)" type="design"/>
 <property name="PROP_DevSpeed" value="-3" type="design"/>

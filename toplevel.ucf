@@ -9,11 +9,13 @@ TIMESPEC TS_sclk = PERIOD "sclk" 125 ns LOW 50 %;
 
 
 NET "clk_12mhz" LOC = A9;
-NET "miso" LOC = J4;
-NET "mosi" LOC = H1;
-NET "pcm_out[0]" LOC = A2;
-NET "pcm_out[1]" LOC = B2;
-NET "pcm_out[2]" LOC = B1;
-NET "pcm_out[3]" LOC = C1;
-NET "sclk" LOC = K3;
-NET "ssel" LOC = H2;
+
+NET "pcm_out[0]" LOC = B15;	#14
+NET "pcm_out[1]" LOC = B16;	#13
+NET "pcm_out[2]" LOC = C15;	#12
+NET "pcm_out[3]" LOC = C16;	#11
+
+NET "sclk" LOC = J16;			#7
+NET "miso" LOC = J14;			#8
+NET "mosi" LOC = F15;			#9
+NET "ssel" LOC = F16;			#10

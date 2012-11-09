@@ -9,9 +9,9 @@
 		</Bus>
 		<Port Id="clk_12mhz" Dir="IN"/>
 		<Port Id="ssel" Dir="IN"/>
+		<Port Id="miso" Dir="OUT"/>
 		<Port Id="mosi" Dir="IN"/>
 		<Port Id="sclk" Dir="IN"/>
-		<Port Id="miso" Dir="OUT"/>
 	</Ifc>
 </Interface>
 

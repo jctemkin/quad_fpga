@@ -2,9 +2,9 @@
 <DARoots Version="1" Minor="16">
 	<FileSet Name="constrs_1" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1">
 		<Filter Type="Constrs"/>
-		<File Path="$PPRDIR/../ipcore_dir/fifo.ncf">
-		</File>
 		<File Path="$PPRDIR/../toplevel.ucf">
+		</File>
+		<File Path="$PPRDIR/../ipcore_dir/fifo.ncf">
 		</File>
 		<File Path="$PDATADIR/constrs_1/designprops.xml">
 			<FileInfo SFType="CompatPartsDb"/>

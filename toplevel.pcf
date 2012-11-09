@@ -1,17 +1,17 @@
 //! **************************************************************************
-// Written by: Map O.61xd on Wed Nov 07 12:10:44 2012
+// Written by: Map O.61xd on Thu Nov 08 17:50:31 2012
 //! **************************************************************************
 
 SCHEMATIC START;
 COMP "clk_12mhz" LOCATE = SITE "A9" LEVEL 1;
-COMP "miso" LOCATE = SITE "J4" LEVEL 1;
-COMP "sclk" LOCATE = SITE "K3" LEVEL 1;
-COMP "mosi" LOCATE = SITE "H1" LEVEL 1;
-COMP "ssel" LOCATE = SITE "H2" LEVEL 1;
-COMP "pcm_out<0>" LOCATE = SITE "A2" LEVEL 1;
-COMP "pcm_out<1>" LOCATE = SITE "B2" LEVEL 1;
-COMP "pcm_out<2>" LOCATE = SITE "B1" LEVEL 1;
-COMP "pcm_out<3>" LOCATE = SITE "C1" LEVEL 1;
+COMP "miso" LOCATE = SITE "J14" LEVEL 1;
+COMP "sclk" LOCATE = SITE "J16" LEVEL 1;
+COMP "mosi" LOCATE = SITE "F15" LEVEL 1;
+COMP "ssel" LOCATE = SITE "F16" LEVEL 1;
+COMP "pcm_out<0>" LOCATE = SITE "B15" LEVEL 1;
+COMP "pcm_out<1>" LOCATE = SITE "B16" LEVEL 1;
+COMP "pcm_out<2>" LOCATE = SITE "C15" LEVEL 1;
+COMP "pcm_out<3>" LOCATE = SITE "C16" LEVEL 1;
 PIN mem/regs/Mram_regs_pins<20> = BEL "mem/regs/Mram_regs" PINNAME CLKAWRCLK;
 PIN mem/regs/Mram_regs_pins<21> = BEL "mem/regs/Mram_regs" PINNAME CLKBRDCLK;
 PIN

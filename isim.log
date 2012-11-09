@@ -1,6 +1,5 @@
 ISim log file
-Running: /home/jenn/git/quad_fpga/spi_test_isim_beh.exe -intstyle ise -gui -tclbatch isim.cmd -view /home/jenn/git/quad_fpga/sdfs.wcfg -wdb /home/jenn/git/quad_fpga/spi_test_isim_beh.wdb 
-INFO: There is another simulation running in the same directory. Using database file name isim1.wdb.
+Running: /home/jenn/quad/quad_fpga/testbench_isim_beh.exe -intstyle ise -gui -tclbatch isim.cmd -view /home/jenn/quad/quad_fpga/sdfs.wcfg -wdb /home/jenn/quad/quad_fpga/testbench_isim_beh.wdb 
 ISim O.61xd (signature 0xb4d1ced7)
 WARNING: A WEBPACK license was found.
 WARNING: Please use Xilinx License Configuration Manager to check out a full ISim license.
@@ -8,8 +7,7 @@ WARNING: ISim will run in Lite mode. Please refer to the ISim documentation for 
 This is a Lite version of ISim.
 Time resolution is 1 ps
 # onerror resume
-# run 10us
+# run 8 ms
 Simulator is doing circuit initialization process.
 Finished circuit initialization process.
-# exit 0
 # exit 0

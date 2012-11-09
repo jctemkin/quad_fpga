@@ -1,7 +1,7 @@
 Release 13.2 par O.61xd (lin64)
 Copyright (c) 1995-2011 Xilinx, Inc.  All rights reserved.
 
-jenn-laptop::  Wed Nov 07 12:10:50 2012
+jenn-pc::  Thu Nov 08 17:50:33 2012
 
 par -w -intstyle ise -ol high -xe n -mt off toplevel_map.ncd toplevel.ncd
 toplevel.pcf 
@@ -33,24 +33,24 @@ Slice Logic Utilization:
     Number used as Latches:                      0
     Number used as Latch-thrus:                  0
     Number used as AND/OR logics:                0
-  Number of Slice LUTs:                        238 out of  15,032    1%
+  Number of Slice LUTs:                        245 out of  15,032    1%
     Number used as logic:                      227 out of  15,032    1%
-      Number using O6 output only:             104
-      Number using O5 output only:              66
+      Number using O6 output only:             105
+      Number using O5 output only:              65
       Number using O5 and O6:                   57
       Number used as ROM:                        0
     Number used as Memory:                       0 out of   3,664    0%
-    Number used exclusively as route-thrus:     11
-      Number with same-slice register load:      5
+    Number used exclusively as route-thrus:     18
+      Number with same-slice register load:     12
       Number with same-slice carry load:         6
       Number with other load:                    0
 
 Slice Logic Distribution:
-  Number of occupied Slices:                   113 out of   3,758    3%
-  Number of LUT Flip Flop pairs used:          338
-    Number with an unused Flip Flop:            84 out of     338   24%
-    Number with an unused LUT:                 100 out of     338   29%
-    Number of fully used LUT-FF pairs:         154 out of     338   45%
+  Number of occupied Slices:                   117 out of   3,758    3%
+  Number of LUT Flip Flop pairs used:          344
+    Number with an unused Flip Flop:            97 out of     344   28%
+    Number with an unused LUT:                  99 out of     344   28%
+    Number of fully used LUT-FF pairs:         148 out of     344   43%
     Number of slice register sites lost
       to control set restrictions:               0 out of  30,064    0%
 
@@ -104,35 +104,35 @@ Specific Feature Utilization:
 Overall effort level (-ol):   High 
 Router effort level (-rl):    High 
 
-Starting initial Timing Analysis.  REAL time: 7 secs 
-Finished initial Timing Analysis.  REAL time: 7 secs 
+Starting initial Timing Analysis.  REAL time: 4 secs 
+Finished initial Timing Analysis.  REAL time: 4 secs 
 
 Starting Router
 
 
-Phase  1  : 1400 unrouted;      REAL time: 8 secs 
+Phase  1  : 1397 unrouted;      REAL time: 4 secs 
 
-Phase  2  : 1114 unrouted;      REAL time: 10 secs 
+Phase  2  : 1114 unrouted;      REAL time: 6 secs 
 
-Phase  3  : 357 unrouted;      REAL time: 12 secs 
+Phase  3  : 329 unrouted;      REAL time: 7 secs 
 
-Phase  4  : 357 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 13 secs 
+Phase  4  : 329 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 8 secs 
 
 Updating file: toplevel.ncd with current fully routed design.
 
-Phase  5  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 15 secs 
+Phase  5  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 9 secs 
 
-Phase  6  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 15 secs 
+Phase  6  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 9 secs 
 
-Phase  7  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 15 secs 
+Phase  7  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 9 secs 
 
-Phase  8  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 15 secs 
+Phase  8  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 9 secs 
 
-Phase  9  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 15 secs 
+Phase  9  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 9 secs 
 
-Phase 10  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 15 secs 
-Total REAL time to Router completion: 15 secs 
-Total CPU time to Router completion: 13 secs 
+Phase 10  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 9 secs 
+Total REAL time to Router completion: 9 secs 
+Total CPU time to Router completion: 9 secs 
 
 Partition Implementation Status
 -------------------------------
@@ -150,11 +150,11 @@ Generating Clock Report
 +---------------------+--------------+------+------+------------+-------------+
 |        Clock Net    |   Resource   |Locked|Fanout|Net Skew(ns)|Max Delay(ns)|
 +---------------------+--------------+------+------+------------+-------------+
-|      sclk_IBUF_BUFG | BUFGMUX_X2Y11| No   |   11 |  0.581     |  1.745      |
+|      sclk_IBUF_BUFG |  BUFGMUX_X3Y8| No   |   11 |  0.589     |  1.641      |
 +---------------------+--------------+------+------+------------+-------------+
-|             fastclk |  BUFGMUX_X2Y2| No   |   65 |  0.678     |  1.742      |
+|             fastclk |  BUFGMUX_X2Y2| No   |   62 |  0.594     |  1.639      |
 +---------------------+--------------+------+------+------------+-------------+
-|       clk_1mhz_BUFG | BUFGMUX_X3Y13| No   |   23 |  0.537     |  1.721      |
+|       clk_1mhz_BUFG | BUFGMUX_X3Y13| No   |   23 |  0.571     |  1.623      |
 +---------------------+--------------+------+------+------------+-------------+
 
 * Net Skew is the difference between the minimum and maximum routing
@@ -176,19 +176,19 @@ Asterisk (*) preceding a constraint indicates it was not met.
   Constraint                                |    Check    | Worst Case |  Best Case | Timing |   Timing   
                                             |             |    Slack   | Achievable | Errors |    Score   
 ----------------------------------------------------------------------------------------------------------
-  TS_clk_100mhz_i_clkfx = PERIOD TIMEGRP "c | SETUP       |     4.982ns|     5.017ns|       0|           0
-  lk_100mhz_i_clkfx" TS_clk_12mhz /         | HOLD        |     0.238ns|            |       0|           0
+  TS_clk_100mhz_i_clkfx = PERIOD TIMEGRP "c | SETUP       |     4.970ns|     5.029ns|       0|           0
+  lk_100mhz_i_clkfx" TS_clk_12mhz /         | HOLD        |     0.393ns|            |       0|           0
    8.33333333 HIGH 50% INPUT_JITTER 0.01 ns |             |            |            |        |            
 ----------------------------------------------------------------------------------------------------------
   TS_clk_12mhz = PERIOD TIMEGRP "clk_12mhz" | MINLOWPULSE |    51.332ns|    32.000ns|       0|           0
    83.3333 ns HIGH 50% INPUT_JITTER         |             |            |            |        |            
    0.01 ns                                  |             |            |            |        |            
 ----------------------------------------------------------------------------------------------------------
-  TS_sclk = PERIOD TIMEGRP "sclk" 125 ns LO | SETUP       |    60.370ns|     4.671ns|       0|           0
-  W 50%                                     | HOLD        |     0.436ns|            |       0|           0
+  TS_sclk = PERIOD TIMEGRP "sclk" 125 ns LO | SETUP       |    60.645ns|     4.755ns|       0|           0
+  W 50%                                     | HOLD        |     0.435ns|            |       0|           0
 ----------------------------------------------------------------------------------------------------------
-  TS_clk_1mhz = PERIOD TIMEGRP "clk_1mhz" 1 | SETUP       |   994.340ns|     5.660ns|       0|           0
-  000 ns HIGH 50%                           | HOLD        |     0.468ns|            |       0|           0
+  TS_clk_1mhz = PERIOD TIMEGRP "clk_1mhz" 1 | SETUP       |   993.242ns|     6.758ns|       0|           0
+  000 ns HIGH 50%                           | HOLD        |     0.459ns|            |       0|           0
 ----------------------------------------------------------------------------------------------------------
 
 
@@ -202,8 +202,8 @@ Derived Constraints for TS_clk_12mhz
 |           Constraint          | Requirement |-------------+-------------|-------------+-------------|-------------+-------------|
 |                               |             |   Direct    | Derivative  |   Direct    | Derivative  |   Direct    | Derivative  |
 +-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-|TS_clk_12mhz                   |     83.333ns|     32.000ns|     41.808ns|            0|            0|            0|         1162|
-| TS_clk_100mhz_i_clkfx         |     10.000ns|      5.017ns|          N/A|            0|            0|         1162|            0|
+|TS_clk_12mhz                   |     83.333ns|     32.000ns|     41.908ns|            0|            0|            0|         1162|
+| TS_clk_100mhz_i_clkfx         |     10.000ns|      5.029ns|          N/A|            0|            0|         1162|            0|
 +-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
 
 All constraints were met.
@@ -213,10 +213,10 @@ Generating Pad Report.
 
 All signals are completely routed.
 
-Total REAL time to PAR completion: 15 secs 
-Total CPU time to PAR completion: 14 secs 
+Total REAL time to PAR completion: 9 secs 
+Total CPU time to PAR completion: 9 secs 
 
-Peak Memory Usage:  494 MB
+Peak Memory Usage:  496 MB
 
 Placer: Placement generated during map.
 Routing: Completed - No errors found.

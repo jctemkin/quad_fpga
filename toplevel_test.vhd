@@ -70,7 +70,7 @@ BEGIN
 	BEGIN
 		wait for 1 us; -- wait until global set/reset completes
 
-		test_output <= X"00ff";
+		test_output <= X"0080";
 		ssel <= '0'; wait for sclk_period/4;
 		for i in 15 downto 0 loop
 			sclk <= '0';
@@ -79,7 +79,7 @@ BEGIN
 			sclk <= '1';
 			wait for sclk_period/2;		
 		end loop;
-		test_output <= X"0128";
+		test_output <= X"4020";
 		for i in 15 downto 0 loop
 			sclk <= '0';
 			mosi <= test_output(i);
@@ -87,7 +87,7 @@ BEGIN
 			sclk <= '1';
 			wait for sclk_period/2;		
 		end loop;
-		test_output <= X"0050";
+		test_output <= X"0010";
 		for i in 7 downto 0 loop
 			sclk <= '0';
 			mosi <= test_output(i);
@@ -96,6 +96,38 @@ BEGIN
 			wait for sclk_period/2;		
 		end loop;
 		wait for sclk_period/4; ssel <= '1';
+
+
+
+		wait for 3 ms;
+		
+		test_output <= X"0000";
+		ssel <= '0'; wait for sclk_period/4;
+		for i in 15 downto 0 loop
+			sclk <= '0';
+			mosi <= test_output(i);
+			wait for sclk_period/2;
+			sclk <= '1';
+			wait for sclk_period/2;		
+		end loop;
+		test_output <= X"1020";
+		for i in 15 downto 0 loop
+			sclk <= '0';
+			mosi <= test_output(i);
+			wait for sclk_period/2;
+			sclk <= '1';
+			wait for sclk_period/2;		
+		end loop;
+		test_output <= X"0030";
+		for i in 7 downto 0 loop
+			sclk <= '0';
+			mosi <= test_output(i);
+			wait for sclk_period/2;
+			sclk <= '1';
+			wait for sclk_period/2;		
+		end loop;
+		wait for sclk_period/4; ssel <= '1';
+		
 
 		wait;
 	END PROCESS tb;
