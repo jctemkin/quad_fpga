@@ -50,17 +50,13 @@ end mem_spi;
 
 architecture Behavioral of mem_spi is
 
-	--spi slave signals
+	--SPI slave signals
 	signal spi_di_req: std_logic;
-	signal spi_di_req_strobe: std_logic := '0';
 	signal spi_di: std_logic_vector(7 downto 0);
 	signal spi_do: std_logic_vector(7 downto 0);
 	signal spi_wr_en: std_logic := '0';
 	signal spi_do_valid: std_logic;
 	signal spi_miso: std_logic;
-
-	--Holds address byte from SPI.
-	signal addr_hold: std_logic_vector(7 downto 0) := (others => '0');
 
 	--fifo signals
 	signal fifo_out: std_logic_vector(15 downto 0);
@@ -79,19 +75,16 @@ architecture Behavioral of mem_spi is
 	signal reg_rd_en: std_logic;
 	signal reg_wr_addr: std_logic_vector(6 downto 0);
 	signal reg_wr_data: std_logic_vector(7 downto 0);
+	signal reg_rd_addr_a: std_logic_vector(6 downto 0);
+	signal reg_rd_data_a: std_logic_vector(7 downto 0);
 	
 	
-	--Signals for generating do_valid.
+	--Various control signals and registers
+	signal addr_hold: std_logic_vector(7 downto 0) := (others => '0');
+	signal spi_do_valid_delay: std_logic := '0';
 	signal do_valid: std_logic := '0';
 	signal do_valid_delay: std_logic := '0';
-	signal sclk_del_reg: std_logic := '1';
-	signal sclk_count: std_logic_vector(10 downto 0) := (others => '0');
-	
-	
-	--wut
-	signal rd_data_out: std_logic_Vector(7 downto 0) := (others => '0');
-	signal rd_data_almost_ready: std_logic := '0';
-	signal rd_en_hold: std_logic := '0';
+	signal addr_rxd: std_logic := '0';
 	signal rd_data_ready_reg: std_logic := '0';
 	signal fifo_read_en_hold: std_logic := '0';
 	
@@ -128,9 +121,6 @@ begin
 			do_valid_o => spi_do_valid,
 			do_o => spi_do
 		);
-		
-		miso <= spi_miso when ssel = '0' else
-					'Z';
 
 
 	regs: entity work.reg_file(Behavioral)
@@ -142,7 +132,9 @@ begin
 			wr_data => reg_wr_data,
 			wr_en=> reg_wr_en,
 			clk => clk,
-			rd_data => reg_rd_data	
+			rd_data => reg_rd_data,
+			rd_addr_a => reg_rd_addr_a,
+			rd_data_a => reg_rd_data_a
 		);
 		
 	afifo: component fifo
@@ -162,93 +154,43 @@ begin
 	process(clk)
 	begin
 		if rising_edge(clk) then
-		------------------------------------------------------------------------------------------
-			--Handle address byte and writing from SPI to FIFO
-		------------------------------------------------------------------------------------------	
-			--Generate our own do_valid signal, since the one given takes an extra 3 clock cycles.
-			sclk_del_reg <= sclk;	--Used to detect rising edge of SCLK.
+
+			--For generating do_valid strobe.
+			spi_do_valid_delay <= spi_do_valid;
+			
+			--For generating some useful read/write signals.
 			do_valid_delay <= do_valid;
-			if ssel = '1' then		--If the transmission ends, reset values.
-				sclk_count <= (others => '0');
-				do_valid <= '0';
-				fifo_wr_en <= '0';
+			
+			--Keep track of the address byte.
+			if ssel = '1' then
+				addr_rxd <= '0';
 				addr_hold <= (others => '0');
+			
+			elsif do_valid = '1' then
+				addr_rxd <= '1';
 				
-			elsif sclk_del_reg = '0' and sclk = '1' then	--Count each rising edge of SCLK.
-				sclk_count <= std_logic_vector(unsigned(sclk_count) + 1);
-				
-				if sclk_count = "00000000111" then	--On the eighth tick of SCK, signal do_valid and hold the address byte.
-					do_valid <= '1';
+				--The first byte is an address byte, so hold on to it.
+				if addr_rxd = '0' then
 					addr_hold <= spi_do;
 				
-				elsif sclk_count(2 downto 0) = "111" then	--After subsequent bytes are received, signal do_valid,
-					do_valid <= '1';
-					if addr_hold(7) = '0' then	--and write to FIFO if in write mode.
-						fifo_wr_en <= '1';
-					else
-						addr_hold <= std_logic_vector(unsigned(addr_hold) + 1);	--Also increment address pointer now if in read mode.
-					end if;
-					
+				--Increment the address for all other bytes.
+				else
+					addr_hold <= std_logic_vector(unsigned(addr_hold) + 1);
 				end if;
-				
-			elsif do_valid_delay = '1' and unsigned(sclk_count) > 8 then	--Increment address pointer later if in write mode.
-				if addr_hold(7) = '0' then
-					addr_hold <= std_logic_vector(unsigned(addr_hold) + 1);	
-				end if;
-				
-				--do_valid <= '0';		--Shouldn't be necessary.
-				--fifo_wr_en <= '0';
-			
-			else
-				do_valid <= '0';
-				fifo_wr_en <= '0';
+
 			end if;
 			
-		
-			------------------------------------------------------------------------------------------
-			--Handle writes from registers to SPI
-			------------------------------------------------------------------------------------------
-			spi_wr_en <= do_valid AND addr_hold(7);
 			
-			------------------------------------------------------------------------------------------
-			--Handle writes from FIFO to registers
-			------------------------------------------------------------------------------------------
-			--If the fifo won't be empty after this cycle's read, then read.
-			if fifo_empty = '0'  and not (fifo_read_en = '1' and fifo_almost_empty = '1') and not wr_en = '1' then	
-				fifo_read_en <= '1';
-			else
-				fifo_read_en <= '0';
-			end if;
-			
+			--Hold fifo read enable if there's an external write request.
 			if fifo_read_en = '1' or (fifo_read_en_hold = '1' and wr_en = '1') then
 				fifo_read_en_hold <= '1';
 			else
 				fifo_read_en_hold <= '0';
 			end if;
-			
-			
-			
-			------------------------------------------------------------------------------------------
-			--Handle regfile read requests from SPI and externally.
-			------------------------------------------------------------------------------------------
-			--Hold
-			if rd_en = '1' then
-				rd_en_hold <= rd_en AND do_valid;
-				
-			elsif rd_en_hold = '1' and do_valid = '0' then
-				rd_en_hold <= '0';
-				
-			end if;
-			
-			rd_data_almost_ready <= (rd_en or rd_en_hold) and not do_valid;
-			
-			if rd_data_almost_ready = '1' then
-				rd_data_out <= reg_rd_data;
-				rd_data_ready_reg <= '1';
-			else
-				rd_data_ready_reg <= '0';
-			end if;
-				
+
+
+			--Signal when synchronous read data is ready.
+			rd_data_ready_reg <= reg_rd_en;
 			
 			
 
@@ -256,20 +198,50 @@ begin
 		end if;
 	end process;
 	
-	reg_rd_addr <=	addr_hold(6 downto 0) when do_valid = '1' else
-						rd_addr;
-
-	reg_rd_en <= (do_valid AND addr_hold(7)) OR rd_en OR rd_en_hold;
-
-	spi_di <= reg_rd_data;
+	--Hold miso at high-Z when not transmitting.
+	miso <= spi_miso when ssel = '0' else 'Z';
 	
-	rd_data <= rd_data_out;
 	
+	
+	--Generate do_valid strobe.
+	do_valid <= spi_do_valid AND NOT spi_do_valid_delay;
+	
+	
+	
+	--Clock asynchronous read data into SPI module when in write mode.
+	spi_wr_en <= do_valid_delay AND addr_hold(7);
+	
+	--Let asynchronous read address always be whatever address is currently held from SPI.
+	reg_rd_addr_a <= addr_hold(6 downto 0);
+	
+	--Feed asynchronous read data to SPI module.
+	spi_di <= reg_rd_data_a;
+	
+	
+	
+	--Wire the register IO to system IO
+	reg_rd_addr <=	rd_addr;
+	reg_rd_en <= rd_en;
+	rd_data <= reg_rd_data;
+	
+	--Signal when synchronous read data is ready.
 	rd_data_ready <= rd_data_ready_reg;
 	
-	--Clock data from fifo into register file once the data is ready (one cycle after fifo_read_en).
+	
+	
+	--Write to fifo as soon as data is valid, if in write mode and the last byte wasn't the address.
+	--fifo_wr_en <= do_valid AND NOT addr_hold(7) when (byte_count > 1) else '0';
+	fifo_wr_en <= do_valid AND NOT addr_hold(7) AND addr_rxd;
+	
+	--Read from fifo until it's empty, but not if there's an external write request.
+	fifo_read_en <= not fifo_empty and not (fifo_read_en_hold and fifo_almost_empty) and not wr_en;
+	
+	
+	
+	--Clock data from fifo or external writes into registers.
 	reg_wr_en <= fifo_read_en_hold OR wr_en;
 	
+	--Switch between fifo data and external data depending on external write enable.
 	reg_wr_addr <= wr_addr when wr_en = '1' else
 						fifo_out(14 downto 8);
 	reg_wr_data <= wr_data when wr_en = '1' else

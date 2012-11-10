@@ -13,8 +13,13 @@ entity reg_file is
 		wr_addr : in  STD_LOGIC_VECTOR ((addr_len - 1) downto 0);
 		wr_data : in  STD_LOGIC_VECTOR ((data_len - 1) downto 0);
 		wr_en: in std_logic;
-		clk : in  STD_LOGIC;
-		rd_data : out  STD_LOGIC_VECTOR (7 downto 0));
+		clk : in  STD_LOGIC;		
+		rd_data : out  STD_LOGIC_VECTOR ((data_len - 1) downto 0);
+		
+		--Asynchronous read
+		rd_addr_a:	in STD_LOGIC_VECTOR((addr_len - 1) downto 0);
+		rd_data_a:	out STD_LOGIC_VECTOR((data_len - 1) downto 0)
+	);
 end reg_file;
 
 architecture Behavioral of reg_file is
@@ -42,6 +47,8 @@ begin
 	end process;
 	
 	rd_data <= rd_data_reg;
+	rd_data_a <= regs(to_integer(unsigned(rd_addr_a)));
+	
 
 end Behavioral;
 

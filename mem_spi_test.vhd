@@ -75,8 +75,8 @@ ARCHITECTURE behavior OF mem_spi_test IS
    
 	
 	-- Clock period definitions
-   constant sclk_period : time := 125 ns; --8MHz
-   constant clk_period : time := 20 ns;
+   constant sclk_period : time := 1 us;
+   constant clk_period : time := 10 ns;
 	
 	
 	--Other signals!
@@ -173,7 +173,7 @@ BEGIN
 	process
 	begin
 	
-	wait for 41111 ns;
+	wait for 79875 us;
 	wr_en <= '1';
 	wr_addr <= "0000111";
 	wr_data <= X"AA";
