@@ -5,14 +5,14 @@ Parameter TMPDIR set to xst/projnav.tmp
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.06 secs
+Total CPU time to Xst completion: 0.05 secs
  
 --> 
 Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.06 secs
+Total CPU time to Xst completion: 0.05 secs
  
 --> 
 Reading design: toplevel.prj
@@ -114,48 +114,48 @@ Cores Search Directories           : {"ipcore_dir"  }
 =========================================================================
 *                          HDL Parsing                                  *
 =========================================================================
-Parsing VHDL file "/home/jenn/git/quad_fpga/ipcore_dir/fifo.vhd" into library work
+Parsing VHDL file "/home/jenn/quad/quad_fpga/ipcore_dir/fifo.vhd" into library work
 Parsing entity <fifo>.
 Parsing architecture <fifo_a> of entity <fifo>.
-Parsing VHDL file "/home/jenn/git/quad_fpga/spi_slave.vhd" into library work
+Parsing VHDL file "/home/jenn/quad/quad_fpga/spi_slave.vhd" into library work
 Parsing entity <spi_slave>.
 Parsing architecture <rtl> of entity <spi_slave>.
-WARNING:HDLCompiler:957 - "/home/jenn/git/quad_fpga/spi_slave.vhd" Line 361: Case choice must be a locally static expression
-WARNING:HDLCompiler:957 - "/home/jenn/git/quad_fpga/spi_slave.vhd" Line 369: Case choice must be a locally static expression
-WARNING:HDLCompiler:957 - "/home/jenn/git/quad_fpga/spi_slave.vhd" Line 378: Case choice must be a locally static expression
-Parsing VHDL file "/home/jenn/git/quad_fpga/reg_file.vhd" into library work
+WARNING:HDLCompiler:957 - "/home/jenn/quad/quad_fpga/spi_slave.vhd" Line 361: Case choice must be a locally static expression
+WARNING:HDLCompiler:957 - "/home/jenn/quad/quad_fpga/spi_slave.vhd" Line 369: Case choice must be a locally static expression
+WARNING:HDLCompiler:957 - "/home/jenn/quad/quad_fpga/spi_slave.vhd" Line 378: Case choice must be a locally static expression
+Parsing VHDL file "/home/jenn/quad/quad_fpga/reg_file.vhd" into library work
 Parsing entity <reg_file>.
 Parsing architecture <Behavioral> of entity <reg_file>.
-Parsing VHDL file "/home/jenn/git/quad_fpga/pcm_gen.vhd" into library work
+Parsing VHDL file "/home/jenn/quad/quad_fpga/pcm_gen.vhd" into library work
 Parsing entity <pcm_gen>.
 Parsing architecture <Behavioral> of entity <pcm_gen>.
-Parsing VHDL file "/home/jenn/git/quad_fpga/mem_spi.vhd" into library work
+Parsing VHDL file "/home/jenn/quad/quad_fpga/mem_spi.vhd" into library work
 Parsing entity <mem_spi>.
 Parsing architecture <Behavioral> of entity <mem_spi>.
-WARNING:HDLCompiler:946 - "/home/jenn/git/quad_fpga/mem_spi.vhd" Line 152: Actual for formal port din is neither a static name nor a globally static expression
-Parsing VHDL file "/home/jenn/git/quad_fpga/ipcore_dir/clk_100mhz/example_design/clk_100mhz_exdes.vhd" into library work
-Parsing entity <clk_100mhz_exdes>.
-Parsing architecture <xilinx> of entity <clk_100mhz_exdes>.
-Parsing VHDL file "/home/jenn/git/quad_fpga/ipcore_dir/clk_100mhz.vhd" into library work
+WARNING:HDLCompiler:946 - "/home/jenn/quad/quad_fpga/mem_spi.vhd" Line 144: Actual for formal port din is neither a static name nor a globally static expression
+Parsing VHDL file "/home/jenn/quad/quad_fpga/ipcore_dir/clk_100mhz.vhd" into library work
 Parsing entity <clk_100mhz>.
 Parsing architecture <xilinx> of entity <clk_100mhz>.
-Parsing VHDL file "/home/jenn/git/quad_fpga/toplevel.vhd" into library work
+Parsing VHDL file "/home/jenn/quad/quad_fpga/toplevel.vhd" into library work
 Parsing entity <toplevel>.
 Parsing architecture <Behavioral> of entity <toplevel>.
+Parsing VHDL file "/home/jenn/quad/quad_fpga/ipcore_dir/clk_100mhz/example_design/clk_100mhz_exdes.vhd" into library work
+Parsing entity <clk_100mhz_exdes>.
+Parsing architecture <xilinx> of entity <clk_100mhz_exdes>.
 
 =========================================================================
 *                            HDL Elaboration                            *
 =========================================================================
 
 Elaborating entity <toplevel> (architecture <Behavioral>) from library <work>.
-WARNING:HDLCompiler:871 - "/home/jenn/git/quad_fpga/toplevel.vhd" Line 24: Using initial value '0' for wr_en since it is never assigned
-WARNING:HDLCompiler:871 - "/home/jenn/git/quad_fpga/toplevel.vhd" Line 25: Using initial value "00000000" for wr_addr since it is never assigned
-WARNING:HDLCompiler:871 - "/home/jenn/git/quad_fpga/toplevel.vhd" Line 26: Using initial value "00000000" for wr_data since it is never assigned
+WARNING:HDLCompiler:871 - "/home/jenn/quad/quad_fpga/toplevel.vhd" Line 24: Using initial value '0' for wr_en since it is never assigned
+WARNING:HDLCompiler:871 - "/home/jenn/quad/quad_fpga/toplevel.vhd" Line 25: Using initial value "00000000" for wr_addr since it is never assigned
+WARNING:HDLCompiler:871 - "/home/jenn/quad/quad_fpga/toplevel.vhd" Line 26: Using initial value "00000000" for wr_data since it is never assigned
 
 Elaborating entity <clk_100mhz> (architecture <xilinx>) from library <work>.
 
 Elaborating entity <mem_spi> (architecture <Behavioral>) from library <work>.
-WARNING:HDLCompiler:871 - "/home/jenn/git/quad_fpga/mem_spi.vhd" Line 73: Using initial value '0' for fifo_rst since it is never assigned
+WARNING:HDLCompiler:871 - "/home/jenn/quad/quad_fpga/mem_spi.vhd" Line 69: Using initial value '0' for fifo_rst since it is never assigned
 
 Elaborating entity <spi_slave> (architecture <rtl>) with generics from library <work>.
 
@@ -170,8 +170,8 @@ Elaborating entity <pcm_gen> (architecture <Behavioral>) from library <work>.
 =========================================================================
 
 Synthesizing Unit <toplevel>.
-    Related source file is "/home/jenn/git/quad_fpga/toplevel.vhd".
-INFO:Xst:3210 - "/home/jenn/git/quad_fpga/toplevel.vhd" line 62: Output port <LOCKED> of the instance <clk_100mhz_i> is unconnected or connected to loadless signal.
+    Related source file is "/home/jenn/quad/quad_fpga/toplevel.vhd".
+INFO:Xst:3210 - "/home/jenn/quad/quad_fpga/toplevel.vhd" line 62: Output port <LOCKED> of the instance <clk_100mhz_i> is unconnected or connected to loadless signal.
     Found 1-bit register for signal <clk_1mhz>.
     Found 18-bit register for signal <idle_counter>.
     Found 1-bit register for signal <rd_en>.
@@ -203,50 +203,39 @@ INFO:Xst:3210 - "/home/jenn/git/quad_fpga/toplevel.vhd" line 62: Output port <LO
 Unit <toplevel> synthesized.
 
 Synthesizing Unit <clk_100mhz>.
-    Related source file is "/home/jenn/git/quad_fpga/ipcore_dir/clk_100mhz.vhd".
+    Related source file is "/home/jenn/quad/quad_fpga/ipcore_dir/clk_100mhz.vhd".
     Summary:
 	no macro.
 Unit <clk_100mhz> synthesized.
 
 Synthesizing Unit <mem_spi>.
-    Related source file is "/home/jenn/git/quad_fpga/mem_spi.vhd".
-INFO:Xst:3210 - "/home/jenn/git/quad_fpga/mem_spi.vhd" line 117: Output port <state_dbg_o> of the instance <spi_slave> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/jenn/git/quad_fpga/mem_spi.vhd" line 117: Output port <sh_reg_dbg_o> of the instance <spi_slave> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/jenn/git/quad_fpga/mem_spi.vhd" line 117: Output port <di_req_o> of the instance <spi_slave> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/jenn/git/quad_fpga/mem_spi.vhd" line 117: Output port <wr_ack_o> of the instance <spi_slave> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/jenn/git/quad_fpga/mem_spi.vhd" line 117: Output port <do_valid_o> of the instance <spi_slave> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/jenn/git/quad_fpga/mem_spi.vhd" line 117: Output port <do_transfer_o> of the instance <spi_slave> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/jenn/git/quad_fpga/mem_spi.vhd" line 117: Output port <wren_o> of the instance <spi_slave> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/jenn/git/quad_fpga/mem_spi.vhd" line 117: Output port <rx_bit_next_o> of the instance <spi_slave> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/jenn/git/quad_fpga/mem_spi.vhd" line 148: Output port <full> of the instance <afifo> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/home/jenn/git/quad_fpga/mem_spi.vhd" line 148: Output port <almost_full> of the instance <afifo> is unconnected or connected to loadless signal.
+    Related source file is "/home/jenn/quad/quad_fpga/mem_spi.vhd".
+INFO:Xst:3210 - "/home/jenn/quad/quad_fpga/mem_spi.vhd" line 110: Output port <state_dbg_o> of the instance <spi_slave> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/jenn/quad/quad_fpga/mem_spi.vhd" line 110: Output port <sh_reg_dbg_o> of the instance <spi_slave> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/jenn/quad/quad_fpga/mem_spi.vhd" line 110: Output port <di_req_o> of the instance <spi_slave> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/jenn/quad/quad_fpga/mem_spi.vhd" line 110: Output port <wr_ack_o> of the instance <spi_slave> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/jenn/quad/quad_fpga/mem_spi.vhd" line 110: Output port <do_transfer_o> of the instance <spi_slave> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/jenn/quad/quad_fpga/mem_spi.vhd" line 110: Output port <wren_o> of the instance <spi_slave> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/jenn/quad/quad_fpga/mem_spi.vhd" line 110: Output port <rx_bit_next_o> of the instance <spi_slave> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/jenn/quad/quad_fpga/mem_spi.vhd" line 140: Output port <full> of the instance <afifo> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/home/jenn/quad/quad_fpga/mem_spi.vhd" line 140: Output port <almost_full> of the instance <afifo> is unconnected or connected to loadless signal.
     Found 1-bit register for signal <do_valid_delay>.
-    Found 11-bit register for signal <sclk_count>.
-    Found 1-bit register for signal <do_valid>.
-    Found 1-bit register for signal <fifo_wr_en>.
+    Found 1-bit register for signal <addr_rxd>.
     Found 8-bit register for signal <addr_hold>.
-    Found 1-bit register for signal <spi_wr_en>.
-    Found 1-bit register for signal <fifo_read_en>.
     Found 1-bit register for signal <reg_wr_en>.
-    Found 1-bit register for signal <rd_en_hold>.
-    Found 1-bit register for signal <rd_data_almost_ready>.
-    Found 8-bit register for signal <rd_data_out>.
     Found 1-bit register for signal <rd_data_ready_reg>.
-    Found 1-bit register for signal <sclk_del_reg>.
-    Found 11-bit adder for signal <sclk_count[10]_GND_13_o_add_0_OUT> created at line 1241.
-    Found 8-bit adder for signal <addr_hold[7]_GND_13_o_add_8_OUT> created at line 1241.
-    Found 1-bit tristate buffer for signal <miso> created at line 132
-    Found 11-bit comparator greater for signal <GND_13_o_sclk_count[10]_LessThan_8_o> created at line 194
+    Found 1-bit register for signal <spi_do_valid_delay>.
+    Found 8-bit adder for signal <addr_hold[7]_GND_13_o_add_0_OUT> created at line 1241.
+    Found 1-bit tristate buffer for signal <miso> created at line 202
     Summary:
-	inferred   2 Adder/Subtractor(s).
-	inferred  37 D-type flip-flop(s).
-	inferred   1 Comparator(s).
-	inferred   4 Multiplexer(s).
+	inferred   1 Adder/Subtractor(s).
+	inferred  13 D-type flip-flop(s).
+	inferred   1 Multiplexer(s).
 	inferred   1 Tristate(s).
 Unit <mem_spi> synthesized.
 
 Synthesizing Unit <spi_slave>.
-    Related source file is "/home/jenn/git/quad_fpga/spi_slave.vhd".
+    Related source file is "/home/jenn/quad/quad_fpga/spi_slave.vhd".
         N = 8
         CPOL = '1'
         CPHA = '1'
@@ -284,18 +273,18 @@ Synthesizing Unit <spi_slave>.
 Unit <spi_slave> synthesized.
 
 Synthesizing Unit <reg_file>.
-    Related source file is "/home/jenn/git/quad_fpga/reg_file.vhd".
+    Related source file is "/home/jenn/quad/quad_fpga/reg_file.vhd".
         addr_len = 7
         data_len = 8
-    Found 128x8-bit dual-port RAM <Mram_regs> for signal <regs>.
     Found 8-bit register for signal <rd_data_reg>.
+    Found 128x8-bit dual-port RAM <Mram_regs> for signal <regs>.
     Summary:
-	inferred   1 RAM(s).
+	inferred   2 RAM(s).
 	inferred   8 D-type flip-flop(s).
 Unit <reg_file> synthesized.
 
 Synthesizing Unit <pcm_gen>.
-    Related source file is "/home/jenn/git/quad_fpga/pcm_gen.vhd".
+    Related source file is "/home/jenn/quad/quad_fpga/pcm_gen.vhd".
     Found 12-bit register for signal <pcm_count>.
     Found 12-bit register for signal <pulse_width_reg>.
     Found 1-bit register for signal <pcm_out_reg>.
@@ -314,34 +303,30 @@ Unit <pcm_gen> synthesized.
 HDL Synthesis Report
 
 Macro Statistics
-# RAMs                                                 : 1
- 128x8-bit dual-port RAM                               : 1
-# Adders/Subtractors                                   : 13
- 11-bit adder                                          : 1
+# RAMs                                                 : 2
+ 128x8-bit dual-port RAM                               : 2
+# Adders/Subtractors                                   : 12
  12-bit adder                                          : 8
  18-bit adder                                          : 1
  4-bit subtractor                                      : 1
  6-bit adder                                           : 1
  8-bit adder                                           : 1
-# Registers                                            : 55
- 1-bit register                                        : 32
+# Registers                                            : 48
+ 1-bit register                                        : 27
  10-bit register                                       : 4
- 11-bit register                                       : 1
  12-bit register                                       : 8
  18-bit register                                       : 1
  3-bit register                                        : 1
  4-bit register                                        : 1
  6-bit register                                        : 1
- 8-bit register                                        : 6
-# Comparators                                          : 17
- 11-bit comparator greater                             : 1
+ 8-bit register                                        : 5
+# Comparators                                          : 16
  12-bit comparator greater                             : 12
  4-bit comparator greater                              : 4
-# Multiplexers                                         : 29
- 1-bit 2-to-1 multiplexer                              : 13
+# Multiplexers                                         : 26
+ 1-bit 2-to-1 multiplexer                              : 12
  4-bit 2-to-1 multiplexer                              : 6
- 7-bit 2-to-1 multiplexer                              : 1
- 8-bit 2-to-1 multiplexer                              : 9
+ 8-bit 2-to-1 multiplexer                              : 8
 # Tristates                                            : 1
  1-bit tristate buffer                                 : 1
 # FSMs                                                 : 1
@@ -380,7 +365,31 @@ WARNING:Xst:1293 - FF/Latch <pulse_width_reg_1> has a constant value of 0 in blo
 WARNING:Xst:1293 - FF/Latch <pulse_width_reg_0> has a constant value of 0 in block <pcms[0].pcm>. This FF/Latch will be trimmed during the optimization process.
 
 Synthesizing (advanced) Unit <mem_spi>.
-The following registers are absorbed into counter <sclk_count>: 1 register on signal <sclk_count>.
+The following registers are absorbed into counter <addr_hold>: 1 register on signal <addr_hold>.
+INFO:Xst:3226 - The RAM <regs/Mram_regs1> will be implemented as a BLOCK RAM, absorbing the following register(s): <spi_slave/di_reg>
+    -----------------------------------------------------------------------
+    | ram_type           | Block                               |          |
+    -----------------------------------------------------------------------
+    | Port A                                                              |
+    |     aspect ratio   | 128-word x 8-bit                    |          |
+    |     mode           | read-first                          |          |
+    |     clkA           | connected to signal <clk>           | rise     |
+    |     weA            | connected to signal <reg_wr_en>     | high     |
+    |     addrA          | connected to signal <fifo_out<14:8>> |          |
+    |     diA            | connected to signal <fifo_out<7:0>> |          |
+    -----------------------------------------------------------------------
+    | optimization       | speed                               |          |
+    -----------------------------------------------------------------------
+    | Port B                                                              |
+    |     aspect ratio   | 128-word x 8-bit                    |          |
+    |     mode           | write-first                         |          |
+    |     clkB           | connected to signal <clk>           | rise     |
+    |     enB            | connected to signal <spi_wr_en>     | high     |
+    |     addrB          | connected to signal <addr_hold<6:0>> |          |
+    |     doB            | connected to signal <spi_slave/di_reg> |          |
+    -----------------------------------------------------------------------
+    | optimization       | speed                               |          |
+    -----------------------------------------------------------------------
 Unit <mem_spi> synthesized (advanced).
 
 Synthesizing (advanced) Unit <pcm_gen>.
@@ -423,28 +432,25 @@ Unit <toplevel> synthesized (advanced).
 Advanced HDL Synthesis Report
 
 Macro Statistics
-# RAMs                                                 : 1
- 128x8-bit dual-port block RAM                         : 1
-# Adders/Subtractors                                   : 6
+# RAMs                                                 : 2
+ 128x8-bit dual-port block RAM                         : 2
+# Adders/Subtractors                                   : 5
  12-bit adder                                          : 4
  4-bit subtractor                                      : 1
- 8-bit adder                                           : 1
 # Counters                                             : 7
- 11-bit up counter                                     : 1
  12-bit up counter                                     : 4
  18-bit up counter                                     : 1
  6-bit up counter                                      : 1
-# Registers                                            : 167
- Flip-Flops                                            : 167
-# Comparators                                          : 17
- 11-bit comparator greater                             : 1
+ 8-bit up counter                                      : 1
+# Registers                                            : 132
+ Flip-Flops                                            : 132
+# Comparators                                          : 16
  12-bit comparator greater                             : 12
  4-bit comparator greater                              : 4
-# Multiplexers                                         : 29
- 1-bit 2-to-1 multiplexer                              : 13
+# Multiplexers                                         : 25
+ 1-bit 2-to-1 multiplexer                              : 12
  4-bit 2-to-1 multiplexer                              : 6
- 7-bit 2-to-1 multiplexer                              : 1
- 8-bit 2-to-1 multiplexer                              : 9
+ 8-bit 2-to-1 multiplexer                              : 7
 # FSMs                                                 : 1
 
 =========================================================================
@@ -476,8 +482,6 @@ Optimizing FSM <FSM_0> on signal <state[1:3]> with user encoding.
 
 Optimizing unit <toplevel> ...
 
-Optimizing unit <spi_slave> ...
-
 Optimizing unit <pcm_gen> ...
 WARNING:Xst:1293 - FF/Latch <pcms[3].pcm/pulse_width_reg_1> has a constant value of 0 in block <toplevel>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1293 - FF/Latch <pcms[3].pcm/pulse_width_reg_0> has a constant value of 0 in block <toplevel>. This FF/Latch will be trimmed during the optimization process.
@@ -487,24 +491,11 @@ WARNING:Xst:1293 - FF/Latch <pcms[1].pcm/pulse_width_reg_1> has a constant value
 WARNING:Xst:1293 - FF/Latch <pcms[1].pcm/pulse_width_reg_0> has a constant value of 0 in block <toplevel>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1293 - FF/Latch <pcms[0].pcm/pulse_width_reg_1> has a constant value of 0 in block <toplevel>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1293 - FF/Latch <pcms[0].pcm/pulse_width_reg_0> has a constant value of 0 in block <toplevel>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:2677 - Node <mem/spi_slave/di_req_o_D> of sequential type is unconnected in block <toplevel>.
-WARNING:Xst:2677 - Node <mem/spi_slave/do_valid_D> of sequential type is unconnected in block <toplevel>.
-WARNING:Xst:2677 - Node <mem/spi_slave/di_req_o_C> of sequential type is unconnected in block <toplevel>.
-WARNING:Xst:2677 - Node <mem/spi_slave/do_valid_C> of sequential type is unconnected in block <toplevel>.
-WARNING:Xst:2677 - Node <mem/spi_slave/di_req_o_B> of sequential type is unconnected in block <toplevel>.
-WARNING:Xst:2677 - Node <mem/spi_slave/do_valid_B> of sequential type is unconnected in block <toplevel>.
-WARNING:Xst:2677 - Node <mem/spi_slave/do_valid_A> of sequential type is unconnected in block <toplevel>.
-WARNING:Xst:2677 - Node <mem/spi_slave/di_req_o_A> of sequential type is unconnected in block <toplevel>.
-WARNING:Xst:2677 - Node <mem/spi_slave/di_req_reg> of sequential type is unconnected in block <toplevel>.
-WARNING:Xst:2677 - Node <mem/spi_slave/do_transfer_reg> of sequential type is unconnected in block <toplevel>.
-WARNING:Xst:2677 - Node <mem/spi_slave/di_req_o_reg> of sequential type is unconnected in block <toplevel>.
-WARNING:Xst:2677 - Node <mem/spi_slave/do_valid_o_reg> of sequential type is unconnected in block <toplevel>.
 
 Mapping all equations...
 Building and optimizing final netlist ...
 Found area constraint ratio of 100 (+ 5) on block toplevel, actual ratio is 2.
 Forward register balancing over carry chain Mcount_idle_counter_cy<0>
-Forward register balancing over carry chain mem/Mcount_sclk_count_cy<0>
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/grss.rsts/ram_empty_i> in Unit <mem/afifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/grss.rsts/ram_empty_fb_i> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2> in Unit <mem/afifo> is equivalent to the following 3 FFs/Latches : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0> <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_1> <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_0> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_i> in Unit <mem/afifo> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_fb_i> 
@@ -515,19 +506,26 @@ INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_
 Pipelining and Register Balancing Report ...
 
 Processing Unit <toplevel> :
-	Register(s) mem/GND_13_o_sclk_count[10]_equal_2_o<10>1_FRB mem/sclk_count_3 mem/sclk_count_1 mem/sclk_count_2 mem/sclk_count_0 has(ve) been forward balanced into : mem/GND_13_o_sclk_count[10]_equal_2_o<10>2_FRB.
-	Register(s) mem/sclk_count_8 mem/_n0127_inv3_FRB mem/_n0127_inv2_FRB has(ve) been forward balanced into : mem/_n0127_inv4_SW0_FRB.
-	Register(s) mem/sclk_count_9 mem/sclk_count_10 mem/sclk_count_7 mem/sclk_count_8 mem/sclk_count_5 mem/GND_13_o_sclk_count[10]_equal_2_o<10>1_SW0_FRB has(ve) been forward balanced into : mem/GND_13_o_sclk_count[10]_equal_2_o<10>1_FRB.
+	Register(s) idle_counter_13 idle_counter_14 idle_counter_11 idle_counter_12 idle_counter_0 idle_counter_10 has(ve) been forward balanced into : state_FSM_FFd3-In1_FRB.
+	Register(s) idle_counter_2 idle_counter_3 idle_counter_17 idle_counter_1 idle_counter_15 idle_counter_16 has(ve) been forward balanced into : state_FSM_FFd3-In2_FRB.
+	Register(s) mem/addr_rxd has(ve) been forward balanced into : mem/addr_rxd_INV_16_o1_FRB.
+	Register(s) mem/spi_slave/do_valid_o_reg mem/spi_do_valid_delay has(ve) been forward balanced into : mem/do_valid1_FRB.
 Unit <toplevel> processed.
 
 Final Macro Processing ...
+
+Processing Unit <toplevel> :
+	Found 2-bit shift register for signal <mem/spi_slave/do_valid_D>.
+Unit <toplevel> processed.
 
 =========================================================================
 Final Register Report
 
 Macro Statistics
-# Registers                                            : 243
- Flip-Flops                                            : 243
+# Registers                                            : 199
+ Flip-Flops                                            : 199
+# Shift Registers                                      : 1
+ 2-bit shift register                                  : 1
 
 =========================================================================
 
@@ -550,37 +548,39 @@ Top Level Output File Name         : toplevel.ngc
 
 Primitive and Black Box Usage:
 ------------------------------
-# BELS                             : 467
+# BELS                             : 428
 #      GND                         : 2
-#      INV                         : 15
-#      LUT1                        : 71
-#      LUT2                        : 34
-#      LUT3                        : 31
-#      LUT4                        : 51
-#      LUT5                        : 25
-#      LUT6                        : 66
-#      MUXCY                       : 91
-#      MUXF7                       : 3
+#      INV                         : 14
+#      LUT1                        : 61
+#      LUT2                        : 26
+#      LUT3                        : 37
+#      LUT4                        : 53
+#      LUT5                        : 17
+#      LUT6                        : 53
+#      MUXCY                       : 88
+#      MUXF7                       : 2
 #      VCC                         : 1
-#      XORCY                       : 77
-# FlipFlops/Latches                : 274
-#      FD                          : 32
+#      XORCY                       : 74
+# FlipFlops/Latches                : 231
+#      FD                          : 35
 #      FD_1                        : 1
 #      FDC                         : 7
 #      FDCE                        : 18
-#      FDE                         : 124
+#      FDE                         : 99
 #      FDP                         : 7
 #      FDP_1                       : 1
 #      FDPE                        : 1
-#      FDR                         : 56
-#      FDRE                        : 25
-#      FDSE                        : 2
-# RAMS                             : 2
-#      RAMB8BWER                   : 2
+#      FDR                         : 54
+#      FDRE                        : 8
+# RAMS                             : 3
+#      RAMB8BWER                   : 3
+# Shift Registers                  : 1
+#      SRLC16E                     : 1
 # Clock Buffers                    : 4
-#      BUFG                        : 4
-# IO Buffers                       : 9
-#      IBUF                        : 3
+#      BUFG                        : 3
+#      BUFGP                       : 1
+# IO Buffers                       : 8
+#      IBUF                        : 2
 #      IBUFG                       : 1
 #      OBUF                        : 4
 #      OBUFT                       : 1
@@ -594,25 +594,27 @@ Selected Device : 6slx25ftg256-3
 
 
 Slice Logic Utilization: 
- Number of Slice Registers:             268  out of  30064     0%  
- Number of Slice LUTs:                  293  out of  15032     1%  
-    Number used as Logic:               293  out of  15032     1%  
+ Number of Slice Registers:             226  out of  30064     0%  
+ Number of Slice LUTs:                  262  out of  15032     1%  
+    Number used as Logic:               261  out of  15032     1%  
+    Number used as Memory:                1  out of   3664     0%  
+       Number used as SRL:                1
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:    428
-   Number with an unused Flip Flop:     160  out of    428    37%  
-   Number with an unused LUT:           135  out of    428    31%  
-   Number of fully used LUT-FF pairs:   133  out of    428    31%  
-   Number of unique control sets:        32
+ Number of LUT Flip Flop pairs used:    368
+   Number with an unused Flip Flop:     142  out of    368    38%  
+   Number with an unused LUT:           106  out of    368    28%  
+   Number of fully used LUT-FF pairs:   120  out of    368    32%  
+   Number of unique control sets:        28
 
 IO Utilization: 
  Number of IOs:                           9
  Number of bonded IOBs:                   9  out of    186     4%  
-    IOB Flip Flops/Latches:               6
+    IOB Flip Flops/Latches:               5
 
 Specific Feature Utilization:
- Number of Block RAM/FIFO:                1  out of     52     1%  
-    Number using Block RAM only:          1
+ Number of Block RAM/FIFO:                2  out of     52     3%  
+    Number using Block RAM only:          2
  Number of BUFG/BUFGCTRLs:                4  out of     16    25%  
 
 ---------------------------
@@ -636,8 +638,8 @@ Clock Information:
 -----------------------------------+-------------------------------+-------+
 Clock Signal                       | Clock buffer(FF name)         | Load  |
 -----------------------------------+-------------------------------+-------+
-clk_12mhz                          | clk_100mhz_i/dcm_sp_inst:CLKFX| 169   |
-sclk                               | IBUF+BUFG                     | 23    |
+clk_12mhz                          | clk_100mhz_i/dcm_sp_inst:CLKFX| 127   |
+sclk                               | BUFGP                         | 24    |
 clk_1mhz                           | BUFG                          | 84    |
 -----------------------------------+-------------------------------+-------+
 
@@ -649,10 +651,10 @@ Timing Summary:
 ---------------
 Speed Grade: -3
 
-   Minimum period: 29.969ns (Maximum Frequency: 33.368MHz)
-   Minimum input arrival time before clock: 3.961ns
-   Maximum output required time after clock: 4.610ns
-   Maximum combinational path delay: 5.141ns
+   Minimum period: 38.310ns (Maximum Frequency: 26.103MHz)
+   Minimum input arrival time before clock: 2.785ns
+   Maximum output required time after clock: 5.822ns
+   Maximum combinational path delay: 4.820ns
 
 Timing Details:
 ---------------
@@ -660,35 +662,36 @@ All values displayed in nanoseconds (ns)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'clk_12mhz'
-  Clock period: 29.969ns (frequency: 33.368MHz)
-  Total number of paths / destination ports: 1216 / 372
+  Clock period: 38.310ns (frequency: 26.103MHz)
+  Total number of paths / destination ports: 1066 / 304
 -------------------------------------------------------------------------
-Delay:               3.596ns (Levels of Logic = 4)
-  Source:            mem/fifo_read_en (FF)
-  Destination:       mem/afifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/grss.rsts/ram_empty_i (FF)
+Delay:               4.597ns (Levels of Logic = 5)
+  Source:            mem/spi_slave/do_valid_o_reg (FF)
+  Destination:       mem/afifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_i (FF)
   Source Clock:      clk_12mhz rising 8.3X
   Destination Clock: clk_12mhz rising 8.3X
 
-  Data Path: mem/fifo_read_en to mem/afifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/grss.rsts/ram_empty_i
+  Data Path: mem/spi_slave/do_valid_o_reg to mem/afifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_i
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FD:C->Q               5   0.447   0.819  mem/fifo_read_en (mem/fifo_read_en)
-     begin scope: 'mem/afifo:rd_en'
-     LUT2:I0->O           13   0.203   1.037  U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/ram_rd_en_i1 (U0/xst_fifo_generator/gconvfifo.rf/grf.rf/ram_rd_en)
-     LUT6:I4->O            1   0.203   0.580  U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/grss.rsts/Mmux_going_empty_PWR_33_o_MUX_8_o13 (U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/grss.rsts/Mmux_going_empty_PWR_33_o_MUX_8_o12)
-     LUT6:I5->O            2   0.205   0.000  U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/grss.rsts/Mmux_going_empty_PWR_33_o_MUX_8_o17 (U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/grss.rsts/going_empty_PWR_33_o_MUX_8_o)
-     FDP:D                     0.102          U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/grss.rsts/ram_empty_fb_i
+     FD:C->Q               3   0.447   0.879  mem/spi_slave/do_valid_o_reg (mem/spi_slave/do_valid_o_reg)
+     LUT4:I1->O            2   0.205   0.721  mem/fifo_wr_en1 (mem/fifo_wr_en)
+     begin scope: 'mem/afifo:wr_en'
+     LUT2:I0->O           18   0.203   1.050  U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1 (U0/xst_fifo_generator/gconvfifo.rf/grf.rf/ram_wr_en)
+     LUT6:I5->O            1   0.205   0.580  U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/Mmux_ram_full_comb_GND_188_o_MUX_11_o13 (U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/Mmux_ram_full_comb_GND_188_o_MUX_11_o12)
+     LUT6:I5->O            2   0.205   0.000  U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/Mmux_ram_full_comb_GND_188_o_MUX_11_o17 (U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_comb_GND_188_o_MUX_11_o)
+     FDC:D                     0.102          U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_fb_i
     ----------------------------------------
-    Total                      3.596ns (1.160ns logic, 2.436ns route)
-                                       (32.3% logic, 67.7% route)
+    Total                      4.597ns (1.367ns logic, 3.230ns route)
+                                       (29.7% logic, 70.3% route)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'sclk'
-  Clock period: 6.315ns (frequency: 158.363MHz)
-  Total number of paths / destination ports: 212 / 30
+  Clock period: 4.840ns (frequency: 206.599MHz)
+  Total number of paths / destination ports: 217 / 31
 -------------------------------------------------------------------------
-Delay:               3.157ns (Levels of Logic = 2)
+Delay:               2.420ns (Levels of Logic = 2)
   Source:            mem/spi_slave/state_reg_2 (FF)
   Destination:       mem/spi_slave/tx_bit_reg (FF)
   Source Clock:      sclk rising
@@ -698,13 +701,13 @@ Delay:               3.157ns (Levels of Logic = 2)
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FDC:C->Q             23   0.447   1.518  mem/spi_slave/state_reg_2 (mem/spi_slave/state_reg_2)
-     LUT6:I0->O            1   0.203   0.684  mem/spi_slave/tx_bit_next1 (mem/spi_slave/tx_bit_next1)
-     LUT3:I1->O            1   0.203   0.000  mem/spi_slave/tx_bit_next3 (mem/spi_slave/tx_bit_next)
+     FDC:C->Q             24   0.447   1.537  mem/spi_slave/state_reg_2 (mem/spi_slave/state_reg_2)
+     LUT6:I0->O            1   0.203   0.000  mem/spi_slave/tx_bit_next3_F (N63)
+     MUXF7:I0->O           1   0.131   0.000  mem/spi_slave/tx_bit_next3 (mem/spi_slave/tx_bit_next)
      FD_1:D                    0.102          mem/spi_slave/tx_bit_reg
     ----------------------------------------
-    Total                      3.157ns (0.955ns logic, 2.202ns route)
-                                       (30.2% logic, 69.8% route)
+    Total                      2.420ns (0.883ns logic, 1.537ns route)
+                                       (36.5% logic, 63.5% route)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'clk_1mhz'
@@ -722,11 +725,11 @@ Delay:               5.007ns (Levels of Logic = 5)
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
      FDE:C->Q              4   0.447   0.788  pcms[3].pcm/pulse_width_reg_6 (pcms[3].pcm/pulse_width_reg_6)
-     LUT2:I0->O            2   0.203   0.845  pcms[3].pcm/GND_37_o_pulse_width_reg[11]_add_0_OUT<9>_SW0 (N2)
+     LUT2:I0->O            2   0.203   0.845  pcms[3].pcm/GND_37_o_pulse_width_reg[11]_add_0_OUT<9>_SW0 (N01)
      LUT6:I3->O            2   0.205   0.721  pcms[3].pcm/GND_37_o_pulse_width_reg[11]_add_0_OUT<9> (pcms[3].pcm/GND_37_o_pulse_width_reg[11]_add_0_OUT<9>)
      LUT4:I2->O            1   0.203   0.000  pcms[3].pcm/Mcompar_pcm_count[11]_GND_37_o_LessThan_2_o_lut<4> (pcms[3].pcm/Mcompar_pcm_count[11]_GND_37_o_LessThan_2_o_lut<4>)
      MUXCY:S->O            1   0.366   0.924  pcms[3].pcm/Mcompar_pcm_count[11]_GND_37_o_LessThan_2_o_cy<4> (pcms[3].pcm/Mcompar_pcm_count[11]_GND_37_o_LessThan_2_o_cy<4>)
-     LUT6:I1->O            1   0.203   0.000  pcms[3].pcm/pcm_count[11]_pcm_count[11]_AND_32_o (pcms[3].pcm/pcm_count[11]_pcm_count[11]_AND_32_o)
+     LUT6:I1->O            1   0.203   0.000  pcms[3].pcm/pcm_count[11]_pcm_count[11]_AND_30_o (pcms[3].pcm/pcm_count[11]_pcm_count[11]_AND_30_o)
      FD:D                      0.102          pcms[3].pcm/pcm_out_reg
     ----------------------------------------
     Total                      5.007ns (1.729ns logic, 3.278ns route)
@@ -734,30 +737,29 @@ Delay:               5.007ns (Levels of Logic = 5)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'clk_12mhz'
-  Total number of paths / destination ports: 76 / 67
+  Total number of paths / destination ports: 10 / 10
 -------------------------------------------------------------------------
-Offset:              3.961ns (Levels of Logic = 3)
-  Source:            sclk (PAD)
-  Destination:       mem/addr_hold_7 (FF)
+Offset:              2.785ns (Levels of Logic = 2)
+  Source:            ssel (PAD)
+  Destination:       mem/addr_rxd (FF)
   Destination Clock: clk_12mhz rising 8.3X
 
-  Data Path: sclk to mem/addr_hold_7
+  Data Path: ssel to mem/addr_rxd
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     IBUF:I->O            12   1.222   1.273  sclk_IBUF (sclk_IBUF)
-     LUT6:I0->O            1   0.203   0.000  mem/_n0127_inv5_G (N102)
-     MUXF7:I1->O           8   0.140   0.802  mem/_n0127_inv5 (mem/_n0127_inv)
-     FDRE:CE                   0.322          mem/addr_hold_0
+     IBUF:I->O            17   1.222   1.256  ssel_IBUF (ssel_IBUF)
+     LUT3:I0->O            1   0.205   0.000  mem/addr_rxd_rstpot (mem/addr_rxd_rstpot)
+     FD:D                      0.102          mem/addr_rxd
     ----------------------------------------
-    Total                      3.961ns (1.887ns logic, 2.074ns route)
-                                       (47.6% logic, 52.4% route)
+    Total                      2.785ns (1.529ns logic, 1.256ns route)
+                                       (54.9% logic, 45.1% route)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'sclk'
   Total number of paths / destination ports: 8 / 8
 -------------------------------------------------------------------------
-Offset:              3.000ns (Levels of Logic = 1)
+Offset:              2.679ns (Levels of Logic = 1)
   Source:            ssel (PAD)
   Destination:       mem/spi_slave/state_reg_3 (FF)
   Destination Clock: sclk rising
@@ -766,11 +768,11 @@ Offset:              3.000ns (Levels of Logic = 1)
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     IBUF:I->O            36   1.222   1.348  ssel_IBUF (ssel_IBUF)
+     IBUF:I->O            17   1.222   1.027  ssel_IBUF (ssel_IBUF)
      FDC:CLR                   0.430          mem/spi_slave/state_reg_0
     ----------------------------------------
-    Total                      3.000ns (1.652ns logic, 1.348ns route)
-                                       (55.1% logic, 44.9% route)
+    Total                      2.679ns (1.652ns logic, 1.027ns route)
+                                       (61.7% logic, 38.3% route)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'clk_1mhz'
@@ -815,27 +817,27 @@ Offset:              4.610ns (Levels of Logic = 2)
 Timing constraint: Default OFFSET OUT AFTER for Clock 'clk_12mhz'
   Total number of paths / destination ports: 1 / 1
 -------------------------------------------------------------------------
-Offset:              4.419ns (Levels of Logic = 2)
-  Source:            mem/spi_slave/di_reg_7 (FF)
+Offset:              5.822ns (Levels of Logic = 2)
+  Source:            mem/regs/Mram_regs1 (RAM)
   Destination:       miso (PAD)
   Source Clock:      clk_12mhz rising 8.3X
 
-  Data Path: mem/spi_slave/di_reg_7 to miso
+  Data Path: mem/regs/Mram_regs1 to miso
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FDE:C->Q              2   0.447   0.617  mem/spi_slave/di_reg_7 (mem/spi_slave/di_reg_7)
+     RAMB8BWER:CLKBRDCLK->DOBDO7    2   1.850   0.617  mem/regs/Mram_regs1 (mem/spi_slave/di_reg<7>)
      LUT3:I2->O            1   0.205   0.579  mem/spi_slave/Mmux_spi_miso_o11 (mem/spi_miso)
      OBUFT:I->O                2.571          miso_OBUFT (miso)
     ----------------------------------------
-    Total                      4.419ns (3.223ns logic, 1.196ns route)
-                                       (72.9% logic, 27.1% route)
+    Total                      5.822ns (4.626ns logic, 1.196ns route)
+                                       (79.5% logic, 20.5% route)
 
 =========================================================================
 Timing constraint: Default path analysis
   Total number of paths / destination ports: 1 / 1
 -------------------------------------------------------------------------
-Delay:               5.141ns (Levels of Logic = 2)
+Delay:               4.820ns (Levels of Logic = 2)
   Source:            ssel (PAD)
   Destination:       miso (PAD)
 
@@ -843,11 +845,11 @@ Delay:               5.141ns (Levels of Logic = 2)
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     IBUF:I->O            36   1.222   1.348  ssel_IBUF (ssel_IBUF)
+     IBUF:I->O            17   1.222   1.027  ssel_IBUF (ssel_IBUF)
      OBUFT:T->O                2.571          miso_OBUFT (miso)
     ----------------------------------------
-    Total                      5.141ns (3.793ns logic, 1.348ns route)
-                                       (73.8% logic, 26.2% route)
+    Total                      4.820ns (3.793ns logic, 1.027ns route)
+                                       (78.7% logic, 21.3% route)
 
 =========================================================================
 
@@ -859,8 +861,8 @@ Clock to Setup on destination clock clk_12mhz
                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ---------------+---------+---------+---------+---------+
-clk_12mhz      |    3.596|         |         |         |
-sclk           |    1.733|         |         |         |
+clk_12mhz      |    4.597|         |         |         |
+sclk           |    1.837|         |         |         |
 ---------------+---------+---------+---------+---------+
 
 Clock to Setup on destination clock clk_1mhz
@@ -877,22 +879,22 @@ Clock to Setup on destination clock sclk
                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ---------------+---------+---------+---------+---------+
-clk_12mhz      |    2.726|         |    2.726|         |
-sclk           |    3.157|         |    3.157|         |
+clk_12mhz      |    3.869|         |    3.150|         |
+sclk           |    3.194|         |    2.420|         |
 ---------------+---------+---------+---------+---------+
 
 =========================================================================
 
 
-Total REAL time to Xst completion: 11.00 secs
-Total CPU time to Xst completion: 9.65 secs
+Total REAL time to Xst completion: 8.00 secs
+Total CPU time to Xst completion: 7.82 secs
  
 --> 
 
 
-Total memory usage is 292444 kilobytes
+Total memory usage is 292324 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :   58 (   0 filtered)
+Number of warnings :   46 (   0 filtered)
 Number of infos    :   22 (   0 filtered)
 

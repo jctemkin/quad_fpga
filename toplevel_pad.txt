@@ -1,7 +1,7 @@
 Release 13.2 - par O.61xd (lin64)
 Copyright (c) 1995-2011 Xilinx, Inc.  All rights reserved.
 
-Thu Nov  8 17:50:43 2012
+Sat Nov 10 15:31:43 2012
 
 
 INFO: The IO information is provided in three file formats as part of the Place and Route (PAR) process.  These formats are:
@@ -163,7 +163,7 @@ Pinout by Pin Number:
 |J13       |           |IOBM     |IO_L41P_GCLK9_IRDY1_M1RASN_1 |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
 |J14       |miso       |IOB      |IO_L43P_GCLK5_M1DQ4_1        |TRISTATE |LVCMOS25*  |1             |12        |         |           |         |         |LOCATED   |NO         |NONE            |
 |J15       |           |         |VCCO_1                       |         |           |1             |          |         |           |         |2.50     |          |           |                |
-|J16       |sclk       |IOB      |IO_L43N_GCLK4_M1DQ5_1        |INPUT    |LVCMOS25*  |1             |          |         |           |NONE     |         |LOCATED   |YES        |NONE            |
+|J16       |sclk       |IOB      |IO_L43N_GCLK4_M1DQ5_1        |INPUT    |LVCMOS25*  |1             |          |         |           |NONE     |         |LOCATED   |NO         |NONE            |
 |K1        |           |IOBS     |IO_L37N_M3DQ1_3              |UNUSED   |           |3             |          |         |           |         |         |          |           |                |
 |K2        |           |IOBM     |IO_L37P_M3DQ0_3              |UNUSED   |           |3             |          |         |           |         |         |          |           |                |
 |K3        |           |IOBM     |IO_L42P_GCLK25_TRDY2_M3UDM_3 |UNUSED   |           |3             |          |         |           |         |         |          |           |                |

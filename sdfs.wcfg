@@ -62,7 +62,7 @@
    <wvobject fp_name="/testbench/uut/mem/regs/regs" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">regs[0:127]</obj_property>
       <obj_property name="ObjectShortName">regs[0:127]</obj_property>
-      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/testbench/uut/pcm_array" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">pcm_array[0:3]</obj_property>

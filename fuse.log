@@ -11,15 +11,15 @@ WARNING:HDLCompiler:957 - "/home/jenn/quad/quad_fpga/spi_slave.vhd" Line 378: Ca
 Parsing VHDL file "/home/jenn/quad/quad_fpga/reg_file.vhd" into library work
 Parsing VHDL file "/home/jenn/quad/quad_fpga/pcm_gen.vhd" into library work
 Parsing VHDL file "/home/jenn/quad/quad_fpga/mem_spi.vhd" into library work
-WARNING:HDLCompiler:946 - "/home/jenn/quad/quad_fpga/mem_spi.vhd" Line 152: Actual for formal port din is neither a static name nor a globally static expression
-Parsing VHDL file "/home/jenn/quad/quad_fpga/ipcore_dir/clk_100mhz/example_design/clk_100mhz_exdes.vhd" into library work
+WARNING:HDLCompiler:946 - "/home/jenn/quad/quad_fpga/mem_spi.vhd" Line 144: Actual for formal port din is neither a static name nor a globally static expression
 Parsing VHDL file "/home/jenn/quad/quad_fpga/ipcore_dir/clk_100mhz.vhd" into library work
 Parsing VHDL file "/home/jenn/quad/quad_fpga/toplevel.vhd" into library work
 Parsing VHDL file "/home/jenn/quad/quad_fpga/toplevel_test.vhd" into library work
+Parsing VHDL file "/home/jenn/quad/quad_fpga/ipcore_dir/clk_100mhz/example_design/clk_100mhz_exdes.vhd" into library work
 Starting static elaboration
 Completed static elaboration
-Fuse Memory Usage: 96912 KB
-Fuse CPU Usage: 270 ms
+Fuse Memory Usage: 96900 KB
+Fuse CPU Usage: 280 ms
 Compiling package standard
 Compiling package std_logic_1164
 Compiling package numeric_std
@@ -49,9 +49,9 @@ Compiling architecture behavioral of entity pcm_gen [pcm_gen_default]
 Compiling architecture behavioral of entity toplevel [toplevel_default]
 Compiling architecture behavior of entity testbench
 Time Resolution for simulation is 1ps.
-Waiting for 6 sub-compilation(s) to finish...
+Waiting for 8 sub-compilation(s) to finish...
 Compiled 45 VHDL Units
 Built simulation executable /home/jenn/quad/quad_fpga/testbench_isim_beh.exe
-Fuse Memory Usage: 687104 KB
-Fuse CPU Usage: 710 ms
-GCC CPU Usage: 2340 ms
+Fuse Memory Usage: 687092 KB
+Fuse CPU Usage: 730 ms
+GCC CPU Usage: 2310 ms

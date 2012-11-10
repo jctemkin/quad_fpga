@@ -9,5 +9,6 @@ Time resolution is 1 ps
 # onerror resume
 # run 8 ms
 Simulator is doing circuit initialization process.
+at 0 ps, Instance /testbench/uut/mem/regs/ : Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
 Finished circuit initialization process.
 # exit 0

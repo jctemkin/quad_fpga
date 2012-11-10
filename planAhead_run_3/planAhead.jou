@@ -1,40 +1,12 @@
 #-----------------------------------------------------------
 # PlanAhead v13.2 (64-bit)
 # Build 131561 by hdbuild on Thu Jun 16 16:53:07 PDT 2011
-# Start of session at: Thu Nov  8 17:37:02 2012
-# Process ID: 18923
+# Start of session at: Sat Nov 10 15:43:35 2012
+# Process ID: 23414
 # Log file: /home/jenn/quad/quad_fpga/planAhead_run_3/planAhead.log
 # Journal file: /home/jenn/quad/quad_fpga/planAhead_run_3/planAhead.jou
 #-----------------------------------------------------------
 start_gui
-source /home/jenn/quad/quad_fpga/pa.fromHdl.tcl
-startgroup
-set_property loc PAD65 [get_ports {pcm_out[0]}]
-endgroup
-startgroup
-set_property loc PAD66 [get_ports {pcm_out[1]}]
-endgroup
-startgroup
-set_property loc PAD73 [get_ports {pcm_out[2]}]
-endgroup
-startgroup
-set_property loc PAD74 [get_ports {pcm_out[3]}]
-endgroup
-startgroup
-set_property loc PAD74 [get_ports {pcm_out[3]}]
-endgroup
-startgroup
-set_property loc PAD78 [get_ports ssel]
-endgroup
-startgroup
-set_property loc PAD77 [get_ports mosi]
-endgroup
-startgroup
-set_property loc PAD93 [get_ports miso]
-endgroup
-startgroup
-set_property loc PAD94 [get_ports sclk]
-endgroup
-save_design
+source /home/jenn/quad/quad_fpga/pa.fromNcd.tcl
 exit
 stop_gui

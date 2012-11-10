@@ -10,39 +10,45 @@ Target Device  : xc6slx25
 Target Package : ftg256
 Target Speed   : -3
 Mapper Version : spartan6 -- $Revision: 1.55 $
-Mapped Date    : Thu Nov  8 17:50:20 2012
+Mapped Date    : Sat Nov 10 15:31:23 2012
 
 Design Summary
 --------------
 Number of errors:      0
 Number of warnings:    1
 Slice Logic Utilization:
-  Number of Slice Registers:                   266 out of  30,064    1%
-    Number used as Flip Flops:                 266
+  Number of Slice Registers:                   224 out of  30,064    1%
+    Number used as Flip Flops:                 224
     Number used as Latches:                      0
     Number used as Latch-thrus:                  0
     Number used as AND/OR logics:                0
-  Number of Slice LUTs:                        245 out of  15,032    1%
-    Number used as logic:                      227 out of  15,032    1%
-      Number using O6 output only:             105
-      Number using O5 output only:              65
-      Number using O5 and O6:                   57
+  Number of Slice LUTs:                        216 out of  15,032    1%
+    Number used as logic:                      200 out of  15,032    1%
+      Number using O6 output only:              85
+      Number using O5 output only:              56
+      Number using O5 and O6:                   59
       Number used as ROM:                        0
-    Number used as Memory:                       0 out of   3,664    0%
-    Number used exclusively as route-thrus:     18
-      Number with same-slice register load:     12
-      Number with same-slice carry load:         6
+    Number used as Memory:                       1 out of   3,664    1%
+      Number used as Dual Port RAM:              0
+      Number used as Single Port RAM:            0
+      Number used as Shift Register:             1
+        Number using O6 output only:             1
+        Number using O5 output only:             0
+        Number using O5 and O6:                  0
+    Number used exclusively as route-thrus:     15
+      Number with same-slice register load:     10
+      Number with same-slice carry load:         5
       Number with other load:                    0
 
 Slice Logic Distribution:
-  Number of occupied Slices:                   117 out of   3,758    3%
-  Number of LUT Flip Flop pairs used:          344
-    Number with an unused Flip Flop:            97 out of     344   28%
-    Number with an unused LUT:                  99 out of     344   28%
-    Number of fully used LUT-FF pairs:         148 out of     344   43%
-    Number of unique control sets:              31
+  Number of occupied Slices:                    92 out of   3,758    2%
+  Number of LUT Flip Flop pairs used:          270
+    Number with an unused Flip Flop:            67 out of     270   24%
+    Number with an unused LUT:                  54 out of     270   20%
+    Number of fully used LUT-FF pairs:         149 out of     270   55%
+    Number of unique control sets:              27
     Number of slice register sites lost
-      to control set restrictions:             102 out of  30,064    1%
+      to control set restrictions:              87 out of  30,064    1%
 
   A LUT Flip Flop pair for this architecture represents one LUT paired with
   one Flip Flop within a slice.  A control set is a unique combination of
@@ -53,11 +59,11 @@ Slice Logic Distribution:
 IO Utilization:
   Number of bonded IOBs:                         9 out of     186    4%
     Number of LOCed IOBs:                        9 out of       9  100%
-    IOB Flip Flops:                              6
+    IOB Flip Flops:                              5
 
 Specific Feature Utilization:
   Number of RAMB16BWERs:                         0 out of      52    0%
-  Number of RAMB8BWERs:                          2 out of     104    1%
+  Number of RAMB8BWERs:                          3 out of     104    2%
   Number of BUFIO2/BUFIO2_2CLKs:                 1 out of      32    3%
     Number used as BUFIO2s:                      1
     Number used as BUFIO2_2CLKs:                 0
@@ -70,8 +76,8 @@ Specific Feature Utilization:
   Number of DCM/DCM_CLKGENs:                     1 out of       4   25%
     Number used as DCMs:                         1
     Number used as DCM_CLKGENs:                  0
-  Number of ILOGIC2/ISERDES2s:                   2 out of     272    1%
-    Number used as ILOGIC2s:                     2
+  Number of ILOGIC2/ISERDES2s:                   1 out of     272    1%
+    Number used as ILOGIC2s:                     1
     Number used as ISERDES2s:                    0
   Number of IODELAY2/IODRP2/IODRP2_MCBs:         0 out of     272    0%
   Number of OLOGIC2/OSERDES2s:                   4 out of     272    1%
@@ -90,11 +96,11 @@ Specific Feature Utilization:
   Number of STARTUPs:                            0 out of       1    0%
   Number of SUSPEND_SYNCs:                       0 out of       1    0%
 
-Average Fanout of Non-Clock Nets:                2.91
+Average Fanout of Non-Clock Nets:                2.84
 
-Peak Memory Usage:  509 MB
-Total REAL time to MAP completion:  12 secs 
-Total CPU time to MAP completion:   10 secs 
+Peak Memory Usage:  508 MB
+Total REAL time to MAP completion:  10 secs 
+Total CPU time to MAP completion:   9 secs 
 
 Table of Contents
 -----------------
@@ -228,7 +234,7 @@ Section 6 - IOB Properties
 | pcm_out<1>                         | IOB              | OUTPUT    | LVCMOS25             |       | 12       | SLOW | OFF          |          |          |
 | pcm_out<2>                         | IOB              | OUTPUT    | LVCMOS25             |       | 12       | SLOW | OFF          |          |          |
 | pcm_out<3>                         | IOB              | OUTPUT    | LVCMOS25             |       | 12       | SLOW | OFF          |          |          |
-| sclk                               | IOB              | INPUT     | LVCMOS25             |       |          |      | IFF          |          |          |
+| sclk                               | IOB              | INPUT     | LVCMOS25             |       |          |      |              |          |          |
 | ssel                               | IOB              | INPUT     | LVCMOS25             |       |          |      | IFF          |          |          |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------+
 

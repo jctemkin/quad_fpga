@@ -169,22 +169,23 @@ BEGIN
    end process;
 	
 	
-	--Simulate outside read requests
+	--Simulate outside read/write requests
 	process
 	begin
 	
-	wait for 79875 us;
+	wait for 79875 ns;
 	wr_en <= '1';
 	wr_addr <= "0000111";
 	wr_data <= X"AA";
 	wait for clk_period;
---	wr_en <= '0';
---	
---	wait for clk_period;
+	wr_en <= '0';
+	
+	wait for clk_period;
 	wr_en <= '1';
 	wr_addr <= "0000010";
 	wr_data <= X"BB";
 	wait for clk_period;
+	wait for 1 ps;
 	wr_en <= '0';
 	
 	
