@@ -133,15 +133,15 @@ Parsing VHDL file "/home/jenn/quad/quad_fpga/mem_spi.vhd" into library work
 Parsing entity <mem_spi>.
 Parsing architecture <Behavioral> of entity <mem_spi>.
 WARNING:HDLCompiler:946 - "/home/jenn/quad/quad_fpga/mem_spi.vhd" Line 144: Actual for formal port din is neither a static name nor a globally static expression
+Parsing VHDL file "/home/jenn/quad/quad_fpga/ipcore_dir/clk_100mhz/example_design/clk_100mhz_exdes.vhd" into library work
+Parsing entity <clk_100mhz_exdes>.
+Parsing architecture <xilinx> of entity <clk_100mhz_exdes>.
 Parsing VHDL file "/home/jenn/quad/quad_fpga/ipcore_dir/clk_100mhz.vhd" into library work
 Parsing entity <clk_100mhz>.
 Parsing architecture <xilinx> of entity <clk_100mhz>.
 Parsing VHDL file "/home/jenn/quad/quad_fpga/toplevel.vhd" into library work
 Parsing entity <toplevel>.
 Parsing architecture <Behavioral> of entity <toplevel>.
-Parsing VHDL file "/home/jenn/quad/quad_fpga/ipcore_dir/clk_100mhz/example_design/clk_100mhz_exdes.vhd" into library work
-Parsing entity <clk_100mhz_exdes>.
-Parsing architecture <xilinx> of entity <clk_100mhz_exdes>.
 
 =========================================================================
 *                            HDL Elaboration                            *
@@ -289,14 +289,15 @@ Synthesizing Unit <pcm_gen>.
     Found 12-bit register for signal <pulse_width_reg>.
     Found 1-bit register for signal <pcm_out_reg>.
     Found 12-bit adder for signal <GND_37_o_pulse_width_reg[11]_add_0_OUT> created at line 1247.
-    Found 12-bit adder for signal <pcm_count[11]_GND_37_o_add_4_OUT> created at line 1241.
-    Found 12-bit comparator greater for signal <pcm_count[11]_GND_37_o_LessThan_2_o> created at line 25
-    Found 12-bit comparator greater for signal <pcm_count[11]_GND_37_o_LessThan_3_o> created at line 25
-    Found 12-bit comparator greater for signal <GND_37_o_pcm_count[11]_LessThan_4_o> created at line 32
+    Found 12-bit adder for signal <pcm_count[11]_GND_37_o_add_5_OUT> created at line 1241.
+    Found 12-bit comparator greater for signal <pcm_count[11]_GND_37_o_LessThan_2_o> created at line 26
+    Found 12-bit comparator greater for signal <pcm_count[11]_GND_37_o_LessThan_3_o> created at line 26
+    Found 12-bit comparator greater for signal <pulse_width_reg[11]_GND_37_o_LessThan_4_o> created at line 26
+    Found 12-bit comparator greater for signal <GND_37_o_pcm_count[11]_LessThan_5_o> created at line 33
     Summary:
 	inferred   2 Adder/Subtractor(s).
 	inferred  25 D-type flip-flop(s).
-	inferred   3 Comparator(s).
+	inferred   4 Comparator(s).
 Unit <pcm_gen> synthesized.
 
 =========================================================================
@@ -320,8 +321,8 @@ Macro Statistics
  4-bit register                                        : 1
  6-bit register                                        : 1
  8-bit register                                        : 5
-# Comparators                                          : 16
- 12-bit comparator greater                             : 12
+# Comparators                                          : 20
+ 12-bit comparator greater                             : 16
  4-bit comparator greater                              : 4
 # Multiplexers                                         : 26
  1-bit 2-to-1 multiplexer                              : 12
@@ -444,8 +445,8 @@ Macro Statistics
  8-bit up counter                                      : 1
 # Registers                                            : 132
  Flip-Flops                                            : 132
-# Comparators                                          : 16
- 12-bit comparator greater                             : 12
+# Comparators                                          : 20
+ 12-bit comparator greater                             : 16
  4-bit comparator greater                              : 4
 # Multiplexers                                         : 25
  1-bit 2-to-1 multiplexer                              : 12
@@ -548,15 +549,15 @@ Top Level Output File Name         : toplevel.ngc
 
 Primitive and Black Box Usage:
 ------------------------------
-# BELS                             : 428
+# BELS                             : 436
 #      GND                         : 2
 #      INV                         : 14
 #      LUT1                        : 61
 #      LUT2                        : 26
 #      LUT3                        : 37
-#      LUT4                        : 53
+#      LUT4                        : 57
 #      LUT5                        : 17
-#      LUT6                        : 53
+#      LUT6                        : 57
 #      MUXCY                       : 88
 #      MUXF7                       : 2
 #      VCC                         : 1
@@ -595,16 +596,16 @@ Selected Device : 6slx25ftg256-3
 
 Slice Logic Utilization: 
  Number of Slice Registers:             226  out of  30064     0%  
- Number of Slice LUTs:                  262  out of  15032     1%  
-    Number used as Logic:               261  out of  15032     1%  
+ Number of Slice LUTs:                  270  out of  15032     1%  
+    Number used as Logic:               269  out of  15032     1%  
     Number used as Memory:                1  out of   3664     0%  
        Number used as SRL:                1
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:    368
-   Number with an unused Flip Flop:     142  out of    368    38%  
-   Number with an unused LUT:           106  out of    368    28%  
-   Number of fully used LUT-FF pairs:   120  out of    368    32%  
+ Number of LUT Flip Flop pairs used:    376
+   Number with an unused Flip Flop:     150  out of    376    39%  
+   Number with an unused LUT:           106  out of    376    28%  
+   Number of fully used LUT-FF pairs:   120  out of    376    31%  
    Number of unique control sets:        28
 
 IO Utilization: 
@@ -702,7 +703,7 @@ Delay:               2.420ns (Levels of Logic = 2)
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
      FDC:C->Q             24   0.447   1.537  mem/spi_slave/state_reg_2 (mem/spi_slave/state_reg_2)
-     LUT6:I0->O            1   0.203   0.000  mem/spi_slave/tx_bit_next3_F (N63)
+     LUT6:I0->O            1   0.203   0.000  mem/spi_slave/tx_bit_next3_F (N55)
      MUXF7:I0->O           1   0.131   0.000  mem/spi_slave/tx_bit_next3 (mem/spi_slave/tx_bit_next)
      FD_1:D                    0.102          mem/spi_slave/tx_bit_reg
     ----------------------------------------
@@ -711,10 +712,10 @@ Delay:               2.420ns (Levels of Logic = 2)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'clk_1mhz'
-  Clock period: 5.007ns (frequency: 199.724MHz)
-  Total number of paths / destination ports: 1328 / 132
+  Clock period: 5.038ns (frequency: 198.478MHz)
+  Total number of paths / destination ports: 1360 / 132
 -------------------------------------------------------------------------
-Delay:               5.007ns (Levels of Logic = 5)
+Delay:               5.038ns (Levels of Logic = 5)
   Source:            pcms[3].pcm/pulse_width_reg_6 (FF)
   Destination:       pcms[3].pcm/pcm_out_reg (FF)
   Source Clock:      clk_1mhz rising
@@ -724,16 +725,16 @@ Delay:               5.007ns (Levels of Logic = 5)
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FDE:C->Q              4   0.447   0.788  pcms[3].pcm/pulse_width_reg_6 (pcms[3].pcm/pulse_width_reg_6)
+     FDE:C->Q              5   0.447   0.819  pcms[3].pcm/pulse_width_reg_6 (pcms[3].pcm/pulse_width_reg_6)
      LUT2:I0->O            2   0.203   0.845  pcms[3].pcm/GND_37_o_pulse_width_reg[11]_add_0_OUT<9>_SW0 (N01)
      LUT6:I3->O            2   0.205   0.721  pcms[3].pcm/GND_37_o_pulse_width_reg[11]_add_0_OUT<9> (pcms[3].pcm/GND_37_o_pulse_width_reg[11]_add_0_OUT<9>)
      LUT4:I2->O            1   0.203   0.000  pcms[3].pcm/Mcompar_pcm_count[11]_GND_37_o_LessThan_2_o_lut<4> (pcms[3].pcm/Mcompar_pcm_count[11]_GND_37_o_LessThan_2_o_lut<4>)
      MUXCY:S->O            1   0.366   0.924  pcms[3].pcm/Mcompar_pcm_count[11]_GND_37_o_LessThan_2_o_cy<4> (pcms[3].pcm/Mcompar_pcm_count[11]_GND_37_o_LessThan_2_o_cy<4>)
-     LUT6:I1->O            1   0.203   0.000  pcms[3].pcm/pcm_count[11]_pcm_count[11]_AND_30_o (pcms[3].pcm/pcm_count[11]_pcm_count[11]_AND_30_o)
+     LUT6:I1->O            1   0.203   0.000  pcms[3].pcm/pcm_count[11]_pulse_width_reg[11]_AND_31_o4 (pcms[3].pcm/pcm_count[11]_pulse_width_reg[11]_AND_31_o)
      FD:D                      0.102          pcms[3].pcm/pcm_out_reg
     ----------------------------------------
-    Total                      5.007ns (1.729ns logic, 3.278ns route)
-                                       (34.5% logic, 65.5% route)
+    Total                      5.038ns (1.729ns logic, 3.309ns route)
+                                       (34.3% logic, 65.7% route)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'clk_12mhz'
@@ -871,7 +872,7 @@ Clock to Setup on destination clock clk_1mhz
 Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ---------------+---------+---------+---------+---------+
 clk_12mhz      |    1.128|         |         |         |
-clk_1mhz       |    5.007|         |         |         |
+clk_1mhz       |    5.038|         |         |         |
 ---------------+---------+---------+---------+---------+
 
 Clock to Setup on destination clock sclk
@@ -887,12 +888,12 @@ sclk           |    3.194|         |    2.420|         |
 
 
 Total REAL time to Xst completion: 8.00 secs
-Total CPU time to Xst completion: 7.82 secs
+Total CPU time to Xst completion: 7.96 secs
  
 --> 
 
 
-Total memory usage is 292324 kilobytes
+Total memory usage is 292288 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :   46 (   0 filtered)

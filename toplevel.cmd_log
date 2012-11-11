@@ -1,26 +1,3 @@
-xst -intstyle ise -ifn "/home/jenn/git/quad_fpga/toplevel.xst" -ofn "/home/jenn/git/quad_fpga/toplevel.syr" 
-xst -intstyle ise -ifn "/home/jenn/git/quad_fpga/toplevel.xst" -ofn "/home/jenn/git/quad_fpga/toplevel.syr" 
-xst -intstyle ise -ifn "/home/jenn/git/quad_fpga/toplevel.xst" -ofn "/home/jenn/git/quad_fpga/toplevel.syr" 
-xst -intstyle ise -ifn "/home/jenn/git/quad_fpga/toplevel.xst" -ofn "/home/jenn/git/quad_fpga/toplevel.syr" 
-ngdbuild -intstyle ise -dd _ngo -sd ipcore_dir -nt timestamp -i -p xc6slx25-ftg256-3 toplevel.ngc toplevel.ngd  
-xst -intstyle ise -ifn "/home/jenn/git/quad_fpga/toplevel.xst" -ofn "/home/jenn/git/quad_fpga/toplevel.syr" 
-xst -intstyle ise -ifn "/home/jenn/git/quad_fpga/toplevel.xst" -ofn "/home/jenn/git/quad_fpga/toplevel.syr" 
-xst -intstyle ise -ifn "/home/jenn/git/quad_fpga/toplevel.xst" -ofn "/home/jenn/git/quad_fpga/toplevel.syr" 
-ngdbuild -intstyle ise -dd _ngo -sd ipcore_dir -nt timestamp -uc toplevel.ucf -p xc6slx25-ftg256-3 toplevel.ngc toplevel.ngd  
-map -intstyle ise -p xc6slx25-ftg256-3 -w -logic_opt off -ol high -xe n -t 1 -xt 0 -register_duplication off -r 4 -global_opt off -mt off -ir off -pr b -lc off -power off -o toplevel_map.ncd toplevel.ngd toplevel.pcf 
-xst -intstyle ise -ifn "/home/jenn/git/quad_fpga/toplevel.xst" -ofn "/home/jenn/git/quad_fpga/toplevel.syr" 
-ngdbuild -intstyle ise -dd _ngo -sd ipcore_dir -nt timestamp -uc toplevel.ucf -p xc6slx25-ftg256-3 toplevel.ngc toplevel.ngd  
-map -intstyle ise -p xc6slx25-ftg256-3 -w -logic_opt off -ol high -xe n -t 1 -xt 0 -register_duplication off -r 4 -global_opt off -mt off -ir off -pr b -lc off -power off -o toplevel_map.ncd toplevel.ngd toplevel.pcf 
-ngdbuild -intstyle ise -dd _ngo -sd ipcore_dir -nt timestamp -uc toplevel.ucf -p xc6slx25-ftg256-3 toplevel.ngc toplevel.ngd  
-map -intstyle ise -p xc6slx25-ftg256-3 -w -logic_opt off -ol high -xe n -t 1 -xt 0 -register_duplication off -r 4 -global_opt off -mt off -ir off -pr b -lc off -power off -o toplevel_map.ncd toplevel.ngd toplevel.pcf 
-par -w -intstyle ise -ol high -xe n -mt off toplevel_map.ncd toplevel.ncd toplevel.pcf 
-trce -intstyle ise -v 3 -s 3 -n 3 -fastpaths -xml toplevel.twx toplevel.ncd -o toplevel.twr toplevel.pcf -ucf toplevel.ucf 
-bitgen -intstyle ise -f toplevel.ut toplevel.ncd 
-ngdbuild -intstyle ise -dd _ngo -sd ipcore_dir -nt timestamp -uc toplevel.ucf -p xc6slx25-ftg256-3 toplevel.ngc toplevel.ngd  
-map -intstyle ise -p xc6slx25-ftg256-3 -w -logic_opt off -ol high -xe n -t 1 -xt 0 -register_duplication off -r 4 -global_opt off -mt off -ir off -pr b -lc off -power off -o toplevel_map.ncd toplevel.ngd toplevel.pcf 
-par -w -intstyle ise -ol high -xe n -mt off toplevel_map.ncd toplevel.ncd toplevel.pcf 
-trce -intstyle ise -v 3 -s 3 -n 3 -fastpaths -xml toplevel.twx toplevel.ncd -o toplevel.twr toplevel.pcf -ucf toplevel.ucf 
-bitgen -intstyle ise -f toplevel.ut toplevel.ncd 
 xst -intstyle ise -ifn "/home/jenn/quad/quad_fpga/toplevel.xst" -ofn "/home/jenn/quad/quad_fpga/toplevel.syr" 
 ngdbuild -intstyle ise -dd _ngo -sd ipcore_dir -nt timestamp -uc toplevel.ucf -p xc6slx25-ftg256-3 toplevel.ngc toplevel.ngd  
 map -intstyle ise -p xc6slx25-ftg256-3 -w -logic_opt off -ol high -xe n -t 1 -xt 0 -register_duplication off -r 4 -global_opt off -mt off -ir off -pr b -lc off -power off -o toplevel_map.ncd toplevel.ngd toplevel.pcf 
