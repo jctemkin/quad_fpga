@@ -1,7 +1,7 @@
 Release 13.2 par O.61xd (lin64)
 Copyright (c) 1995-2011 Xilinx, Inc.  All rights reserved.
 
-jenn-pc::  Sun Nov 11 00:23:38 2012
+jenn-pc::  Sun Nov 11 01:25:04 2012
 
 par -w -intstyle ise -ol high -xe n -mt off toplevel_map.ncd toplevel.ncd
 toplevel.pcf 
@@ -110,8 +110,8 @@ Specific Feature Utilization:
 Overall effort level (-ol):   High 
 Router effort level (-rl):    High 
 
-Starting initial Timing Analysis.  REAL time: 4 secs 
-Finished initial Timing Analysis.  REAL time: 4 secs 
+Starting initial Timing Analysis.  REAL time: 5 secs 
+Finished initial Timing Analysis.  REAL time: 5 secs 
 
 Starting Router
 
@@ -120,9 +120,9 @@ Phase  1  : 1284 unrouted;      REAL time: 5 secs
 
 Phase  2  : 999 unrouted;      REAL time: 6 secs 
 
-Phase  3  : 292 unrouted;      REAL time: 7 secs 
+Phase  3  : 292 unrouted;      REAL time: 8 secs 
 
-Phase  4  : 292 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 8 secs 
+Phase  4  : 292 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 9 secs 
 
 Updating file: toplevel.ncd with current fully routed design.
 
@@ -136,9 +136,9 @@ Phase  8  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL 
 
 Phase  9  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 9 secs 
 
-Phase 10  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 9 secs 
-Total REAL time to Router completion: 9 secs 
-Total CPU time to Router completion: 9 secs 
+Phase 10  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 10 secs 
+Total REAL time to Router completion: 10 secs 
+Total CPU time to Router completion: 10 secs 
 
 Partition Implementation Status
 -------------------------------
@@ -219,8 +219,8 @@ Generating Pad Report.
 
 All signals are completely routed.
 
-Total REAL time to PAR completion: 9 secs 
-Total CPU time to PAR completion: 9 secs 
+Total REAL time to PAR completion: 10 secs 
+Total CPU time to PAR completion: 10 secs 
 
 Peak Memory Usage:  493 MB
 
