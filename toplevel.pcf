@@ -1,5 +1,5 @@
 //! **************************************************************************
-// Written by: Map O.61xd on Thu Nov 08 17:50:31 2012
+// Written by: Map O.61xd on Thu Nov 29 14:43:28 2012
 //! **************************************************************************
 
 SCHEMATIC START;
@@ -12,8 +12,8 @@ COMP "pcm_out<0>" LOCATE = SITE "B15" LEVEL 1;
 COMP "pcm_out<1>" LOCATE = SITE "B16" LEVEL 1;
 COMP "pcm_out<2>" LOCATE = SITE "C15" LEVEL 1;
 COMP "pcm_out<3>" LOCATE = SITE "C16" LEVEL 1;
-PIN mem/regs/Mram_regs_pins<20> = BEL "mem/regs/Mram_regs" PINNAME CLKAWRCLK;
-PIN mem/regs/Mram_regs_pins<21> = BEL "mem/regs/Mram_regs" PINNAME CLKBRDCLK;
+PIN mem/regs/Mram_regs_pins<18> = BEL "mem/regs/Mram_regs" PINNAME CLKAWRCLK;
+PIN mem/regs/Mram_regs_pins<19> = BEL "mem/regs/Mram_regs" PINNAME CLKBRDCLK;
 PIN
         mem/afifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram_pins<26>
         = BEL
@@ -25,57 +25,49 @@ PIN
         "mem/afifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram"
         PINNAME CLKBRDCLK;
 TIMEGRP clk_100mhz_i_clkfx = BEL "last_state_0" BEL "last_state_1" BEL
-        "last_state_2" BEL "pcm_array_2_2" BEL "pcm_array_2_3" BEL
-        "pcm_array_2_4" BEL "pcm_array_2_5" BEL "pcm_array_2_6" BEL
-        "pcm_array_2_7" BEL "pcm_array_2_8" BEL "pcm_array_2_9" BEL
-        "pcm_array_0_2" BEL "pcm_array_0_3" BEL "pcm_array_0_4" BEL
-        "pcm_array_0_5" BEL "pcm_array_0_6" BEL "pcm_array_0_7" BEL
-        "pcm_array_0_8" BEL "pcm_array_0_9" BEL "pcm_array_1_2" BEL
+        "last_state_2" BEL "pcm_array_2_0" BEL "pcm_array_2_1" BEL
+        "pcm_array_2_2" BEL "pcm_array_2_3" BEL "pcm_array_2_4" BEL
+        "pcm_array_2_5" BEL "pcm_array_2_6" BEL "pcm_array_2_7" BEL
+        "pcm_array_2_8" BEL "pcm_array_2_9" BEL "pcm_array_0_0" BEL
+        "pcm_array_0_1" BEL "pcm_array_0_2" BEL "pcm_array_0_3" BEL
+        "pcm_array_0_4" BEL "pcm_array_0_5" BEL "pcm_array_0_6" BEL
+        "pcm_array_0_7" BEL "pcm_array_0_8" BEL "pcm_array_0_9" BEL
+        "pcm_array_1_0" BEL "pcm_array_1_1" BEL "pcm_array_1_2" BEL
         "pcm_array_1_3" BEL "pcm_array_1_4" BEL "pcm_array_1_5" BEL
         "pcm_array_1_6" BEL "pcm_array_1_7" BEL "pcm_array_1_8" BEL
-        "pcm_array_1_9" BEL "pcm_array_3_2" BEL "pcm_array_3_3" BEL
-        "pcm_array_3_4" BEL "pcm_array_3_5" BEL "pcm_array_3_6" BEL
-        "pcm_array_3_7" BEL "pcm_array_3_8" BEL "pcm_array_3_9" BEL
-        "state_FSM_FFd3" BEL "state_FSM_FFd2" BEL "state_FSM_FFd1" BEL
-        "clk_1mhz_cnt_0" BEL "clk_1mhz_cnt_1" BEL "clk_1mhz_cnt_2" BEL
-        "clk_1mhz_cnt_3" BEL "clk_1mhz_cnt_4" BEL "clk_1mhz_cnt_5" BEL
-        "idle_counter_0" BEL "idle_counter_1" BEL "idle_counter_2" BEL
-        "idle_counter_3" BEL "idle_counter_4" BEL "idle_counter_5" BEL
-        "idle_counter_6" BEL "idle_counter_7" BEL "idle_counter_8" BEL
-        "idle_counter_9" BEL "idle_counter_10" BEL "idle_counter_11" BEL
-        "idle_counter_12" BEL "idle_counter_13" BEL "idle_counter_14" BEL
-        "idle_counter_15" BEL "idle_counter_16" BEL "idle_counter_17" BEL
-        "clk_100mhz_i/clkout1_buf" BEL "mem/sclk_count_9" BEL
-        "mem/sclk_count_3" BEL "mem/sclk_count_2" BEL "mem/sclk_count_1" BEL
-        "mem/sclk_count_0" BEL "mem/addr_hold_7" BEL "mem/addr_hold_6" BEL
-        "mem/addr_hold_5" BEL "mem/addr_hold_4" BEL "mem/addr_hold_3" BEL
-        "mem/addr_hold_2" BEL "mem/addr_hold_1" BEL "mem/addr_hold_0" BEL
-        "mem/rd_data_out_7" BEL "mem/rd_data_out_6" BEL "mem/rd_data_out_5"
-        BEL "mem/rd_data_out_4" BEL "mem/rd_data_out_3" BEL
-        "mem/rd_data_out_2" BEL "mem/rd_data_out_1" BEL "mem/rd_data_out_0"
-        BEL "mem/rd_data_ready_reg" BEL "mem/fifo_read_en_hold" BEL
-        "mem/do_valid_delay" BEL "mem/sclk_del_reg" BEL "mem/fifo_read_en" BEL
-        "mem/rd_data_almost_ready" BEL "mem/spi_wr_en" BEL
+        "pcm_array_1_9" BEL "pcm_array_3_0" BEL "pcm_array_3_1" BEL
+        "pcm_array_3_2" BEL "pcm_array_3_3" BEL "pcm_array_3_4" BEL
+        "pcm_array_3_5" BEL "pcm_array_3_6" BEL "pcm_array_3_7" BEL
+        "pcm_array_3_8" BEL "pcm_array_3_9" BEL "state_FSM_FFd3" BEL
+        "state_FSM_FFd2" BEL "state_FSM_FFd1" BEL "clk_1mhz_cnt_0" BEL
+        "clk_1mhz_cnt_1" BEL "clk_1mhz_cnt_2" BEL "clk_1mhz_cnt_3" BEL
+        "clk_1mhz_cnt_4" BEL "clk_1mhz_cnt_5" BEL "idle_counter_4" BEL
+        "idle_counter_5" BEL "idle_counter_6" BEL "idle_counter_7" BEL
+        "idle_counter_8" BEL "idle_counter_9" BEL "clk_100mhz_i/clkout1_buf"
+        BEL "mem/addr_hold_7" BEL "mem/addr_hold_6" BEL "mem/addr_hold_5" BEL
+        "mem/addr_hold_4" BEL "mem/addr_hold_3" BEL "mem/addr_hold_2" BEL
+        "mem/addr_hold_1" BEL "mem/addr_hold_0" BEL "mem/lsb_hold_7" BEL
+        "mem/lsb_hold_6" BEL "mem/lsb_hold_5" BEL "mem/lsb_hold_4" BEL
+        "mem/lsb_hold_3" BEL "mem/lsb_hold_2" BEL "mem/lsb_hold_1" BEL
+        "mem/lsb_hold_0" BEL "mem/spi_do_valid_delay" BEL
+        "mem/rd_data_ready_reg" BEL "mem/fifo_read_en_hold" BEL
+        "mem/do_valid_delay" BEL "mem/spi_slave/do_valid_B" BEL
+        "mem/spi_slave/do_valid_A" BEL "mem/spi_slave/do_valid_o_reg" BEL
         "mem/spi_slave/di_reg_7" BEL "mem/spi_slave/di_reg_6" BEL
         "mem/spi_slave/di_reg_5" BEL "mem/spi_slave/di_reg_4" BEL
         "mem/spi_slave/di_reg_3" BEL "mem/spi_slave/di_reg_2" BEL
         "mem/spi_slave/di_reg_1" BEL "mem/spi_slave/di_reg_0" BEL
-        "mem/fifo_wr_en" BEL "mem/do_valid" BEL "clk_1mhz" BEL "rd_en" BEL
-        "mem/spi_slave/wren" BEL "mem/rd_en_hold" BEL "Result<0>1_FRB" BEL
-        "Result<1>1_FRB" BEL "Result<2>1_FRB" BEL "Result<3>1_FRB" BEL
-        "Result<4>1_FRB" BEL "Result<5>1_FRB" BEL "Result<6>_FRB" BEL
-        "Result<7>_FRB" BEL "Result<8>_FRB" BEL "Result<9>_FRB" BEL
-        "Result<10>_FRB" BEL "Result<11>_FRB" BEL "Result<12>_FRB" BEL
-        "Result<13>_FRB" BEL "Result<14>_FRB" BEL "Result<15>_FRB" BEL
-        "Result<16>_FRB" BEL "Result<17>_FRB" BEL "mem/Result<0>_FRB" BEL
-        "mem/Result<1>_FRB" BEL "mem/Result<2>_FRB" BEL "mem/Result<3>_FRB"
-        BEL "mem/Result<4>_FRB" BEL "mem/Result<5>_FRB" BEL
-        "mem/Result<6>_FRB" BEL "mem/Result<7>_FRB" BEL "mem/Result<8>_FRB"
-        BEL "mem/Result<9>_FRB" BEL "mem/Result<10>_FRB" BEL
-        "mem/GND_13_o_sclk_count[10]_equal_2_o<10>1_FRB" BEL
-        "mem/GND_13_o_sclk_count[10]_equal_2_o<10>2_FRB" BEL
-        "mem/_n0127_inv4_SW0_FRB" PIN "mem/regs/Mram_regs_pins<20>" PIN
-        "mem/regs/Mram_regs_pins<21>" BEL
+        "mem/addr_rxd" BEL "mem/lsb_rxd" BEL "clk_1mhz" BEL "rd_en" BEL
+        "Result<0>1_FRB" BEL "Result<1>1_FRB" BEL "Result<2>1_FRB" BEL
+        "Result<3>1_FRB" BEL "Result<4>1_FRB" BEL "Result<5>1_FRB" BEL
+        "Result<6>_FRB" BEL "Result<7>_FRB" BEL "Result<8>_FRB" BEL
+        "Result<9>_FRB" BEL "Result<10>_FRB" BEL "Result<11>_FRB" BEL
+        "Result<12>_FRB" BEL "Result<13>_FRB" BEL "Result<14>_FRB" BEL
+        "Result<15>_FRB" BEL "Result<16>_FRB" BEL "Result<17>_FRB" BEL
+        "state_FSM_FFd3-In1_FRB" BEL "state_FSM_FFd3-In2_FRB" BEL
+        "mem/spi_slave/wren" PIN "mem/regs/Mram_regs_pins<18>" PIN
+        "mem/regs/Mram_regs_pins<19>" BEL "mem/spi_slave/Mshreg_do_valid_D"
+        BEL "mem/spi_slave/do_valid_D" BEL
         "mem/afifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/rd_rst_asreg_d2"
         BEL
         "mem/afifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/rd_rst_asreg_d1"
@@ -136,33 +128,53 @@ TIMEGRP clk_100mhz_i_clkfx = BEL "last_state_0" BEL "last_state_1" BEL
         PIN
         "mem/afifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram_pins<26>"
         PIN
-        "mem/afifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram_pins<27>";
-TIMEGRP sclk = BEL "mem/sclk_count_9" BEL "mem/sclk_count_3" BEL
-        "mem/sclk_count_2" BEL "mem/sclk_count_1" BEL "mem/sclk_count_0" BEL
-        "mem/addr_hold_7" BEL "mem/addr_hold_6" BEL "mem/addr_hold_5" BEL
-        "mem/addr_hold_4" BEL "mem/addr_hold_3" BEL "mem/addr_hold_2" BEL
-        "mem/addr_hold_1" BEL "mem/addr_hold_0" BEL "mem/sclk_del_reg" BEL
-        "mem/spi_slave/do_buffer_reg_7" BEL "mem/spi_slave/do_buffer_reg_6"
-        BEL "mem/spi_slave/do_buffer_reg_5" BEL
-        "mem/spi_slave/do_buffer_reg_4" BEL "mem/spi_slave/do_buffer_reg_3"
-        BEL "mem/spi_slave/do_buffer_reg_2" BEL
-        "mem/spi_slave/do_buffer_reg_1" BEL "mem/spi_slave/do_buffer_reg_0"
-        BEL "mem/spi_slave/sh_reg_7" BEL "mem/spi_slave/sh_reg_6" BEL
-        "mem/spi_slave/sh_reg_5" BEL "mem/spi_slave/sh_reg_4" BEL
-        "mem/spi_slave/sh_reg_3" BEL "mem/spi_slave/sh_reg_2" BEL
-        "mem/spi_slave/sh_reg_1" BEL "mem/spi_slave/sh_reg_0" BEL
-        "mem/spi_slave/state_reg_3" BEL "mem/spi_slave/state_reg_2" BEL
-        "mem/spi_slave/state_reg_1" BEL "mem/spi_slave/state_reg_0" BEL
-        "mem/spi_slave/tx_bit_reg" BEL "mem/spi_slave/wr_ack_reg" BEL
-        "mem/spi_slave/preload_miso" BEL "mem/fifo_wr_en" BEL "mem/do_valid"
-        BEL "mem/Result<0>_FRB" BEL "mem/Result<1>_FRB" BEL
-        "mem/Result<2>_FRB" BEL "mem/Result<3>_FRB" BEL "mem/Result<4>_FRB"
-        BEL "mem/Result<5>_FRB" BEL "mem/Result<6>_FRB" BEL
-        "mem/Result<7>_FRB" BEL "mem/Result<8>_FRB" BEL "mem/Result<9>_FRB"
-        BEL "mem/Result<10>_FRB" BEL
-        "mem/GND_13_o_sclk_count[10]_equal_2_o<10>1_FRB" BEL
-        "mem/GND_13_o_sclk_count[10]_equal_2_o<10>2_FRB" BEL
-        "mem/_n0127_inv4_SW0_FRB" BEL "sclk_IBUF_BUFG";
+        "mem/afifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.WIDE_PRIM9.ram_pins<27>"
+        BEL "mem/regs/Mram_regs116/SP.HIGH" BEL "mem/regs/Mram_regs116/SP.LOW"
+        BEL "mem/regs/Mram_regs116/DP.HIGH" BEL "mem/regs/Mram_regs116/DP.LOW"
+        BEL "mem/regs/Mram_regs115/SP.HIGH" BEL "mem/regs/Mram_regs115/SP.LOW"
+        BEL "mem/regs/Mram_regs115/DP.HIGH" BEL "mem/regs/Mram_regs115/DP.LOW"
+        BEL "mem/regs/Mram_regs113/SP.HIGH" BEL "mem/regs/Mram_regs113/SP.LOW"
+        BEL "mem/regs/Mram_regs113/DP.HIGH" BEL "mem/regs/Mram_regs113/DP.LOW"
+        BEL "mem/regs/Mram_regs112/SP.HIGH" BEL "mem/regs/Mram_regs112/SP.LOW"
+        BEL "mem/regs/Mram_regs112/DP.HIGH" BEL "mem/regs/Mram_regs112/DP.LOW"
+        BEL "mem/regs/Mram_regs114/SP.HIGH" BEL "mem/regs/Mram_regs114/SP.LOW"
+        BEL "mem/regs/Mram_regs114/DP.HIGH" BEL "mem/regs/Mram_regs114/DP.LOW"
+        BEL "mem/regs/Mram_regs111/SP.HIGH" BEL "mem/regs/Mram_regs111/SP.LOW"
+        BEL "mem/regs/Mram_regs111/DP.HIGH" BEL "mem/regs/Mram_regs111/DP.LOW"
+        BEL "mem/regs/Mram_regs110/SP.HIGH" BEL "mem/regs/Mram_regs110/SP.LOW"
+        BEL "mem/regs/Mram_regs110/DP.HIGH" BEL "mem/regs/Mram_regs110/DP.LOW"
+        BEL "mem/regs/Mram_regs18/SP.HIGH" BEL "mem/regs/Mram_regs18/SP.LOW"
+        BEL "mem/regs/Mram_regs18/DP.HIGH" BEL "mem/regs/Mram_regs18/DP.LOW"
+        BEL "mem/regs/Mram_regs17/SP.HIGH" BEL "mem/regs/Mram_regs17/SP.LOW"
+        BEL "mem/regs/Mram_regs17/DP.HIGH" BEL "mem/regs/Mram_regs17/DP.LOW"
+        BEL "mem/regs/Mram_regs19/SP.HIGH" BEL "mem/regs/Mram_regs19/SP.LOW"
+        BEL "mem/regs/Mram_regs19/DP.HIGH" BEL "mem/regs/Mram_regs19/DP.LOW"
+        BEL "mem/regs/Mram_regs16/SP.HIGH" BEL "mem/regs/Mram_regs16/SP.LOW"
+        BEL "mem/regs/Mram_regs16/DP.HIGH" BEL "mem/regs/Mram_regs16/DP.LOW"
+        BEL "mem/regs/Mram_regs15/SP.HIGH" BEL "mem/regs/Mram_regs15/SP.LOW"
+        BEL "mem/regs/Mram_regs15/DP.HIGH" BEL "mem/regs/Mram_regs15/DP.LOW"
+        BEL "mem/regs/Mram_regs13/SP.HIGH" BEL "mem/regs/Mram_regs13/SP.LOW"
+        BEL "mem/regs/Mram_regs13/DP.HIGH" BEL "mem/regs/Mram_regs13/DP.LOW"
+        BEL "mem/regs/Mram_regs12/SP.HIGH" BEL "mem/regs/Mram_regs12/SP.LOW"
+        BEL "mem/regs/Mram_regs12/DP.HIGH" BEL "mem/regs/Mram_regs12/DP.LOW"
+        BEL "mem/regs/Mram_regs14/SP.HIGH" BEL "mem/regs/Mram_regs14/SP.LOW"
+        BEL "mem/regs/Mram_regs14/DP.HIGH" BEL "mem/regs/Mram_regs14/DP.LOW"
+        BEL "mem/regs/Mram_regs11/SP.HIGH" BEL "mem/regs/Mram_regs11/SP.LOW"
+        BEL "mem/regs/Mram_regs11/DP.HIGH" BEL "mem/regs/Mram_regs11/DP.LOW";
+TIMEGRP sclk = BEL "mem/spi_slave/do_buffer_reg_7" BEL
+        "mem/spi_slave/do_buffer_reg_6" BEL "mem/spi_slave/do_buffer_reg_5"
+        BEL "mem/spi_slave/do_buffer_reg_4" BEL
+        "mem/spi_slave/do_buffer_reg_3" BEL "mem/spi_slave/do_buffer_reg_2"
+        BEL "mem/spi_slave/do_buffer_reg_1" BEL
+        "mem/spi_slave/do_buffer_reg_0" BEL "mem/spi_slave/sh_reg_7" BEL
+        "mem/spi_slave/sh_reg_6" BEL "mem/spi_slave/sh_reg_5" BEL
+        "mem/spi_slave/sh_reg_4" BEL "mem/spi_slave/sh_reg_3" BEL
+        "mem/spi_slave/sh_reg_2" BEL "mem/spi_slave/sh_reg_1" BEL
+        "mem/spi_slave/sh_reg_0" BEL "mem/spi_slave/state_reg_3" BEL
+        "mem/spi_slave/state_reg_2" BEL "mem/spi_slave/state_reg_1" BEL
+        "mem/spi_slave/state_reg_0" BEL "mem/spi_slave/tx_bit_reg" BEL
+        "mem/spi_slave/do_transfer_reg" BEL "mem/spi_slave/wr_ack_reg" BEL
+        "mem/spi_slave/preload_miso" BEL "sclk_BUFGP/BUFG";
 TIMEGRP clk_1mhz = BEL "pcms[3].pcm/pcm_count_11" BEL
         "pcms[3].pcm/pcm_count_10" BEL "pcms[3].pcm/pcm_count_9" BEL
         "pcms[3].pcm/pcm_count_8" BEL "pcms[3].pcm/pcm_count_7" BEL
@@ -174,7 +186,8 @@ TIMEGRP clk_1mhz = BEL "pcms[3].pcm/pcm_count_11" BEL
         BEL "pcms[3].pcm/pulse_width_reg_6" BEL
         "pcms[3].pcm/pulse_width_reg_5" BEL "pcms[3].pcm/pulse_width_reg_4"
         BEL "pcms[3].pcm/pulse_width_reg_3" BEL
-        "pcms[3].pcm/pulse_width_reg_2" BEL "pcms[3].pcm/pcm_out_reg" BEL
+        "pcms[3].pcm/pulse_width_reg_2" BEL "pcms[3].pcm/pulse_width_reg_1"
+        BEL "pcms[3].pcm/pulse_width_reg_0" BEL "pcms[3].pcm/pcm_out_reg" BEL
         "pcms[2].pcm/pcm_count_11" BEL "pcms[2].pcm/pcm_count_10" BEL
         "pcms[2].pcm/pcm_count_9" BEL "pcms[2].pcm/pcm_count_8" BEL
         "pcms[2].pcm/pcm_count_7" BEL "pcms[2].pcm/pcm_count_6" BEL
@@ -186,18 +199,21 @@ TIMEGRP clk_1mhz = BEL "pcms[3].pcm/pcm_count_11" BEL
         "pcms[2].pcm/pulse_width_reg_6" BEL "pcms[2].pcm/pulse_width_reg_5"
         BEL "pcms[2].pcm/pulse_width_reg_4" BEL
         "pcms[2].pcm/pulse_width_reg_3" BEL "pcms[2].pcm/pulse_width_reg_2"
-        BEL "pcms[2].pcm/pcm_out_reg" BEL "pcms[1].pcm/pcm_count_11" BEL
-        "pcms[1].pcm/pcm_count_10" BEL "pcms[1].pcm/pcm_count_9" BEL
-        "pcms[1].pcm/pcm_count_8" BEL "pcms[1].pcm/pcm_count_7" BEL
-        "pcms[1].pcm/pcm_count_6" BEL "pcms[1].pcm/pcm_count_5" BEL
-        "pcms[1].pcm/pcm_count_4" BEL "pcms[1].pcm/pcm_count_3" BEL
-        "pcms[1].pcm/pcm_count_2" BEL "pcms[1].pcm/pcm_count_1" BEL
-        "pcms[1].pcm/pcm_count_0" BEL "pcms[1].pcm/pulse_width_reg_9" BEL
-        "pcms[1].pcm/pulse_width_reg_8" BEL "pcms[1].pcm/pulse_width_reg_7"
-        BEL "pcms[1].pcm/pulse_width_reg_6" BEL
-        "pcms[1].pcm/pulse_width_reg_5" BEL "pcms[1].pcm/pulse_width_reg_4"
-        BEL "pcms[1].pcm/pulse_width_reg_3" BEL
-        "pcms[1].pcm/pulse_width_reg_2" BEL "pcms[1].pcm/pcm_out_reg" BEL
+        BEL "pcms[2].pcm/pulse_width_reg_1" BEL
+        "pcms[2].pcm/pulse_width_reg_0" BEL "pcms[2].pcm/pcm_out_reg" BEL
+        "pcms[1].pcm/pcm_count_11" BEL "pcms[1].pcm/pcm_count_10" BEL
+        "pcms[1].pcm/pcm_count_9" BEL "pcms[1].pcm/pcm_count_8" BEL
+        "pcms[1].pcm/pcm_count_7" BEL "pcms[1].pcm/pcm_count_6" BEL
+        "pcms[1].pcm/pcm_count_5" BEL "pcms[1].pcm/pcm_count_4" BEL
+        "pcms[1].pcm/pcm_count_3" BEL "pcms[1].pcm/pcm_count_2" BEL
+        "pcms[1].pcm/pcm_count_1" BEL "pcms[1].pcm/pcm_count_0" BEL
+        "pcms[1].pcm/pulse_width_reg_9" BEL "pcms[1].pcm/pulse_width_reg_8"
+        BEL "pcms[1].pcm/pulse_width_reg_7" BEL
+        "pcms[1].pcm/pulse_width_reg_6" BEL "pcms[1].pcm/pulse_width_reg_5"
+        BEL "pcms[1].pcm/pulse_width_reg_4" BEL
+        "pcms[1].pcm/pulse_width_reg_3" BEL "pcms[1].pcm/pulse_width_reg_2"
+        BEL "pcms[1].pcm/pulse_width_reg_1" BEL
+        "pcms[1].pcm/pulse_width_reg_0" BEL "pcms[1].pcm/pcm_out_reg" BEL
         "pcms[0].pcm/pcm_count_11" BEL "pcms[0].pcm/pcm_count_10" BEL
         "pcms[0].pcm/pcm_count_9" BEL "pcms[0].pcm/pcm_count_8" BEL
         "pcms[0].pcm/pcm_count_7" BEL "pcms[0].pcm/pcm_count_6" BEL
@@ -209,7 +225,9 @@ TIMEGRP clk_1mhz = BEL "pcms[3].pcm/pcm_count_11" BEL
         "pcms[0].pcm/pulse_width_reg_6" BEL "pcms[0].pcm/pulse_width_reg_5"
         BEL "pcms[0].pcm/pulse_width_reg_4" BEL
         "pcms[0].pcm/pulse_width_reg_3" BEL "pcms[0].pcm/pulse_width_reg_2"
-        BEL "pcms[0].pcm/pcm_out_reg" BEL "clk_1mhz" BEL "clk_1mhz_BUFG";
+        BEL "pcms[0].pcm/pulse_width_reg_1" BEL
+        "pcms[0].pcm/pulse_width_reg_0" BEL "pcms[0].pcm/pcm_out_reg" BEL
+        "clk_1mhz" BEL "clk_1mhz_BUFG";
 PIN SP6_BUFIO_INSERT_ML_BUFIO2_0_pins<0> = BEL "SP6_BUFIO_INSERT_ML_BUFIO2_0"
         PINNAME DIVCLK;
 PIN clk_100mhz_i/dcm_sp_inst_pins<3> = BEL "clk_100mhz_i/dcm_sp_inst" PINNAME

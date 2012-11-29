@@ -5,11 +5,15 @@
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
 <messages>
-<msg type="info" file="LIT" num="243" delta="old" >Logical network <arg fmt="%s" index="1">mem/afifo/dout&lt;15&gt;</arg> has no load.
+<msg type="info" file="LIT" num="243" delta="new" >Logical network <arg fmt="%s" index="1">mem/regs/Mram_regs116/SPO</arg> has no load.
 </msg>
 
-<msg type="info" file="LIT" num="395" delta="old" >The above <arg fmt="%s" index="1">info</arg> message is repeated <arg fmt="%d" index="2">1</arg> more times for the following (max. 5 shown):
-<arg fmt="%s" index="3">mem/afifo/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwss.wsts/ram_full_i</arg>
+<msg type="info" file="LIT" num="395" delta="new" >The above <arg fmt="%s" index="1">info</arg> message is repeated <arg fmt="%d" index="2">17</arg> more times for the following (max. 5 shown):
+<arg fmt="%s" index="3">mem/regs/Mram_regs115/SPO,
+mem/regs/Mram_regs113/SPO,
+mem/regs/Mram_regs112/SPO,
+mem/regs/Mram_regs114/SPO,
+mem/regs/Mram_regs111/SPO</arg>
 To see the details of these <arg fmt="%s" index="4">info</arg> messages, please use the -detail switch.
 </msg>
 
