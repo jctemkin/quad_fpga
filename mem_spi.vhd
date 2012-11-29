@@ -40,10 +40,10 @@ entity mem_spi is
 		
 		wr_en : in  STD_LOGIC;
 		wr_addr : in  STD_LOGIC_VECTOR (6 downto 0);
-		wr_data: in std_logic_vector(7 downto 0);
+		wr_data: in std_logic_vector(15 downto 0);
 		rd_en : in  STD_LOGIC;
 		rd_addr : in  STD_LOGIC_VECTOR (6 downto 0);
-		rd_data : out  STD_LOGIC_VECTOR (7 downto 0);
+		rd_data : out  STD_LOGIC_VECTOR (15 downto 0);
 		rd_data_ready: out std_logic
 		);
 end mem_spi;
@@ -59,7 +59,7 @@ architecture Behavioral of mem_spi is
 	signal spi_miso: std_logic;
 
 	--fifo signals
-	signal fifo_out: std_logic_vector(15 downto 0);
+	signal fifo_out: std_logic_vector(23 downto 0);
 	signal fifo_full: std_logic;
 	signal fifo_empty: std_logic;
 	signal fifo_almost_full: std_logic;
@@ -71,12 +71,12 @@ architecture Behavioral of mem_spi is
 	--register file signals
 	signal reg_wr_en: std_logic;
 	signal reg_rd_addr: std_logic_vector(6 downto 0);
-	signal reg_rd_data: std_logic_vector(7 downto 0);
+	signal reg_rd_data: std_logic_vector(15 downto 0);
 	signal reg_rd_en: std_logic;
 	signal reg_wr_addr: std_logic_vector(6 downto 0);
-	signal reg_wr_data: std_logic_vector(7 downto 0);
+	signal reg_wr_data: std_logic_vector(15 downto 0);
 	signal reg_rd_addr_a: std_logic_vector(6 downto 0);
-	signal reg_rd_data_a: std_logic_vector(7 downto 0);
+	signal reg_rd_data_a: std_logic_vector(15 downto 0);
 	
 	
 	--Various control signals and registers
@@ -87,16 +87,18 @@ architecture Behavioral of mem_spi is
 	signal addr_rxd: std_logic := '0';
 	signal rd_data_ready_reg: std_logic := '0';
 	signal fifo_read_en_hold: std_logic := '0';
+	signal lsb_rxd: std_logic := '0';
+	signal lsb_hold: std_logic_vector(7 downto 0) := (others => '0');
 	
 	--FIFO component declaration
 	component fifo is
 		port(
 			clk : IN STD_LOGIC;
 			rst : IN STD_LOGIC;
-			din : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
+			din : IN STD_LOGIC_VECTOR(23 DOWNTO 0);
 			wr_en : IN STD_LOGIC;
 			rd_en : IN STD_LOGIC;
-			dout : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
+			dout : OUT STD_LOGIC_VECTOR(23 DOWNTO 0);
 			full : OUT STD_LOGIC;
 			almost_full : OUT STD_LOGIC;
 			empty : OUT STD_LOGIC;
@@ -124,7 +126,7 @@ begin
 
 
 	regs: entity work.reg_file(Behavioral)
-		generic map (addr_len => 7, data_len => 8)
+		generic map (addr_len => 7, data_len => 16)
 		port map(
 			rd_addr => reg_rd_addr,	
 			rd_en=> reg_rd_en,
@@ -141,7 +143,7 @@ begin
 		port map(
 			clk => clk,
 			rst => fifo_rst,
-			din => '0' & addr_hold(6 downto 0) & spi_do,
+			din => '0' & addr_hold(6 downto 0) & lsb_hold & spi_do,
 			wr_en => fifo_wr_en,
 			rd_en => fifo_read_en,
 			dout => fifo_out,
@@ -165,6 +167,7 @@ begin
 			if ssel = '1' then
 				addr_rxd <= '0';
 				addr_hold <= (others => '0');
+				lsb_rxd <= '0';
 			
 			elsif do_valid = '1' then
 				addr_rxd <= '1';
@@ -172,10 +175,18 @@ begin
 				--The first byte is an address byte, so hold on to it.
 				if addr_rxd = '0' then
 					addr_hold <= spi_do;
-				
-				--Increment the address for all other bytes.
+					
+				--Proceeding bytes will be LSB, then MSB.
 				else
-					addr_hold <= std_logic_vector(unsigned(addr_hold) + 1);
+					lsb_rxd <= NOT lsb_rxd;
+					
+					--Increment address after every full int.
+					if lsb_rxd = '0' then
+						lsb_hold <= spi_do;
+					else
+						addr_hold <= std_logic_vector(unsigned(addr_hold) + 1);
+					end if;
+					
 				end if;
 
 			end if;
@@ -215,7 +226,7 @@ begin
 	reg_rd_addr_a <= addr_hold(6 downto 0);
 	
 	--Feed asynchronous read data to SPI module.
-	spi_di <= reg_rd_data_a;
+	spi_di <= reg_rd_data_a(15 downto 8) when lsb_rxd = '0' else reg_rd_data_a(7 downto 0);	--checkme
 	
 	
 	
@@ -231,7 +242,7 @@ begin
 	
 	--Write to fifo as soon as data is valid, if in write mode and the last byte wasn't the address.
 	--fifo_wr_en <= do_valid AND NOT addr_hold(7) when (byte_count > 1) else '0';
-	fifo_wr_en <= do_valid AND NOT addr_hold(7) AND addr_rxd;
+	fifo_wr_en <= do_valid AND NOT addr_hold(7) AND addr_rxd AND lsb_rxd;
 	
 	--Read from fifo until it's empty, but not if there's an external write request.
 	fifo_read_en <= not fifo_empty and not (fifo_read_en_hold and fifo_almost_empty) and not wr_en;
@@ -243,12 +254,11 @@ begin
 	
 	--Switch between fifo data and external data depending on external write enable.
 	reg_wr_addr <= wr_addr when wr_en = '1' else
-						fifo_out(14 downto 8);
+						fifo_out(22 downto 16);
 	reg_wr_data <= wr_data when wr_en = '1' else
-						fifo_out(7 downto 0);
+						fifo_out(15 downto 0);
 	
 	
 	
 
 end Behavioral;
-
