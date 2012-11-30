@@ -1,5 +1,0 @@
-vhdl work "ipcore_dir/fifo.vhd"
-vhdl work "spi_slave.vhd"
-vhdl work "reg_file.vhd"
-vhdl work "spi_test_module.vhd"
-vhdl work "spi_test.vhd"
