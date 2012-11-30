@@ -1,8 +1,0 @@
-INTSTYLE=ise
-INFILE=/home/jenn/quad/quad_fpga/toplevel.ncd
-OUTFILE=/home/jenn/quad/quad_fpga/toplevel.bit
-FAMILY=Spartan6
-PART=xc6slx25-3ftg256
-WORKINGDIR=/home/jenn/quad/quad_fpga
-LICENSE=WebPack
-USER_INFO=200898488_0_0_375

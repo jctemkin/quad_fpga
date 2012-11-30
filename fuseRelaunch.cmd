@@ -1,1 +1,0 @@
--intstyle "ise" -incremental -lib "secureip" -o "/home/jenn/quad/quad_fpga/testbench_isim_beh.exe" -prj "/home/jenn/quad/quad_fpga/testbench_beh.prj" "work.testbench" 

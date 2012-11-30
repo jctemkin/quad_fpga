@@ -1,5 +1,0 @@
-vhdl isim_temp "ipcore_dir/fifo.vhd"
-vhdl isim_temp "spi_slave.vhd"
-vhdl isim_temp "reg_file.vhd"
-vhdl isim_temp "spi_test_module.vhd"
-vhdl isim_temp "spi_test.vhd"

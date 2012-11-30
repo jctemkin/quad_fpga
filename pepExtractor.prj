@@ -1,6 +1,0 @@
-work	"ipcore_dir/fifo.vhd"
-work	"mem_spi.vhd"
-work	"pcm_gen.vhd"
-work	"reg_file.vhd"
-work	"spi_slave.vhd"
-work	"toplevel.vhd"
