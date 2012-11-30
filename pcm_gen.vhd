@@ -22,7 +22,8 @@ begin
 		-- Generate PCM
 		if rising_edge(clk_1mhz) then		
 		
-			if (unsigned(pcm_count) < (1000 + unsigned(pulse_width_reg))) AND (unsigned(pcm_count) < 1800) then
+			--Kind of important: if pulse width = 0x0
+			if (unsigned(pcm_count) < (1000 + unsigned(pulse_width_reg))) AND (unsigned(pcm_count) < 1800) AND (unsigned(pulse_width_reg) < 1020) then
 				pcm_out_reg <= '1';
 			else
 				pcm_out_reg <= '0';
