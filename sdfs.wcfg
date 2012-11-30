@@ -18,7 +18,7 @@
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="20" />
+   <WVObjectSize size="25" />
    <wvobject fp_name="/testbench/clk_12mhz" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">clk_12mhz</obj_property>
       <obj_property name="ObjectShortName">clk_12mhz</obj_property>
@@ -43,21 +43,43 @@
       <obj_property name="ElementShortName">miso</obj_property>
       <obj_property name="ObjectShortName">miso</obj_property>
    </wvobject>
-   <wvobject fp_name="/testbench/uut/\pcms(0)\/pcm/pulse_width_reg" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">pulse_width_reg[11:0]</obj_property>
-      <obj_property name="ObjectShortName">pulse_width_reg[11:0]</obj_property>
+   <wvobject fp_name="/testbench/uut/mem/spi_do_valid_delay" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">spi_do_valid_delay</obj_property>
+      <obj_property name="ObjectShortName">spi_do_valid_delay</obj_property>
    </wvobject>
-   <wvobject fp_name="/testbench/uut/state" type="other" db_ref_id="1">
-      <obj_property name="ElementShortName">state</obj_property>
-      <obj_property name="ObjectShortName">state</obj_property>
+   <wvobject fp_name="/testbench/uut/rd_data_ready" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">rd_data_ready</obj_property>
+      <obj_property name="ObjectShortName">rd_data_ready</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/uut/mem/addr_rxd" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">addr_rxd</obj_property>
+      <obj_property name="ObjectShortName">addr_rxd</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/uut/mem/reg_rd_en" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">reg_rd_en</obj_property>
+      <obj_property name="ObjectShortName">reg_rd_en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/uut/mem/lsb_rxd" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">lsb_rxd</obj_property>
+      <obj_property name="ObjectShortName">lsb_rxd</obj_property>
    </wvobject>
    <wvobject fp_name="/testbench/uut/next_state" type="other" db_ref_id="1">
       <obj_property name="ElementShortName">next_state</obj_property>
       <obj_property name="ObjectShortName">next_state</obj_property>
    </wvobject>
-   <wvobject fp_name="/testbench/uut/rd_data_ready" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">rd_data_ready</obj_property>
-      <obj_property name="ObjectShortName">rd_data_ready</obj_property>
+   <wvobject fp_name="/testbench/uut/state" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">state</obj_property>
+      <obj_property name="ObjectShortName">state</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/uut/mem/lsb_hold" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">lsb_hold[7:0]</obj_property>
+      <obj_property name="ObjectShortName">lsb_hold[7:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/uut/mem/spi_do" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">spi_do[7:0]</obj_property>
+      <obj_property name="ObjectShortName">spi_do[7:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/testbench/uut/mem/regs/regs" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">regs[0:127]</obj_property>
@@ -67,7 +89,7 @@
    <wvobject fp_name="/testbench/uut/pcm_array" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">pcm_array[0:3]</obj_property>
       <obj_property name="ObjectShortName">pcm_array[0:3]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
       <wvobject fp_name="/testbench/uut/pcm_array[0]" type="array" db_ref_id="1">
          <obj_property name="ElementShortName">[0]</obj_property>
          <obj_property name="ObjectShortName">pcm_array[0]</obj_property>

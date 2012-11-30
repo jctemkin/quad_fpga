@@ -6,7 +6,6 @@ use IEEE.NUMERIC_STD.ALL;
 entity toplevel is
 	Port ( 
 		clk_12mhz : in  STD_LOGIC;
-		--clk_100mhz: in STD_LOGIC;	--for simulation only
 		ssel : in  STD_LOGIC;
 		miso : out  STD_LOGIC;
 		mosi : in  STD_LOGIC;
@@ -19,10 +18,10 @@ architecture Behavioral of toplevel is
 
 	signal wr_en: std_logic := '0';
 	signal wr_addr: std_logic_vector(7 downto 0) := X"00"; --only bottom 7 bits are used; 8 bits used for convenience of notation
-	signal wr_data: std_logic_vector(7 downto 0) := X"00";
+	signal wr_data: std_logic_vector(15 downto 0) := X"0000";
 	signal rd_en: std_logic := '0';
 	signal rd_addr: std_logic_vector(7 downto 0) := X"00";
-	signal rd_data: std_logic_vector(7 downto 0) := X"00";
+	signal rd_data: std_logic_vector(15 downto 0) := X"0000";
 	signal rd_data_ready: std_logic := '0';
 	
 	signal fastclk: std_logic;
@@ -63,9 +62,7 @@ begin
 			LOCKED => clk_locked
 		);
 		
-	--For now.
 	clk_reset <= '0';
---	fastclk <= clk_100mhz;
 
 	mem: entity work.mem_spi(Behavioral) 
 		port map(
@@ -76,11 +73,11 @@ begin
 			mosi => mosi,
 			wr_en => wr_en,
 			wr_addr => wr_addr(6 downto 0),
-			wr_data=> wr_data,
+			wr_data => wr_data,
 			rd_en => rd_en,
 			rd_addr => rd_addr(6 downto 0),
 			rd_data => rd_data,
-			rd_data_ready=>  rd_data_ready
+			rd_data_ready=> rd_data_ready
 		);
 
 	pcms: for i in 0 to 3 generate
@@ -124,7 +121,7 @@ begin
 						rd_en <= '0';
 					end if;
 					if rd_data_ready = '1' then
-						pcm_array(0) <= rd_data & "00";
+						pcm_array(0) <= rd_data(9 downto 0);
 					end if;
 				
 				when read1 =>
@@ -134,7 +131,7 @@ begin
 						rd_en <= '0';
 					end if;
 					if rd_data_ready = '1' then
-						pcm_array(1) <= rd_data & "00";
+						pcm_array(1) <= rd_data(9 downto 0);
 					end if;
 				
 				when read2 =>
@@ -144,7 +141,7 @@ begin
 						rd_en <= '0';
 					end if;
 					if rd_data_ready = '1' then
-						pcm_array(2) <= rd_data & "00";
+						pcm_array(2) <= rd_data(9 downto 0);
 					end if;
 				
 				when read3 =>
@@ -154,7 +151,7 @@ begin
 						rd_en <= '0';
 					end if;
 					if rd_data_ready = '1' then
-						pcm_array(3) <= rd_data & "00";
+						pcm_array(3) <= rd_data(9 downto 0);
 					end if;
 					
 			end case;

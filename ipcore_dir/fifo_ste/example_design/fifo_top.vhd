@@ -76,7 +76,7 @@ entity fifo_top is
       CLK                            : IN STD_LOGIC;
       BACKUP                         : IN STD_LOGIC;
       BACKUP_MARKER                  : IN STD_LOGIC;
-      DIN                            : IN STD_LOGIC_VECTOR(16-1 downto 0);
+      DIN                            : IN STD_LOGIC_VECTOR(24-1 downto 0);
       PROG_EMPTY_THRESH              : IN STD_LOGIC_VECTOR(4-1 downto 0);
       PROG_EMPTY_THRESH_ASSERT       : IN STD_LOGIC_VECTOR(4-1 downto 0);
       PROG_EMPTY_THRESH_NEGATE       : IN STD_LOGIC_VECTOR(4-1 downto 0);
@@ -96,7 +96,7 @@ entity fifo_top is
       ALMOST_EMPTY                   : OUT STD_LOGIC;
       ALMOST_FULL                    : OUT STD_LOGIC;
       DATA_COUNT                     : OUT STD_LOGIC_VECTOR(4-1 downto 0);
-      DOUT                           : OUT STD_LOGIC_VECTOR(16-1 downto 0);
+      DOUT                           : OUT STD_LOGIC_VECTOR(24-1 downto 0);
       EMPTY                          : OUT STD_LOGIC;
       FULL                           : OUT STD_LOGIC;
       OVERFLOW                       : OUT STD_LOGIC;
@@ -320,8 +320,8 @@ architecture xilinx of fifo_top is
            RST                       : IN  std_logic;
            WR_EN 		     : IN  std_logic;
            RD_EN                     : IN  std_logic;
-           DIN                       : IN  std_logic_vector(16-1 DOWNTO 0);
-           DOUT                      : OUT std_logic_vector(16-1 DOWNTO 0);
+           DIN                       : IN  std_logic_vector(24-1 DOWNTO 0);
+           DOUT                      : OUT std_logic_vector(24-1 DOWNTO 0);
            FULL                      : OUT std_logic;
            EMPTY                     : OUT std_logic);
   end component;

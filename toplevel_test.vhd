@@ -13,7 +13,6 @@ ARCHITECTURE behavior OF testbench IS
 	COMPONENT toplevel
 		Port ( 
 			clk_12mhz : in  STD_LOGIC;
-			--clk_100mhz: in STD_LOGIC;	--for simulation only
 			ssel : in  STD_LOGIC;
 			miso : out  STD_LOGIC;
 			mosi : in  STD_LOGIC;
@@ -29,7 +28,7 @@ ARCHITECTURE behavior OF testbench IS
 	signal mosi: std_logic := '0';
 	signal sclk: std_logic := '1';
 	signal pcm_out: std_logic_VECTOR (3 downto 0) := "1111";
-	signal test_output: std_logic_vector(15 downto 0) := (others => '0');
+	signal test_output: std_logic_vector(23 downto 0) := (others => '0');
    
 	constant fastclk_period: time := 10 ns;
 	constant clk_period: time := 83.3333 ns;
@@ -40,7 +39,6 @@ BEGIN
   -- Component Instantiation
 	uut: toplevel port map(
 		clk_12mhz => clk_12mhz,
-		--clk_100mhz => clk_100mhz,
 		ssel => ssel,
 		miso => miso,
 		mosi => mosi,
@@ -56,22 +54,25 @@ BEGIN
 		clk_12mhz <= '1';
 		wait for clk_period/2;
    end process;
-	
---	fastclk_process :process
---   begin
---		clk_100mhz <= '0';
---		wait for fastclk_period/2;
---		clk_100mhz <= '1';
---		wait for fastclk_period/2;
---   end process;
+
 
   
 	tb : PROCESS
 	BEGIN
 		wait for 1 us; -- wait until global set/reset completes
 
-		test_output <= X"0080";
+		test_output <= X"000080";
+		wait for 1 ps;
 		ssel <= '0'; wait for sclk_period/4;
+		for i in 23 downto 0 loop
+			sclk <= '0';
+			mosi <= test_output(i);
+			wait for sclk_period/2;
+			sclk <= '1';
+			wait for sclk_period/2;		
+		end loop;
+		test_output <= X"00aaaa";
+		wait for 1 ps;
 		for i in 15 downto 0 loop
 			sclk <= '0';
 			mosi <= test_output(i);
@@ -79,7 +80,8 @@ BEGIN
 			sclk <= '1';
 			wait for sclk_period/2;		
 		end loop;
-		test_output <= X"4020";
+		test_output <= X"001234";
+		wait for 1 ps;
 		for i in 15 downto 0 loop
 			sclk <= '0';
 			mosi <= test_output(i);
@@ -87,8 +89,9 @@ BEGIN
 			sclk <= '1';
 			wait for sclk_period/2;		
 		end loop;
-		test_output <= X"0010";
-		for i in 7 downto 0 loop
+		test_output <= X"00abcd";
+		wait for 1 ps;
+		for i in 15 downto 0 loop
 			sclk <= '0';
 			mosi <= test_output(i);
 			wait for sclk_period/2;
@@ -101,8 +104,16 @@ BEGIN
 
 		wait for 3 ms;
 		
-		test_output <= X"0000";
+		test_output <= X"80aaaa";
 		ssel <= '0'; wait for sclk_period/4;
+		for i in 23 downto 0 loop
+			sclk <= '0';
+			mosi <= test_output(i);
+			wait for sclk_period/2;
+			sclk <= '1';
+			wait for sclk_period/2;		
+		end loop;
+		test_output <= X"00aaaa";
 		for i in 15 downto 0 loop
 			sclk <= '0';
 			mosi <= test_output(i);
@@ -110,7 +121,7 @@ BEGIN
 			sclk <= '1';
 			wait for sclk_period/2;		
 		end loop;
-		test_output <= X"1020";
+		test_output <= X"00aaaa";
 		for i in 15 downto 0 loop
 			sclk <= '0';
 			mosi <= test_output(i);
@@ -118,8 +129,8 @@ BEGIN
 			sclk <= '1';
 			wait for sclk_period/2;		
 		end loop;
-		test_output <= X"0030";
-		for i in 7 downto 0 loop
+		test_output <= X"00aaaa";
+		for i in 15 downto 0 loop
 			sclk <= '0';
 			mosi <= test_output(i);
 			wait for sclk_period/2;
