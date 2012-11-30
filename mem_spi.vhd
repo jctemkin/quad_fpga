@@ -143,7 +143,7 @@ begin
 		port map(
 			clk => clk,
 			rst => fifo_rst,
-			din => '0' & addr_hold(6 downto 0) & lsb_hold & spi_do,
+			din => '0' & addr_hold(6 downto 0) & spi_do & lsb_hold,
 			wr_en => fifo_wr_en,
 			rd_en => fifo_read_en,
 			dout => fifo_out,
@@ -226,7 +226,7 @@ begin
 	reg_rd_addr_a <= addr_hold(6 downto 0);
 	
 	--Feed asynchronous read data to SPI module.
-	spi_di <= reg_rd_data_a(15 downto 8) when lsb_rxd = '0' else reg_rd_data_a(7 downto 0);	--checkme
+	spi_di <= reg_rd_data_a(7 downto 0) when lsb_rxd = '0' else reg_rd_data_a(15 downto 8);	--checkme
 	
 	
 	
