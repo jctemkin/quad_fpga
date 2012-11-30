@@ -2,7 +2,6 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
-
 entity toplevel is
 	Port ( 
 		clk_12mhz : in  STD_LOGIC;
@@ -17,7 +16,7 @@ end toplevel;
 architecture Behavioral of toplevel is
 
 	signal wr_en: std_logic := '0';
-	signal wr_addr: std_logic_vector(7 downto 0) := X"00"; --only bottom 7 bits are used; 8 bits used for convenience of notation
+	signal wr_addr: std_logic_vector(7 downto 0) := X"00"; --only bottom 7 bits are used; 8 bits used here for convenience of notation
 	signal wr_data: std_logic_vector(15 downto 0) := X"0000";
 	signal rd_en: std_logic := '0';
 	signal rd_addr: std_logic_vector(7 downto 0) := X"00";
@@ -35,7 +34,6 @@ architecture Behavioral of toplevel is
 	signal state: state_type := idle;
 	signal next_state: state_type := idle;
 	signal last_state: state_type := idle;
-	--signal idle_counter: natural range 0 to 1048575 := 0;
 	signal idle_counter: std_logic_vector(17 downto 0) := (others => '0');
 	signal clk_1mhz_cnt: natural range 0 to 63 := 0;
 	signal clk_1mhz: std_logic := '0';
