@@ -1,3 +1,24 @@
+
+-- Register map!
+
+-- ==== Received values ====
+-- 00 - 03: PCM width regs (range 0 to 800)
+-- 04 - 06: Accelerometer X, Y, Z
+-- 07 - 09: Gyro X, Y, Z
+-- 0A - 0C: Magnetometer X, Y, Z
+-- 0D: Target pitch
+-- 0E: Target roll
+-- 0F: Target heading
+-- 10: Throttle
+-- 11 - 1F: Reserved
+
+-- ==== Calculated values ====
+-- 20: Pitch
+-- 21: Roll
+-- 22: Heading
+
+
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
@@ -27,18 +48,7 @@ architecture Behavioral of toplevel is
 	signal clk_reset: std_logic;
 	signal clk_locked: std_logic;
 	
-	type pcm_array_type is array (0 to 3) of std_logic_vector(9 downto 0);
-	signal pcm_array: pcm_array_type := (others => (others => '0'));
 	
-	type state_type is (idle, read0, read1, read2, read3);
-	signal state: state_type := idle;
-	signal next_state: state_type := idle;
-	signal last_state: state_type := idle;
-	signal idle_counter: std_logic_vector(17 downto 0) := (others => '0');
-	signal clk_1mhz_cnt: natural range 0 to 63 := 0;
-	signal clk_1mhz: std_logic := '0';
-
-
 	component clk_100mhz
 		port (
 			CLK_IN1           : in     std_logic;
@@ -77,140 +87,6 @@ begin
 			rd_data => rd_data,
 			rd_data_ready=> rd_data_ready
 		);
-
-	pcms: for i in 0 to 3 generate
-	begin
-		pcm: entity work.pcm_gen(Behavioral)
-			port map(
-				pulse_width => pcm_array(i),
-				clk_1mhz => clk_1mhz,
-				pcm_out => pcm_out(i)
-			);
-	end generate pcms;
-
-
-	clk_1mhz_proc: process(fastclk)
-	begin
-		if rising_edge(fastclk) then
-			if clk_1mhz_cnt = 49 then
-				clk_1mhz_cnt <= 0;
-				clk_1mhz <= NOT clk_1mhz;
-			else
-				clk_1mhz_cnt <= clk_1mhz_cnt + 1;
-			end if;
-		end if;
-	end process;
-			
-
-
-	fsm_sync: process (fastclk)
-	begin
-		if rising_edge(fastclk) then
-
-			
-			case (state) is
-				when idle =>
-					idle_counter <= std_logic_vector(unsigned(idle_counter) + 1);
-			
-				when read0 =>
-					if last_state = idle then
-						rd_en <= '1';
-					else
-						rd_en <= '0';
-					end if;
-					if rd_data_ready = '1' then
-						pcm_array(0) <= rd_data(9 downto 0);
-					end if;
-				
-				when read1 =>
-					if last_state = read0 then
-						rd_en <= '1';
-					else
-						rd_en <= '0';
-					end if;
-					if rd_data_ready = '1' then
-						pcm_array(1) <= rd_data(9 downto 0);
-					end if;
-				
-				when read2 =>
-					if last_state = read1 then
-						rd_en <= '1';
-					else
-						rd_en <= '0';
-					end if;
-					if rd_data_ready = '1' then
-						pcm_array(2) <= rd_data(9 downto 0);
-					end if;
-				
-				when read3 =>
-					if last_state = read2 then
-						rd_en <= '1';
-					else
-						rd_en <= '0';
-					end if;
-					if rd_data_ready = '1' then
-						pcm_array(3) <= rd_data(9 downto 0);
-					end if;
-					
-			end case;
-			
-			
-			last_state <= state;
-			state <= next_state;
-			
-			
-			
-		end if;
-	end process;
-	
-	
-	
-	fsm_async: process (state, idle_counter, rd_data_ready)
-	begin
-		case (state) is
-			
-			when idle =>
-				if unsigned(idle_counter) = "111111111111111111" then
-					next_state <= read0;
-				else
-					next_state <= idle;
-				end if;
-				rd_addr <= X"00";
-				
-			when read0 =>
-				if rd_data_ready = '1' then
-					next_state <= read1;
-				else
-					next_state <= read0;
-				end if;
-				rd_addr <= X"00";
-				
-			when read1 =>
-				if rd_data_ready = '1' then
-					next_state <= read2;
-				else
-					next_state <= read1;
-				end if;
-				rd_addr <= X"01";
-				
-			when read2 =>
-				if rd_data_ready = '1' then
-					next_state <= read3;
-				else
-					next_state <= read2;
-				end if;
-				rd_addr <= X"02";
-			
-			when read3 =>
-				if rd_data_ready = '1' then
-					next_state <= idle;
-				else
-					next_state <= read3;
-				end if;
-				rd_addr <= X"03";
-				
-		end case;
-	end process;
 	
 
 end Behavioral;
