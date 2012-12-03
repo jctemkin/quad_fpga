@@ -1,6 +1,6 @@
 #Created by Constraints Editor (xc6slx25-ftg256-3) - 2012/11/07
-NET "clk_1mhz" TNM_NET = "clk_1mhz";
-TIMESPEC TS_clk_1mhz = PERIOD "clk_1mhz" 1 us HIGH 50 %;
+#NET "clk_1mhz" TNM_NET = "clk_1mhz";
+#TIMESPEC TS_clk_1mhz = PERIOD "clk_1mhz" 1 us HIGH 50 %;
 NET "clk_12mhz" TNM_NET = "clk_12mhz";
 TIMESPEC TS_clk_12mhz = PERIOD "clk_12mhz" 83.3333 ns HIGH 50 % INPUT_JITTER 0.01 ns;
 NET "sclk" TNM_NET = "sclk";

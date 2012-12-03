@@ -10,12 +10,12 @@
 -- 0E: Target roll
 -- 0F: Target heading
 -- 10: Throttle
--- 11 - 1F: Reserved
+
 
 -- ==== Calculated values ====
--- 20: Pitch
--- 21: Roll
--- 22: Heading
+-- 80: Pitch
+-- 81: Roll
+-- 82: Heading
 
 
 
@@ -36,15 +36,26 @@ end toplevel;
 
 architecture Behavioral of toplevel is
 
-	signal wr_en: std_logic := '0';
-	signal wr_addr: std_logic_vector(7 downto 0) := X"00"; --only bottom 7 bits are used; 8 bits used here for convenience of notation
-	signal wr_data: std_logic_vector(15 downto 0) := X"0000";
-	signal rd_en: std_logic := '0';
-	signal rd_addr: std_logic_vector(7 downto 0) := X"00";
-	signal rd_data: std_logic_vector(15 downto 0) := X"0000";
-	signal rd_data_ready: std_logic := '0';
+	-- Register file and data path signals
+	constant addr_len: positive := 8;
+	constant data_len: positive := 16;
+	constant writers: positive := 1;
+
+	type wr_addr_type is array (0 to (writers - 1)) of std_logic_vector((addr_len - 1) downto 0);
+	type wr_data_type is array (0 to (writers - 1)) of std_logic_vector((data_len - 1) downto 0);
+	signal wr_addr: wr_addr_type := (others => (others => '0'));
+	signal wr_data: wr_data_type := (others => (others => '0'));
+	signal wr_en: std_logic_vector((writers - 1) downto 0) := (others => '0');
+	signal read_regs: std_logic_vector((((2 ** addr_len) * data_len) - 1) downto 0);
+
 	
-	signal fastclk: std_logic;
+	-- Convenience signals
+	signal wr_addr_concat: std_logic_vector(((writers * addr_len) - 1) downto 0);
+	signal wr_data_concat: std_logic_vector(((writers * data_len) - 1) downto 0);
+
+
+	-- Clock-related signals
+	signal clk: std_logic;
 	signal clk_reset: std_logic;
 	signal clk_locked: std_logic;
 	
@@ -65,29 +76,64 @@ begin
 	clk_100mhz_i: clk_100mhz
 		port map(
 			CLK_IN1 => clk_12mhz,
-			CLK_OUT1 => fastclk,
+			CLK_OUT1 => clk,
 			RESET  => clk_reset,
 			LOCKED => clk_locked
 		);
 		
 	clk_reset <= '0';
 
-	mem: entity work.mem_spi(Behavioral) 
+
+	pcm_controller_i: entity work.pcm_controller(Behavioral)
 		port map(
-			clk => fastclk,
+			clk_100mhz => clk,
+			pw_in => read_regs(63 downto 0),
+			pcm_out => pcm_out
+		);
+
+	
+	spi_controller_i: entity work.spi_controller(Behavioral)
+		generic map(
+			addr_len => addr_len,
+			data_len => data_len
+		)
+		port map(
+			clk => clk,
 			sclk => sclk,
 			ssel => ssel,
 			miso => miso,
 			mosi => mosi,
-			wr_en => wr_en,
-			wr_addr => wr_addr(6 downto 0),
-			wr_data => wr_data,
-			rd_en => rd_en,
-			rd_addr => rd_addr(6 downto 0),
-			rd_data => rd_data,
-			rd_data_ready=> rd_data_ready
+			write_en => wr_en(0),
+			write_addr => wr_addr(0),
+			write_data => wr_data(0), 
+			read_regs => read_regs(2047 downto 0)
 		);
-	
+		
+	-- Concatenate write signals so they can be easily passed into register file.
+	array_concat: process(wr_addr, wr_data)
+	begin
+		for i in 0 to (writers - 1) loop
+			wr_addr_concat((((i + 1) * addr_len) - 1) downto (i * addr_len)) <= wr_addr(i);
+			wr_data_concat((((i + 1) * data_len) - 1) downto (i * data_len)) <= wr_data(i);
+		end loop;
+	end process;
+		
+	reg_file_i: entity work.reg_file(Behavioral)
+		generic map(
+			addr_len => addr_len,
+			data_len => data_len,
+			writers => writers
+		)
+		port map(
+			reg_read => read_regs,
+			write_data => wr_data_concat,
+			write_addr => wr_addr_concat,
+			write_en => wr_en,
+			clk  => clk
+		);
+		
+
+		
 
 end Behavioral;
 
