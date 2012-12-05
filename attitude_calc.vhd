@@ -12,60 +12,69 @@ entity attitude_calc is
 		read_regs : in  STD_LOGIC_VECTOR (143 downto 0);
 		write_en : out  STD_LOGIC;
 		write_addr : out  STD_LOGIC_VECTOR (7 downto 0);
-		write_data : out  STD_LOGIC_VECTOR (15 downto 0)
+		write_data : out  STD_LOGIC_VECTOR (15 downto 0);
+		reset: in std_logic
 	);
 end attitude_calc;
 
 architecture Behavioral of attitude_calc is
-	constant ax_offset: std_logic_vector(17 downto 0) := signed(-430);
-	constant ay_offset: std_logic_vector(17 downto 0) := signed(8);
-	constant az_offset: std_logic_vector(17 downto 0) := signed(85);
+	constant ax_offset: std_logic_vector(17 downto 0) := std_logic_vector(to_signed(-430,18));
+	constant ay_offset: std_logic_vector(17 downto 0) := std_logic_vector(to_signed(8, 18));
+	constant az_offset: std_logic_vector(17 downto 0) := std_logic_vector(to_signed(85,18));
 	
-	constant gx_offset: std_logic_vector(17 downto 0) := signed(32);
-	constant gy_offset: std_logic_vector(17 downto 0) := signed(28);
-	constant gz_offset: std_logic_vector(17 downto 0) := signed(4);
+	constant gx_offset: std_logic_vector(17 downto 0) := std_logic_vector(to_signed(32,18));
+	constant gy_offset: std_logic_vector(17 downto 0) := std_logic_vector(to_signed(28,18));
+	constant gz_offset: std_logic_vector(17 downto 0) := std_logic_vector(to_signed(4,18));
 
 
-	constant Dt: std_logic_vector(17 downto 0) := "010100011110101110"; -- * 2^-25 = 0.0025; Time constant in s
+	constant Dt: std_logic_vector(17 downto 0) := "010100111110001011"; -- * 2^-38 = 0.0000025; Time constant in s / 1000 (from millirads)
 	constant Kd: std_logic_vector(17 downto 0) := "011111001110000011"; --0.9756098, 1 integer place; depends on Dt
 	constant Kp: std_logic_vector(17 downto 0) := "000000110001111101"; --0.0243902, 1 integer place depends on Dt
 	
 	--Scale gyro readings from 65.5 lsb/(deg/s) to milliradians/s
-	--TODO: change gyro range on uProc to +-500deg
-	--Also increase sampling rate, forsrs
-	constant gyro_scale: std_logic_vector(17 downto 0) := "010001000011011011"-- * 2^-18 = 0.266462;
+	constant gyro_scale: std_logic_vector(17 downto 0) := "010001000011011011";-- * 2^-18 = 0.266462;
+	
+	constant pitch_corr: std_logic_vector(17 downto 0) := std_logic_vector(to_signed(0,18));
+	constant roll_corr: std_logic_vector(17 downto 0) := std_logic_vector(to_signed(0,18));
 	
 
-	signal ax_raw, ayraw, azraw: std_logic_vector(17 downto 0);
+	signal ax_raw, ay_raw, az_raw: std_logic_vector(17 downto 0);
 	signal axc, ayc, azc: std_logic_vector(17 downto 0);
+	signal axc_range, ayc_range, azc_range: std_logic_vector(17 downto 0);
 	signal acc_pitch, acc_roll: std_logic_vector(17 downto 0);
 		
 	signal gx_raw, gy_raw, gz_raw: std_logic_vector(17 downto 0); --*2^0
-	signal gx, gy, gz: std_logic_vector(17 downto 0); --todo: find exponent for this
-	signal gx_int, gy_int: std_logic_vector(17 downto 0);
+	signal gx, gy, gz: std_logic_vector(47 downto 0); --todo: find exponent for this
+	signal gx_int, gy_int: std_logic_vector(47 downto 0);
 	
 	
-	signal last_pitch, last_roll: std_logic_vector(17 downto 0);
-	signal p_pitch, d_pitch: std_logic_vector(17 downto 0);	
-	signal p_roll, d_roll: std_logic_vector(17 downto 0);
-	signal pitch, roll: std_logic_vector(17 downto 0);
-	signal m_pitch, m_roll: std_logic_vector(17 downto 0);
+	signal last_pitch, last_roll: std_logic_vector(47 downto 0);
+	signal p_pitch, d_pitch: std_logic_vector(47 downto 0);	
+	signal p_roll, d_roll: std_logic_vector(47 downto 0);
+	signal pitch, roll: std_logic_vector(47 downto 0);
+	signal m_pitch, m_roll: std_logic_vector(47 downto 0);
 
 	signal atan_rdy1, atan_rdy2: std_logic;
+
+	signal rst: std_logic := '0';
+	signal clk_en: std_logic := '0';
+	signal atan_rst: std_logic;
 	
-	
+	--latency is ~20 cycles
 	component arctan
 		port (
-			x_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-			y_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-			phase_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
+			x_in : IN STD_LOGIC_VECTOR(17 DOWNTO 0);
+			y_in : IN STD_LOGIC_VECTOR(17 DOWNTO 0);
+			phase_out : OUT STD_LOGIC_VECTOR(17 DOWNTO 0);
 			rdy : OUT STD_LOGIC;
-			clk : IN STD_LOGIC
+			clk : IN STD_LOGIC;
+			sclr : IN STD_LOGIC	--Active high
 		);
 	end component;
 
 begin
 
+	atan_rst <= reset;
 	--=======================--
 	-- Load data from register file (and sign-extend)
 	ax_raw <= std_logic_vector(resize(signed(read_regs(15 downto 0)), 18));
@@ -86,7 +95,9 @@ begin
 		port map(
 			a => gyro_scale,
 			b => gx_raw,
+			c => std_logic_vector(to_signed(0,48)),
 			d => gx_offset,
+			c_p_in => std_logic_vector(to_signed(0,48)),
 			p => gx,
 			
 			rst => rst,
@@ -98,9 +109,11 @@ begin
 	--Multiply-postadd: op=0x1D; P=c+(a*b) = (gx * Dt) + last_pitch
 	dsp_gx2: entity work.dsp48a1_wrapper(Behavioral)
 		port map(
-			a => gx(,
+			a => gx(35 downto 18),
 			b => Dt,
 			c => last_pitch,
+			d => std_logic_vector(to_signed(0,18)),
+			c_p_in => std_logic_vector(to_signed(0,48)),
 			p => gx_int,
 			
 			rst => rst,
@@ -112,8 +125,11 @@ begin
 	--Multiply: op=0x01; C_P_out=a*b = gx_int * Kp (cascade to dsp_pitch)
 	dsp_p_pitch: entity work.dsp48a1_wrapper(Behavioral)
 		port map(
-			a => gx_int,
+			a => gx_int(35 downto 18),
 			b => Kp,
+			c => std_logic_vector(to_signed(0,48)),
+			d => std_logic_vector(to_signed(0,18)),
+			c_p_in => std_logic_vector(to_signed(0,48)),
 			c_p_out => p_pitch,
 			
 			rst => rst,
@@ -131,7 +147,9 @@ begin
 		port map(
 			a => gyro_scale,
 			b => gy_raw,
+			c => std_logic_vector(to_signed(0,48)),
 			d => gy_offset,
+			c_p_in => std_logic_vector(to_signed(0,48)),
 			p => gy,
 			
 			rst => rst,
@@ -143,9 +161,11 @@ begin
 	--Multiply-postadd: op=0x1D; P=c+(a*b) = (gy * Dt) + last_roll
 	dsp_gy2: entity work.dsp48a1_wrapper(Behavioral)
 		port map(
-			a => gy,
+			a => gy(35 downto 18),
 			b => Dt,
 			c => last_roll,
+			d => std_logic_vector(to_signed(0,18)),
+			c_p_in => std_logic_vector(to_signed(0,48)),
 			p => gy_int,
 			
 			rst => rst,
@@ -157,8 +177,11 @@ begin
 	--Multiply: op=0x01; C_P_out=a*b = gy_int * Kp (cascade to dsp_roll)
 	dsp_p_roll: entity work.dsp48a1_wrapper(Behavioral)
 		port map(
-			a => gy_int,
+			a => gy_int(35 downto 18),
 			b => Kp,
+			c => std_logic_vector(to_signed(0,48)),
+			d => std_logic_vector(to_signed(0,18)),
+			c_p_in => std_logic_vector(to_signed(0,48)),
 			c_p_out => p_roll,
 			
 			rst => rst,
@@ -173,27 +196,34 @@ begin
 	-- Accelerometer section
 	
 	--Add stage: add constants to raw sensor values
-	axc <= signed(ax_raw) + signed(ax_offset);
-	ayc <= signed(ay_raw) + signed(ay_offset);
-	azc <= signed(az_raw) + signed(az_offset);
+	axc <= std_logic_vector(signed(ax_raw) + signed(ax_offset));
+	ayc <= std_logic_vector(signed(ay_raw) + signed(ay_offset));
+	azc <= std_logic_vector(signed(az_raw) + signed(az_offset));
+	
+	--Shift accelerometer readings into range for arctan
+	axc_range <= axc(17) & '0' & axc(16 downto 1); --Divide by two, regardless of sign
+	ayc_range <= ayc(17) & '0' & ayc(16 downto 1);
+	azc_range <= azc(17) & '0' & azc(16 downto 1);
 	
 	--Trig stage: take arctangent of offset sensor values
 	arctan_i1: arctan
 		port map(
-			x_in => axc,
-			y_in => azc,
+			x_in => azc_range,
+			y_in => axc_range,
 			phase_out => acc_pitch,
 			rdy => atan_rdy1,
-			clk => clk
+			clk => clk,
+			sclr => atan_rst
 		);
 		
 	arctan_i2: arctan
 		port map(
-			x_in => ayc,
-			y_in => azc,
+			x_in => azc_range,
+			y_in => ayc_range,
 			phase_out => acc_roll,
 			rdy => atan_rdy2,
-			clk => clk
+			clk => clk,
+			sclr => atan_rst
 		);
 	
 	
@@ -207,6 +237,8 @@ begin
 		port map(
 			a => acc_pitch,
 			b => Kd,
+			c => std_logic_vector(to_signed(0,48)),
+			d => std_logic_vector(to_signed(0,18)),
 			c_p_in => p_pitch,
 			p => pitch,
 			
@@ -221,6 +253,8 @@ begin
 		port map(
 			a => acc_roll,
 			b => Kd,
+			c => std_logic_vector(to_signed(0,48)),
+			d => std_logic_vector(to_signed(0,18)),
 			c_p_in => p_roll,
 			p => roll,
 			
@@ -231,8 +265,8 @@ begin
 		);
 	
 	--Add stage: correct for mounting angle
-	m_pitch <= signed(pitch) + signed(pitch_corr);
-	m_roll <= signed(roll) + signed(roll_corr);
+	m_pitch <= std_logic_vector(signed(pitch) + signed(pitch_corr));
+	m_roll <= std_logic_vector(signed(roll) + signed(roll_corr));
 	
 	
 

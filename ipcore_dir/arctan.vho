@@ -45,11 +45,12 @@
 ------------- Begin Cut here for COMPONENT Declaration ------ COMP_TAG
 COMPONENT arctan
   PORT (
-    x_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-    y_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-    phase_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
+    x_in : IN STD_LOGIC_VECTOR(17 DOWNTO 0);
+    y_in : IN STD_LOGIC_VECTOR(17 DOWNTO 0);
+    phase_out : OUT STD_LOGIC_VECTOR(17 DOWNTO 0);
     rdy : OUT STD_LOGIC;
-    clk : IN STD_LOGIC
+    clk : IN STD_LOGIC;
+    sclr : IN STD_LOGIC
   );
 END COMPONENT;
 -- COMP_TAG_END ------ End COMPONENT Declaration ------------
@@ -64,7 +65,8 @@ your_instance_name : arctan
     y_in => y_in,
     phase_out => phase_out,
     rdy => rdy,
-    clk => clk
+    clk => clk,
+    sclr => sclr
   );
 -- INST_TAG_END ------ End INSTANTIATION Template ------------
 

@@ -43,7 +43,7 @@ entity dsp48a1_wrapper is
 		rst: in std_logic;
 		clk: in std_logic;
 		clk_en: in std_logic;
-		opmode: in std_logic(7 downto 0)
+		opmode: in std_logic_vector(7 downto 0)
 	);
 end dsp48a1_wrapper;
 
@@ -75,7 +75,7 @@ begin
 			
 			-- Data Ports: 1-bit (each) output: Data input and output ports
 			--CARRYOUT => c_carry_out,     -- 1-bit output: carry output (if used, connect to CARRYIN pin of another DSP48A1)
-			CARRYOUTF => carry_out,   -- 1-bit output: fabric carry output
+			CARRYOUTF => c_out,   -- 1-bit output: fabric carry output
 			M => m,                   -- 36-bit output: fabric multiplier data output
 			P => p,                   -- 48-bit output: data output
 			

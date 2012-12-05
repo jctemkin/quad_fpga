@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="/home/jenn/quad/quad_fpga/attitude_calc_tb_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="attitude_calc_tb" />
+            <top_module name="bip_utils_pkg_v2_0" />
+            <top_module name="cordic_v4_0_pack" />
+            <top_module name="math_real" />
+            <top_module name="mult_gen_pkg_v11_0" />
+            <top_module name="numeric_std" />
+            <top_module name="std_logic_1164" />
+            <top_module name="std_logic_arith" />
+            <top_module name="std_logic_signed" />
+            <top_module name="textio" />
+            <top_module name="vcomponents" />
+            <top_module name="vital_primitives" />
+            <top_module name="vital_timing" />
+            <top_module name="vpkg" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="23" />
+   <wvobject fp_name="/attitude_calc_tb/clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/attitude_calc_tb/ax" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">ax</obj_property>
+      <obj_property name="ObjectShortName">ax</obj_property>
+   </wvobject>
+   <wvobject fp_name="/attitude_calc_tb/ay" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">ay</obj_property>
+      <obj_property name="ObjectShortName">ay</obj_property>
+   </wvobject>
+   <wvobject fp_name="/attitude_calc_tb/az" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">az</obj_property>
+      <obj_property name="ObjectShortName">az</obj_property>
+   </wvobject>
+   <wvobject fp_name="/attitude_calc_tb/gx" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">gx</obj_property>
+      <obj_property name="ObjectShortName">gx</obj_property>
+   </wvobject>
+   <wvobject fp_name="/attitude_calc_tb/gy" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">gy</obj_property>
+      <obj_property name="ObjectShortName">gy</obj_property>
+   </wvobject>
+   <wvobject fp_name="/attitude_calc_tb/gz" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">gz</obj_property>
+      <obj_property name="ObjectShortName">gz</obj_property>
+   </wvobject>
+   <wvobject fp_name="/attitude_calc_tb/uut/ax_raw" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ax_raw[17:0]</obj_property>
+      <obj_property name="ObjectShortName">ax_raw[17:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/attitude_calc_tb/uut/ay_raw" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ay_raw[17:0]</obj_property>
+      <obj_property name="ObjectShortName">ay_raw[17:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/attitude_calc_tb/uut/az_raw" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">az_raw[17:0]</obj_property>
+      <obj_property name="ObjectShortName">az_raw[17:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/attitude_calc_tb/uut/axc" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">axc[17:0]</obj_property>
+      <obj_property name="ObjectShortName">axc[17:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/attitude_calc_tb/uut/axc_range" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">axc_range[17:0]</obj_property>
+      <obj_property name="ObjectShortName">axc_range[17:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/attitude_calc_tb/uut/ayc" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ayc[17:0]</obj_property>
+      <obj_property name="ObjectShortName">ayc[17:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/attitude_calc_tb/uut/ayc_range" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ayc_range[17:0]</obj_property>
+      <obj_property name="ObjectShortName">ayc_range[17:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/attitude_calc_tb/uut/azc" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">azc[17:0]</obj_property>
+      <obj_property name="ObjectShortName">azc[17:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/attitude_calc_tb/uut/azc_range" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">azc_range[17:0]</obj_property>
+      <obj_property name="ObjectShortName">azc_range[17:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/attitude_calc_tb/uut/acc_pitch" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">acc_pitch[17:0]</obj_property>
+      <obj_property name="ObjectShortName">acc_pitch[17:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/attitude_calc_tb/uut/acc_roll" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">acc_roll[17:0]</obj_property>
+      <obj_property name="ObjectShortName">acc_roll[17:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/attitude_calc_tb/uut/atan_rdy2" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">atan_rdy2</obj_property>
+      <obj_property name="ObjectShortName">atan_rdy2</obj_property>
+   </wvobject>
+   <wvobject fp_name="/attitude_calc_tb/uut/atan_rdy1" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">atan_rdy1</obj_property>
+      <obj_property name="ObjectShortName">atan_rdy1</obj_property>
+   </wvobject>
+   <wvobject fp_name="/attitude_calc_tb/uut/arctan_i1/x_in" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">x_in[17:0]</obj_property>
+      <obj_property name="ObjectShortName">x_in[17:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/attitude_calc_tb/uut/arctan_i1/y_in" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">y_in[17:0]</obj_property>
+      <obj_property name="ObjectShortName">y_in[17:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/attitude_calc_tb/uut/arctan_i1/phase_out" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">phase_out[17:0]</obj_property>
+      <obj_property name="ObjectShortName">phase_out[17:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+</wave_config>

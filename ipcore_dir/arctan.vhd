@@ -42,11 +42,12 @@ LIBRARY XilinxCoreLib;
 -- synthesis translate_on
 ENTITY arctan IS
   PORT (
-    x_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-    y_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-    phase_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
+    x_in : IN STD_LOGIC_VECTOR(17 DOWNTO 0);
+    y_in : IN STD_LOGIC_VECTOR(17 DOWNTO 0);
+    phase_out : OUT STD_LOGIC_VECTOR(17 DOWNTO 0);
     rdy : OUT STD_LOGIC;
-    clk : IN STD_LOGIC
+    clk : IN STD_LOGIC;
+    sclr : IN STD_LOGIC
   );
 END arctan;
 
@@ -54,11 +55,12 @@ ARCHITECTURE arctan_a OF arctan IS
 -- synthesis translate_off
 COMPONENT wrapped_arctan
   PORT (
-    x_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-    y_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-    phase_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
+    x_in : IN STD_LOGIC_VECTOR(17 DOWNTO 0);
+    y_in : IN STD_LOGIC_VECTOR(17 DOWNTO 0);
+    phase_out : OUT STD_LOGIC_VECTOR(17 DOWNTO 0);
     rdy : OUT STD_LOGIC;
-    clk : IN STD_LOGIC
+    clk : IN STD_LOGIC;
+    sclr : IN STD_LOGIC
   );
 END COMPONENT;
 
@@ -77,14 +79,14 @@ END COMPONENT;
       c_has_phase_out => 1,
       c_has_rdy => 1,
       c_has_rfd => 0,
-      c_has_sclr => 0,
+      c_has_sclr => 1,
       c_has_x_in => 1,
       c_has_x_out => 0,
       c_has_y_in => 1,
       c_has_y_out => 0,
-      c_input_width => 16,
+      c_input_width => 18,
       c_iterations => 0,
-      c_output_width => 16,
+      c_output_width => 18,
       c_phase_format => 0,
       c_pipeline_mode => -2,
       c_precision => 0,
@@ -103,7 +105,8 @@ U0 : wrapped_arctan
     y_in => y_in,
     phase_out => phase_out,
     rdy => rdy,
-    clk => clk
+    clk => clk,
+    sclr => sclr
   );
 -- synthesis translate_on
 
