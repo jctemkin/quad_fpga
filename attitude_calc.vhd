@@ -17,21 +17,31 @@ entity attitude_calc is
 end attitude_calc;
 
 architecture Behavioral of attitude_calc is
+	constant ax_offset: std_logic_vector(17 downto 0) := signed(-430);
+	constant ay_offset: std_logic_vector(17 downto 0) := signed(8);
+	constant az_offset: std_logic_vector(17 downto 0) := signed(85);
+	
+	constant gx_offset: std_logic_vector(17 downto 0) := signed(32);
+	constant gy_offset: std_logic_vector(17 downto 0) := signed(28);
+	constant gz_offset: std_logic_vector(17 downto 0) := signed(4);
 
-	signal ax_offset, ay_offset, az_offset: std_logic_vector(17 downto 0);
-	signal gx_offset, gy_offset, gz_offset: std_logic_vector(17 downto 0);
-	signal Dt: std_logic_vector(17 downto 0);
-	signal Kd: std_logic_vector(17 downto 0);
-	signal Kp: std_logic_vector(17 downto 0);
+
+	constant Dt: std_logic_vector(17 downto 0) := "010100011110101110"; -- * 2^-25 = 0.0025; Time constant in s
+	constant Kd: std_logic_vector(17 downto 0) := "011111001110000011"; --0.9756098, 1 integer place; depends on Dt
+	constant Kp: std_logic_vector(17 downto 0) := "000000110001111101"; --0.0243902, 1 integer place depends on Dt
+	
+	--Scale gyro readings from 65.5 lsb/(deg/s) to milliradians/s
+	--TODO: change gyro range on uProc to +-500deg
+	--Also increase sampling rate, forsrs
+	constant gyro_scale: std_logic_vector(17 downto 0) := "010001000011011011"-- * 2^-18 = 0.266462;
 	
 
 	signal ax_raw, ayraw, azraw: std_logic_vector(17 downto 0);
 	signal axc, ayc, azc: std_logic_vector(17 downto 0);
 	signal acc_pitch, acc_roll: std_logic_vector(17 downto 0);
 		
-	signal gx_raw, gy_raw, gz_raw: std_logic_vector(17 downto 0);
-	signal gx_scale, gy_scale, gz_scale: std_logic_vector(17 downto 0);	--scale gyro readings to be radians / ms, with 3 integer places (counting sign bit)
-	signal gx, gy, gz: std_logic_vector(17 downto 0);
+	signal gx_raw, gy_raw, gz_raw: std_logic_vector(17 downto 0); --*2^0
+	signal gx, gy, gz: std_logic_vector(17 downto 0); --todo: find exponent for this
 	signal gx_int, gy_int: std_logic_vector(17 downto 0);
 	
 	
@@ -55,17 +65,16 @@ architecture Behavioral of attitude_calc is
 	end component;
 
 begin
+
 	--=======================--
-	-- Load data from register file
+	-- Load data from register file (and sign-extend)
 	ax_raw <= std_logic_vector(resize(signed(read_regs(15 downto 0)), 18));
 	ay_raw <= std_logic_vector(resize(signed(read_regs(31 downto 16)), 18));
 	az_raw <= std_logic_vector(resize(signed(read_regs(47 downto 32)), 18));
 	
-	
-	
-	
-	
-	
+	gx_raw <= std_logic_vector(resize(signed(read_regs(63 downto 48)), 18));
+	gy_raw <= std_logic_vector(resize(signed(read_regs(79 downto 64)), 18));
+	gz_raw <= std_logic_vector(resize(signed(read_regs(95 downto 80)), 18));
 	
 	
 	--=======================--
@@ -73,10 +82,9 @@ begin
 	-- Pitch:
 	
 	--Preadd-multiply: op=0x11; P=a*(b+d) = (gx_raw + gx_offset) * gx_scale
-	--TODO: correct for overflow
 	dsp_gx1: entity work.dsp48a1_wrapper(Behavioral)
 		port map(
-			a => gx_scale,
+			a => gyro_scale,
 			b => gx_raw,
 			d => gx_offset,
 			p => gx,
@@ -90,7 +98,7 @@ begin
 	--Multiply-postadd: op=0x1D; P=c+(a*b) = (gx * Dt) + last_pitch
 	dsp_gx2: entity work.dsp48a1_wrapper(Behavioral)
 		port map(
-			a => gx,
+			a => gx(,
 			b => Dt,
 			c => last_pitch,
 			p => gx_int,
@@ -121,7 +129,7 @@ begin
 	--Preadd-multiply: op=0x11; P=a*(b+d) = (gy_raw + gy_offset) * gy_scale
 	dsp_gy1: entity work.dsp48a1_wrapper(Behavioral)
 		port map(
-			a => gy_scale,
+			a => gyro_scale,
 			b => gy_raw,
 			d => gy_offset,
 			p => gy,
@@ -165,7 +173,6 @@ begin
 	-- Accelerometer section
 	
 	--Add stage: add constants to raw sensor values
-	--TODO: prevent overflow
 	axc <= signed(ax_raw) + signed(ax_offset);
 	ayc <= signed(ay_raw) + signed(ay_offset);
 	azc <= signed(az_raw) + signed(az_offset);
@@ -224,7 +231,6 @@ begin
 		);
 	
 	--Add stage: correct for mounting angle
-	--TODO: overflow
 	m_pitch <= signed(pitch) + signed(pitch_corr);
 	m_roll <= signed(roll) + signed(roll_corr);
 	
