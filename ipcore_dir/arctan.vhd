@@ -89,7 +89,7 @@ END COMPONENT;
       c_output_width => 18,
       c_phase_format => 0,
       c_pipeline_mode => -2,
-      c_precision => 0,
+      c_precision => 36,
       c_reg_inputs => 1,
       c_reg_outputs => 1,
       c_round_mode => 0,

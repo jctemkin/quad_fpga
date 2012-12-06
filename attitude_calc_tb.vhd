@@ -73,15 +73,42 @@ BEGIN
 
       wait for clk_period*10;
       -- insert stimulus here 
-		ax <= 1;
-		ay <= 1;
-		az <= -900;
-		gx <= 0;
+		ax <= 0;
+		ay <= 10;
+		az <= 10;
+		gx <= 1;
 		gy <= 0;
 		gz <= 0;
 		wait for clk_period;
 		reset <= '0';
+		wait for clk_period*200;
 		
+		reset <= '1';
+		ax <= 10;
+		ay <= -10;
+		az <= 0;
+		gx <= -32767;
+		wait for clk_period;
+		reset <= '0';
+		wait for clk_period*200;
+		
+		
+		reset <= '1';
+		ax <= 0;
+		ay <= 0;
+		az <= 10;
+		gx <= 32767;
+		wait for clk_period;
+		reset <= '0';
+		wait for clk_period*200;
+		
+		
+		reset <= '1';
+		ax <= 10;
+		ay <= -4;
+		wait for clk_period;
+		reset <= '0';
+		wait for clk_period*200;
 
       wait;
    end process;

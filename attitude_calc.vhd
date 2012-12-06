@@ -18,18 +18,18 @@ entity attitude_calc is
 end attitude_calc;
 
 architecture Behavioral of attitude_calc is
-	constant ax_offset: std_logic_vector(17 downto 0) := std_logic_vector(to_signed(-430,18));
-	constant ay_offset: std_logic_vector(17 downto 0) := std_logic_vector(to_signed(8, 18));
-	constant az_offset: std_logic_vector(17 downto 0) := std_logic_vector(to_signed(85,18));
+	constant ax_offset: std_logic_vector(17 downto 0) := "000000000000000000"; --std_logic_vector(to_signed(-430,18));
+	constant ay_offset: std_logic_vector(17 downto 0) := "000000000000000000"; --std_logic_vector(to_signed(8, 18));
+	constant az_offset: std_logic_vector(17 downto 0) := "000000000000000000"; --std_logic_vector(to_signed(85,18));
 	
-	constant gx_offset: std_logic_vector(17 downto 0) := std_logic_vector(to_signed(32,18));
-	constant gy_offset: std_logic_vector(17 downto 0) := std_logic_vector(to_signed(28,18));
-	constant gz_offset: std_logic_vector(17 downto 0) := std_logic_vector(to_signed(4,18));
+	constant gx_offset: std_logic_vector(17 downto 0) := "000000000000000000"; --std_logic_vector(to_signed(32,18));
+	constant gy_offset: std_logic_vector(17 downto 0) := "000000000000000000"; --std_logic_vector(to_signed(28,18));
+	constant gz_offset: std_logic_vector(17 downto 0) := "000000000000000000"; --std_logic_vector(to_signed(4,18));
 
 
 	constant Dt: std_logic_vector(17 downto 0) := "010100111110001011"; -- * 2^-38 = 0.0000025; Time constant in s / 1000 (from millirads)
-	constant Kd: std_logic_vector(17 downto 0) := "011111001110000011"; --0.9756098, 1 integer place; depends on Dt
-	constant Kp: std_logic_vector(17 downto 0) := "000000110001111101"; --0.0243902, 1 integer place depends on Dt
+	constant Kp: std_logic_vector(17 downto 0) := "011111001110000011"; --0.9756098, 1 integer place; depends on Dt
+	constant Kd: std_logic_vector(17 downto 0) := "000000110001111101"; --0.0243902, 1 integer place depends on Dt
 	
 	--Scale gyro readings from 65.5 lsb/(deg/s) to milliradians/s
 	constant gyro_scale: std_logic_vector(17 downto 0) := "010001000011011011";-- * 2^-18 = 0.266462;
@@ -48,7 +48,7 @@ architecture Behavioral of attitude_calc is
 	signal gx_int, gy_int: std_logic_vector(47 downto 0);
 	
 	
-	signal last_pitch, last_roll: std_logic_vector(47 downto 0);
+	signal last_pitch, last_roll: std_logic_vector(47 downto 0) := (others => '0');
 	signal p_pitch, d_pitch: std_logic_vector(47 downto 0);	
 	signal p_roll, d_roll: std_logic_vector(47 downto 0);
 	signal pitch, roll: std_logic_vector(47 downto 0);
@@ -56,11 +56,12 @@ architecture Behavioral of attitude_calc is
 
 	signal atan_rdy1, atan_rdy2: std_logic;
 
-	signal rst: std_logic := '0';
-	signal clk_en: std_logic := '0';
+	signal rst: std_logic;
+	signal clk_en: std_logic := '1';
 	signal atan_rst: std_logic;
 	
-	--latency is ~20 cycles
+	--latency is 22 cycles
+	--latency of DSP slice is 3 cycles
 	component arctan
 		port (
 			x_in : IN STD_LOGIC_VECTOR(17 DOWNTO 0);
@@ -75,6 +76,7 @@ architecture Behavioral of attitude_calc is
 begin
 
 	atan_rst <= reset;
+	rst <= reset;
 	--=======================--
 	-- Load data from register file (and sign-extend)
 	ax_raw <= std_logic_vector(resize(signed(read_regs(15 downto 0)), 18));
@@ -98,23 +100,23 @@ begin
 			c => std_logic_vector(to_signed(0,48)),
 			d => gx_offset,
 			c_p_in => std_logic_vector(to_signed(0,48)),
-			p => gx,
+			p => gx,	--millirads/s, with 18 fractional places
 			
 			rst => rst,
 			clk => clk,
 			clk_en => clk_en,
-			opmode => X"11"	
+			opmode => X"11"
 		);
 	
 	--Multiply-postadd: op=0x1D; P=c+(a*b) = (gx * Dt) + last_pitch
 	dsp_gx2: entity work.dsp48a1_wrapper(Behavioral)
 		port map(
-			a => gx(35 downto 18),
+			a => gx(32 downto 15), --millirads/s, with 3 fractional places
 			b => Dt,
 			c => last_pitch,
 			d => std_logic_vector(to_signed(0,18)),
 			c_p_in => std_logic_vector(to_signed(0,48)),
-			p => gx_int,
+			p => gx_int,	--rads, with 38 fractional places
 			
 			rst => rst,
 			clk => clk,
@@ -125,17 +127,17 @@ begin
 	--Multiply: op=0x01; C_P_out=a*b = gx_int * Kp (cascade to dsp_pitch)
 	dsp_p_pitch: entity work.dsp48a1_wrapper(Behavioral)
 		port map(
-			a => gx_int(35 downto 18),
+			a => gx_int(33 downto 16), --rads, with 4 additional fractional places preceding
 			b => Kp,
 			c => std_logic_vector(to_signed(0,48)),
 			d => std_logic_vector(to_signed(0,18)),
 			c_p_in => std_logic_vector(to_signed(0,48)),
-			c_p_out => p_pitch,
+			c_p_out => p_pitch,	--rads, with 39 fractional places (point between bits 39 and 38)
 			
 			rst => rst,
 			clk => clk,
 			clk_en => clk_en,
-			opmode => X"01"	
+			opmode => X"01"
 		);
 		
 		
@@ -161,7 +163,7 @@ begin
 	--Multiply-postadd: op=0x1D; P=c+(a*b) = (gy * Dt) + last_roll
 	dsp_gy2: entity work.dsp48a1_wrapper(Behavioral)
 		port map(
-			a => gy(35 downto 18),
+			a => gy(32 downto 15),
 			b => Dt,
 			c => last_roll,
 			d => std_logic_vector(to_signed(0,18)),
@@ -177,7 +179,7 @@ begin
 	--Multiply: op=0x01; C_P_out=a*b = gy_int * Kp (cascade to dsp_roll)
 	dsp_p_roll: entity work.dsp48a1_wrapper(Behavioral)
 		port map(
-			a => gy_int(35 downto 18),
+			a => gy_int(33 downto 16),
 			b => Kp,
 			c => std_logic_vector(to_signed(0,48)),
 			d => std_logic_vector(to_signed(0,18)),
@@ -187,7 +189,7 @@ begin
 			rst => rst,
 			clk => clk,
 			clk_en => clk_en,
-			opmode => X"01"	
+			opmode => X"01"
 		);
 	
 	
@@ -201,9 +203,9 @@ begin
 	azc <= std_logic_vector(signed(az_raw) + signed(az_offset));
 	
 	--Shift accelerometer readings into range for arctan
-	axc_range <= axc(17) & '0' & axc(16 downto 1); --Divide by two, regardless of sign
-	ayc_range <= ayc(17) & '0' & ayc(16 downto 1);
-	azc_range <= azc(17) & '0' & azc(16 downto 1);
+	axc_range <= std_logic_vector(signed(shift_right(signed(axc),1)));
+	ayc_range <= std_logic_vector(signed(shift_right(signed(ayc),1)));
+	azc_range <= std_logic_vector(signed(shift_right(signed(azc),1)));
 	
 	--Trig stage: take arctangent of offset sensor values
 	arctan_i1: arctan
@@ -232,36 +234,36 @@ begin
 	--=========================--
 	-- Combine gyro and accelerometer data
 	
-	--Cascade multiply-postadd: op=0x05; P=P_in+(a*b) = (atan_out1 * Kd) + p_pitch
+	--Multiply-postadd: op=0x0D; P=C+(a*b) = (atan_out1 * Kd) + p_pitch
 	dsp_pitch: entity work.dsp48a1_wrapper(Behavioral)
 		port map(
-			a => acc_pitch,
+			a => acc_pitch,	--rads, with 15 fractional places
 			b => Kd,
-			c => std_logic_vector(to_signed(0,48)),
+			c => std_logic_vector(resize(signed(p_pitch(39 downto 7)), 48)),
 			d => std_logic_vector(to_signed(0,18)),
-			c_p_in => p_pitch,
-			p => pitch,
+			c_p_in => std_logic_vector(to_signed(0,48)),
+			p => pitch,	--rads, with 32 fractional places (point between bits 32 and 31)
 			
 			rst => rst,
 			clk => clk,
 			clk_en => clk_en,
-			opmode => X"05"	
+			opmode => X"0D"
 		);
 		
-	--Cascade multiply-postadd: op=0x05; P=P_in+(a*b) = (atan_out2 * Kd) + p_roll
+	--Multiply-postadd: op=0x0D; P=C+(a*b) = (atan_out2 * Kd) + p_roll
 	dsp_roll: entity work.dsp48a1_wrapper(Behavioral)
 		port map(
 			a => acc_roll,
 			b => Kd,
-			c => std_logic_vector(to_signed(0,48)),
+			c => std_logic_vector(resize(signed(p_pitch(39 downto 7)), 48)),
 			d => std_logic_vector(to_signed(0,18)),
-			c_p_in => p_roll,
+			c_p_in => std_logic_vector(to_signed(0,48)),
 			p => roll,
 			
 			rst => rst,
 			clk => clk,
 			clk_en => clk_en,
-			opmode => X"05"	
+			opmode => X"0D"	
 		);
 	
 	--Add stage: correct for mounting angle
@@ -269,7 +271,7 @@ begin
 	m_roll <= std_logic_vector(signed(roll) + signed(roll_corr));
 	
 	
-
+	pitch_out <= pitch(34 downto 19);	--Radians, with fifteen fractional places
 
 
 

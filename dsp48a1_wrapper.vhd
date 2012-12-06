@@ -33,7 +33,6 @@ entity dsp48a1_wrapper is
 		d: in std_logic_vector(17 downto 0);
 		p: out std_logic_vector(47 downto 0);
 		c_out: out std_logic;
-		m: out std_logic_vector(35 downto 0);	--Output of pre-add and multiply
 		
 		--Cascade ports
 		c_p_in: in std_logic_vector(47 downto 0);		--Input to post-adder
@@ -76,7 +75,7 @@ begin
 			-- Data Ports: 1-bit (each) output: Data input and output ports
 			--CARRYOUT => c_carry_out,     -- 1-bit output: carry output (if used, connect to CARRYIN pin of another DSP48A1)
 			CARRYOUTF => c_out,   -- 1-bit output: fabric carry output
-			M => m,                   -- 36-bit output: fabric multiplier data output
+			--M => m,                   -- 36-bit output: fabric multiplier data output
 			P => p,                   -- 48-bit output: data output
 			
 			-- Cascade Ports: 48-bit (each) input: Ports to cascade from one DSP48 to another
@@ -97,7 +96,7 @@ begin
 			CEA => clk_en,               -- 1-bit input: active high clock enable input for A registers
 			CEB => clk_en,               -- 1-bit input: active high clock enable input for B registers
 			CEC => clk_en,               -- 1-bit input: active high clock enable input for C registers
-			CECARRYIN => clk_en,		-- 1-bit input: active high clock enable input for CARRYIN registers
+			CECARRYIN => '0',		-- 1-bit input: active high clock enable input for CARRYIN registers
 			CED => clk_en,               -- 1-bit input: active high clock enable input for D registers
 			CEM => clk_en,               -- 1-bit input: active high clock enable input for multiplier registers
 			CEOPMODE => clk_en,     -- 1-bit input: active high clock enable input for OPMODE registers

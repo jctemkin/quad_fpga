@@ -1,7 +1,7 @@
 ##############################################################
 #
 # Xilinx Core Generator version 13.2
-# Date: Wed Dec  5 18:46:02 2012
+# Date: Thu Dec  6 15:44:59 2012
 #
 ##############################################################
 #
@@ -53,7 +53,7 @@ CSET output_width=18
 CSET phase_format=Radians
 CSET phase_output=true
 CSET pipelining_mode=Maximum
-CSET precision=0
+CSET precision=36
 CSET rdy=true
 CSET register_inputs=true
 CSET register_outputs=true
@@ -66,4 +66,4 @@ CSET y_out=false
 MISC pkg_timestamp=2011-06-21T06:27:35.000Z
 # END Extra information
 GENERATE
-# CRC: 5b0adda0
+# CRC: 356ab37a
