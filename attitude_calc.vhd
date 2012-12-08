@@ -5,6 +5,8 @@ use IEEE.NUMERIC_STD.ALL;
 Library UNISIM;
 use UNISIM.vcomponents.all;
 
+--25 cycle latency from reset to result - arctan's latency is 22 cycles, DSP's is 3 cycles
+--Sensor loop runs at 400Hz
 
 entity attitude_calc is
 	port (
@@ -43,8 +45,8 @@ architecture Behavioral of attitude_calc is
 	signal axc_range, ayc_range, azc_range: std_logic_vector(17 downto 0);
 	signal acc_pitch, acc_roll: std_logic_vector(17 downto 0);
 		
-	signal gx_raw, gy_raw, gz_raw: std_logic_vector(17 downto 0); --*2^0
-	signal gx, gy, gz: std_logic_vector(47 downto 0); --todo: find exponent for this
+	signal gx_raw, gy_raw, gz_raw: std_logic_vector(17 downto 0);
+	signal gx, gy, gz: std_logic_vector(47 downto 0);
 	signal gx_int, gy_int: std_logic_vector(47 downto 0);
 	
 	
@@ -53,15 +55,15 @@ architecture Behavioral of attitude_calc is
 	signal p_roll, d_roll: std_logic_vector(47 downto 0);
 	signal pitch, roll: std_logic_vector(47 downto 0);
 	signal m_pitch, m_roll: std_logic_vector(47 downto 0);
+	signal pitch_out, roll_out: std_logic_vector(15 downto 0);
 
 	signal atan_rdy1, atan_rdy2: std_logic;
 
 	signal rst: std_logic;
 	signal clk_en: std_logic := '1';
 	signal atan_rst: std_logic;
-	
-	--latency is 22 cycles
-	--latency of DSP slice is 3 cycles
+
+
 	component arctan
 		port (
 			x_in : IN STD_LOGIC_VECTOR(17 DOWNTO 0);
