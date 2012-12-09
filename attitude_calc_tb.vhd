@@ -110,6 +110,15 @@ BEGIN
 		reset <= '0';
 		wait for clk_period*200;
 
+
+		reset <= '1';
+		ax <= 10;
+		ay <= 0;
+		gx <= 0;
+		wait for clk_period;
+		reset <= '0';
+		wait for clk_period*200;
+
       wait;
    end process;
 

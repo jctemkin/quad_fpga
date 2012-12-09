@@ -55,49 +55,47 @@
       <obj_property name="ElementShortName">gx</obj_property>
       <obj_property name="ObjectShortName">gx</obj_property>
    </wvobject>
-   <wvobject fp_name="/attitude_calc_tb/uut/gyro_scale" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">gyro_scale[17:0]</obj_property>
-      <obj_property name="ObjectShortName">gyro_scale[17:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   <wvobject fp_name="/attitude_calc_tb/write_en" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">write_en</obj_property>
+      <obj_property name="ObjectShortName">write_en</obj_property>
    </wvobject>
    <wvobject fp_name="/attitude_calc_tb/uut/gx_raw" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">gx_raw[17:0]</obj_property>
       <obj_property name="ObjectShortName">gx_raw[17:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/attitude_calc_tb/uut/gx" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">gx[47:0]</obj_property>
       <obj_property name="ObjectShortName">gx[47:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/attitude_calc_tb/uut/last_pitch" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">last_pitch[47:0]</obj_property>
+      <obj_property name="ObjectShortName">last_pitch[47:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/attitude_calc_tb/uut/gx_int" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">gx_int[47:0]</obj_property>
       <obj_property name="ObjectShortName">gx_int[47:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/attitude_calc_tb/uut/p_pitch" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">p_pitch[47:0]</obj_property>
       <obj_property name="ObjectShortName">p_pitch[47:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/attitude_calc_tb/uut/kd" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">kd[17:0]</obj_property>
-      <obj_property name="ObjectShortName">kd[17:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/attitude_calc_tb/uut/acc_pitch" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">acc_pitch[17:0]</obj_property>
-      <obj_property name="ObjectShortName">acc_pitch[17:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/attitude_calc_tb/uut/pitch" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">pitch[47:0]</obj_property>
       <obj_property name="ObjectShortName">pitch[47:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/attitude_calc_tb/uut/pitch_out" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">pitch_out[15:0]</obj_property>
       <obj_property name="ObjectShortName">pitch_out[15:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/attitude_calc_tb/uut/counter" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">counter</obj_property>
+      <obj_property name="ObjectShortName">counter</obj_property>
    </wvobject>
 </wave_config>

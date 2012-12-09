@@ -6,7 +6,7 @@ Library UNISIM;
 use UNISIM.vcomponents.all;
 
 --25 cycle latency from reset to result - arctan's latency is 22 cycles, DSP's is 3 cycles
---Sensor loop runs at 400Hz
+--Sensor loop runs at 400Hz (every 2.5 ms)
 
 entity attitude_calc is
 	port (
@@ -20,6 +20,8 @@ entity attitude_calc is
 end attitude_calc;
 
 architecture Behavioral of attitude_calc is
+
+	-- Constants!
 	constant ax_offset: std_logic_vector(17 downto 0) := "000000000000000000"; --std_logic_vector(to_signed(-430,18));
 	constant ay_offset: std_logic_vector(17 downto 0) := "000000000000000000"; --std_logic_vector(to_signed(8, 18));
 	constant az_offset: std_logic_vector(17 downto 0) := "000000000000000000"; --std_logic_vector(to_signed(85,18));
@@ -28,7 +30,6 @@ architecture Behavioral of attitude_calc is
 	constant gy_offset: std_logic_vector(17 downto 0) := "000000000000000000"; --std_logic_vector(to_signed(28,18));
 	constant gz_offset: std_logic_vector(17 downto 0) := "000000000000000000"; --std_logic_vector(to_signed(4,18));
 
-
 	constant Dt: std_logic_vector(17 downto 0) := "010100111110001011"; -- * 2^-38 = 0.0000025; Time constant in s / 1000 (from millirads)
 	constant Kp: std_logic_vector(17 downto 0) := "011111001110000011"; --0.9756098, 1 integer place; depends on Dt
 	constant Kd: std_logic_vector(17 downto 0) := "000000110001111101"; --0.0243902, 1 integer place depends on Dt
@@ -36,32 +37,35 @@ architecture Behavioral of attitude_calc is
 	--Scale gyro readings from 65.5 lsb/(deg/s) to milliradians/s
 	constant gyro_scale: std_logic_vector(17 downto 0) := "010001000011011011";-- * 2^-18 = 0.266462;
 	
-	constant pitch_corr: std_logic_vector(17 downto 0) := std_logic_vector(to_signed(0,18));
-	constant roll_corr: std_logic_vector(17 downto 0) := std_logic_vector(to_signed(0,18));
+	constant pitch_corr: std_logic_vector(47 downto 0) := std_logic_vector(to_signed(0,48));	--Correct when sensor mount is received.
+	constant roll_corr: std_logic_vector(47 downto 0) := std_logic_vector(to_signed(0,48));
 	
-
-	signal ax_raw, ay_raw, az_raw: std_logic_vector(17 downto 0);
-	signal axc, ayc, azc: std_logic_vector(17 downto 0);
-	signal axc_range, ayc_range, azc_range: std_logic_vector(17 downto 0);
-	signal acc_pitch, acc_roll: std_logic_vector(17 downto 0);
+	
+	--Calculation-related signals
+	signal ax_raw, ay_raw, az_raw: std_logic_vector(17 downto 0);	--Raw accelerometer readins
+	signal axc, ayc, azc: std_logic_vector(17 downto 0);				--Corrected readings for sensor deviation (acc_raw+acc_offset)
+	signal axc_range, ayc_range, azc_range: std_logic_vector(17 downto 0);	--axyzc divided by two to be in range for arctan unit
+	signal acc_pitch, acc_roll: std_logic_vector(17 downto 0);		--Arctans of xz and yz.
 		
-	signal gx_raw, gy_raw, gz_raw: std_logic_vector(17 downto 0);
-	signal gx, gy, gz: std_logic_vector(47 downto 0);
-	signal gx_int, gy_int: std_logic_vector(47 downto 0);
+	signal gx_raw, gy_raw, gz_raw: std_logic_vector(17 downto 0);	--Raw gyro readings
+	signal gx, gy, gz: std_logic_vector(47 downto 0);					--Gyro readings offset and scaled to millirad/s.
+	signal gx_int, gy_int: std_logic_vector(47 downto 0);				--Integrated gyro readings (gxyz * Dt)
 	
-	
-	signal last_pitch, last_roll: std_logic_vector(47 downto 0) := (others => '0');
-	signal p_pitch, d_pitch: std_logic_vector(47 downto 0);	
-	signal p_roll, d_roll: std_logic_vector(47 downto 0);
-	signal pitch, roll: std_logic_vector(47 downto 0);
-	signal m_pitch, m_roll: std_logic_vector(47 downto 0);
-	signal pitch_out, roll_out: std_logic_vector(15 downto 0);
+	signal last_pitch, last_roll: std_logic_vector(47 downto 0) := (others => '0');	--Result of last calculation iteration.
+	signal p_pitch, p_roll: std_logic_vector(47 downto 0);			--Proportional terms (gxy_int + last_pr * Kp)
+	signal pitch, roll: std_logic_vector(47 downto 0);					--Pitch and roll!
+	signal m_pitch, m_roll: std_logic_vector(47 downto 0);			--Pitch and roll, corrected for mounting angle
+	signal pitch_out, roll_out: std_logic_vector(15 downto 0);		--Correctly ranged and sized signals for writing to the regfile
 
+	
+	--Control signals
 	signal atan_rdy1, atan_rdy2: std_logic;
 
+	signal counter: integer range 0 to 262143 := 0;
 	signal rst: std_logic;
-	signal clk_en: std_logic := '1';
+	signal clk_en: std_logic := '0';
 	signal atan_rst: std_logic;
+	signal sync_rst: std_logic := '0';
 
 
 	component arctan
@@ -77,17 +81,51 @@ architecture Behavioral of attitude_calc is
 
 begin
 
-	atan_rst <= reset;
-	rst <= reset;
-	--=======================--
-	-- Load data from register file (and sign-extend)
-	ax_raw <= std_logic_vector(resize(signed(read_regs(15 downto 0)), 18));
-	ay_raw <= std_logic_vector(resize(signed(read_regs(31 downto 16)), 18));
-	az_raw <= std_logic_vector(resize(signed(read_regs(47 downto 32)), 18));
-	
-	gx_raw <= std_logic_vector(resize(signed(read_regs(63 downto 48)), 18));
-	gy_raw <= std_logic_vector(resize(signed(read_regs(79 downto 64)), 18));
-	gz_raw <= std_logic_vector(resize(signed(read_regs(95 downto 80)), 18));
+
+	sync_proc: process(clk)
+	begin
+		if rising_edge(clk) then
+			if reset = '1' or counter = 249999 then
+				counter <= 0;
+				sync_rst <= '1';
+				-- Load data from register file (and sign-extend)
+				ax_raw <= std_logic_vector(resize(signed(read_regs(15 downto 0)), 18));
+				ay_raw <= std_logic_vector(resize(signed(read_regs(31 downto 16)), 18));
+				az_raw <= std_logic_vector(resize(signed(read_regs(47 downto 32)), 18));				
+				gx_raw <= std_logic_vector(resize(signed(read_regs(63 downto 48)), 18));
+				gy_raw <= std_logic_vector(resize(signed(read_regs(79 downto 64)), 18));
+				gz_raw <= std_logic_vector(resize(signed(read_regs(95 downto 80)), 18));
+			else
+				counter <= counter + 1;
+				sync_rst <= '0';
+			end if;
+			
+			if counter = 26 then
+				write_addr <= X"80";
+				write_data <= pitch_out;
+				write_en <= '1';
+				last_pitch <= pitch;
+			elsif counter = 27 then
+				write_addr <= X"81";
+				write_data <= roll_out;
+				write_en <= '1';
+				last_roll <= roll;
+			else
+				write_addr <= X"00";
+				write_data <= X"0000";
+				write_en <= '0';
+			end if;
+			
+			if (counter = 24999) OR (counter < 26) then
+				clk_en <= '1';
+			else
+				clk_en <= '0';
+			end if;
+		end if;
+	end process;
+
+	atan_rst <= reset OR sync_rst;
+	rst <= reset OR sync_rst;
 	
 	
 	--=======================--
@@ -115,10 +153,15 @@ begin
 		port map(
 			a => gx(32 downto 15), --millirads/s, with 3 fractional places
 			b => Dt,
-			c => last_pitch,
+			c => last_pitch(41 downto 0) & "000000", --rads with 38 fractional places
 			d => std_logic_vector(to_signed(0,18)),
 			c_p_in => std_logic_vector(to_signed(0,48)),
-			p => gx_int,	--rads, with 38 fractional places
+			p => gx_int,	--rads, with 38 fractional places (point between 38 and 37)
+			--gx_int: 	      7654321098.76543210987654321098765432109876543210
+			--lp: 		7654321098765432.10987654321098765432109876543210000000
+			
+			
+			--TODO: correct overflow problem here!
 			
 			rst => rst,
 			clk => clk,
@@ -129,12 +172,12 @@ begin
 	--Multiply: op=0x01; C_P_out=a*b = gx_int * Kp (cascade to dsp_pitch)
 	dsp_p_pitch: entity work.dsp48a1_wrapper(Behavioral)
 		port map(
-			a => gx_int(33 downto 16), --rads, with 4 additional fractional places preceding
+			a => gx_int(40 downto 25), --rads, with 3 integer places
 			b => Kp,
 			c => std_logic_vector(to_signed(0,48)),
 			d => std_logic_vector(to_signed(0,18)),
 			c_p_in => std_logic_vector(to_signed(0,48)),
-			c_p_out => p_pitch,	--rads, with 39 fractional places (point between bits 39 and 38)
+			c_p_out => p_pitch,	--rads, with 39 fractional places (point between bits 39 and 38) NOT ANYMORE
 			
 			rst => rst,
 			clk => clk,
@@ -167,7 +210,7 @@ begin
 		port map(
 			a => gy(32 downto 15),
 			b => Dt,
-			c => last_roll,
+			c => last_roll(41 downto 0) & "000000",
 			d => std_logic_vector(to_signed(0,18)),
 			c_p_in => std_logic_vector(to_signed(0,48)),
 			p => gy_int,
@@ -193,8 +236,7 @@ begin
 			clk_en => clk_en,
 			opmode => X"01"
 		);
-	
-	
+		
 	
 	--=========================--
 	-- Accelerometer section
@@ -241,10 +283,10 @@ begin
 		port map(
 			a => acc_pitch,	--rads, with 15 fractional places
 			b => Kd,
-			c => std_logic_vector(resize(signed(p_pitch(39 downto 7)), 48)),
+			c => std_logic_vector(resize(signed(p_pitch(39 downto 7)), 48)), --CHECKME
 			d => std_logic_vector(to_signed(0,18)),
 			c_p_in => std_logic_vector(to_signed(0,48)),
-			p => pitch,	--rads, with 32 fractional places (point between bits 32 and 31)
+			p => pitch,	--rads, with 32 fractional places (point between bits 32 and 31) CHECKME
 			
 			rst => rst,
 			clk => clk,
@@ -272,8 +314,8 @@ begin
 	m_pitch <= std_logic_vector(signed(pitch) + signed(pitch_corr));
 	m_roll <= std_logic_vector(signed(roll) + signed(roll_corr));
 	
-	
-	pitch_out <= pitch(34 downto 19);	--Radians, with fifteen fractional places
+	pitch_out <= m_pitch(34 downto 19);	--Radians, with thirteen fractional places CHECKME
+	roll_out <= m_roll(34 downto 19);	--Radians, with thirteen fractional places
 
 
 
