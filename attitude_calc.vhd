@@ -22,6 +22,7 @@ end attitude_calc;
 architecture Behavioral of attitude_calc is
 
 	-- Constants!
+	constant pi_32: signed(47 downto 0) := "000000000000001100100100001111110110101010001000"; --Pi, with 32 fractional places.
 	constant ax_offset: std_logic_vector(17 downto 0) := "000000000000000000"; --std_logic_vector(to_signed(-430,18));
 	constant ay_offset: std_logic_vector(17 downto 0) := "000000000000000000"; --std_logic_vector(to_signed(8, 18));
 	constant az_offset: std_logic_vector(17 downto 0) := "000000000000000000"; --std_logic_vector(to_signed(85,18));
@@ -30,12 +31,12 @@ architecture Behavioral of attitude_calc is
 	constant gy_offset: std_logic_vector(17 downto 0) := "000000000000000000"; --std_logic_vector(to_signed(28,18));
 	constant gz_offset: std_logic_vector(17 downto 0) := "000000000000000000"; --std_logic_vector(to_signed(4,18));
 
-	constant Dt: std_logic_vector(17 downto 0) := "010100111110001011"; -- * 2^-38 = 0.0000025; Time constant in s / 1000 (from millirads)
-	constant Kp: std_logic_vector(17 downto 0) := "011111001110000011"; --0.9756098, 1 integer place; depends on Dt
-	constant Kd: std_logic_vector(17 downto 0) := "000000110001111101"; --0.0243902, 1 integer place depends on Dt
+	constant Dt: std_logic_vector(17 downto 0) := "010100011110101110"; --0.0025, 7 preceding fractional places (25 total); Time constant in s
+	constant Kp: std_logic_vector(17 downto 0) := "011101000101110100"; --0.909090, 1 integer place; depends on Dt
+	constant Kd: std_logic_vector(17 downto 0) := "000010111010001011"; --0.090909, 1 integer place depends on Dt
 	
-	--Scale gyro readings from 65.5 lsb/(deg/s) to milliradians/s
-	constant gyro_scale: std_logic_vector(17 downto 0) := "010001000011011011";-- * 2^-18 = 0.266462;
+	--Scale gyro readings from 65.5 lsb/(deg/s) to rad/s
+	constant gyro_scale: std_logic_vector(17 downto 0) := "010001011101100111";--0.00026646, 10 preceding fractional places (28 total)
 	
 	constant pitch_corr: std_logic_vector(47 downto 0) := std_logic_vector(to_signed(0,48));	--Correct when sensor mount is received.
 	constant roll_corr: std_logic_vector(47 downto 0) := std_logic_vector(to_signed(0,48));
@@ -53,7 +54,8 @@ architecture Behavioral of attitude_calc is
 	
 	signal last_pitch, last_roll: std_logic_vector(47 downto 0) := (others => '0');	--Result of last calculation iteration.
 	signal p_pitch, p_roll: std_logic_vector(47 downto 0);			--Proportional terms (gxy_int + last_pr * Kp)
-	signal pitch, roll: std_logic_vector(47 downto 0);					--Pitch and roll!
+	signal pitch_raw, roll_raw: std_logic_vector(47 downto 0);		--Pitch and roll, before being brought into range
+	signal pitch, roll: std_logic_vector(47 downto 0);
 	signal m_pitch, m_roll: std_logic_vector(47 downto 0);			--Pitch and roll, corrected for mounting angle
 	signal pitch_out, roll_out: std_logic_vector(15 downto 0);		--Correctly ranged and sized signals for writing to the regfile
 
@@ -125,7 +127,7 @@ begin
 	end process;
 
 	atan_rst <= reset OR sync_rst;
-	rst <= reset OR sync_rst;
+	rst <= reset OR sync_rst;	
 	
 	
 	--=======================--
@@ -140,7 +142,7 @@ begin
 			c => std_logic_vector(to_signed(0,48)),
 			d => gx_offset,
 			c_p_in => std_logic_vector(to_signed(0,48)),
-			p => gx,	--millirads/s, with 18 fractional places
+			p => gx,	--rads/s, with 28 fractional places
 			
 			rst => rst,
 			clk => clk,
@@ -151,17 +153,14 @@ begin
 	--Multiply-postadd: op=0x1D; P=c+(a*b) = (gx * Dt) + last_pitch
 	dsp_gx2: entity work.dsp48a1_wrapper(Behavioral)
 		port map(
-			a => gx(32 downto 15), --millirads/s, with 3 fractional places
-			b => Dt,
+			a => gx(32 downto 15), 	--rads/s, with 13 fractional places
+			b => Dt,						--s, with 25 fractional places
 			c => last_pitch(41 downto 0) & "000000", --rads with 38 fractional places
 			d => std_logic_vector(to_signed(0,18)),
 			c_p_in => std_logic_vector(to_signed(0,48)),
-			p => gx_int,	--rads, with 38 fractional places (point between 38 and 37)
+			p => gx_int,	--rads, with 38 fractional places
 			--gx_int: 	      7654321098.76543210987654321098765432109876543210
 			--lp: 		7654321098765432.10987654321098765432109876543210000000
-			
-			
-			--TODO: correct overflow problem here!
 			
 			rst => rst,
 			clk => clk,
@@ -169,15 +168,17 @@ begin
 			opmode => X"1D"	
 		);
 		
+	
+		
 	--Multiply: op=0x01; C_P_out=a*b = gx_int * Kp (cascade to dsp_pitch)
 	dsp_p_pitch: entity work.dsp48a1_wrapper(Behavioral)
 		port map(
-			a => gx_int(40 downto 25), --rads, with 3 integer places
-			b => Kp,
+			a => gx_int(40 downto 23), --rads, with 15 fractional places
+			b => Kp,							--constant, with 17 fractional places
 			c => std_logic_vector(to_signed(0,48)),
 			d => std_logic_vector(to_signed(0,18)),
 			c_p_in => std_logic_vector(to_signed(0,48)),
-			c_p_out => p_pitch,	--rads, with 39 fractional places (point between bits 39 and 38) NOT ANYMORE
+			c_p_out => p_pitch,	--rads, with 32 fractional places
 			
 			rst => rst,
 			clk => clk,
@@ -224,7 +225,7 @@ begin
 	--Multiply: op=0x01; C_P_out=a*b = gy_int * Kp (cascade to dsp_roll)
 	dsp_p_roll: entity work.dsp48a1_wrapper(Behavioral)
 		port map(
-			a => gy_int(33 downto 16),
+			a => gy_int(40 downto 23),
 			b => Kp,
 			c => std_logic_vector(to_signed(0,48)),
 			d => std_logic_vector(to_signed(0,18)),
@@ -282,11 +283,11 @@ begin
 	dsp_pitch: entity work.dsp48a1_wrapper(Behavioral)
 		port map(
 			a => acc_pitch,	--rads, with 15 fractional places
-			b => Kd,
-			c => std_logic_vector(resize(signed(p_pitch(39 downto 7)), 48)), --CHECKME
+			b => Kd,				--constant, with 17 fractional placees
+			c => p_pitch, 		--rads, 32 fractional places
 			d => std_logic_vector(to_signed(0,18)),
 			c_p_in => std_logic_vector(to_signed(0,48)),
-			p => pitch,	--rads, with 32 fractional places (point between bits 32 and 31) CHECKME
+			p => pitch_raw,	--rads, with 32 fractional places
 			
 			rst => rst,
 			clk => clk,
@@ -299,10 +300,10 @@ begin
 		port map(
 			a => acc_roll,
 			b => Kd,
-			c => std_logic_vector(resize(signed(p_pitch(39 downto 7)), 48)),
+			c => p_pitch,
 			d => std_logic_vector(to_signed(0,18)),
 			c_p_in => std_logic_vector(to_signed(0,48)),
-			p => roll,
+			p => roll_raw,
 			
 			rst => rst,
 			clk => clk,
@@ -310,13 +311,26 @@ begin
 			opmode => X"0D"	
 		);
 	
-	--Add stage: correct for mounting angle
+	
+	--Correct range of output
+	pitch <= std_logic_vector(signed(pitch_raw) - signed(pi_32)) when signed(pitch_raw) > pi_32 else
+				std_logic_vector(signed(pitch_raw) + signed(pi_32)) when signed(pitch_raw) < -pi_32 else
+				pitch_raw;
+				
+	roll <= std_logic_vector(signed(roll_raw) - signed(pi_32)) when signed(roll_raw) > pi_32 else
+				std_logic_vector(signed(roll_raw) + signed(pi_32)) when signed(roll_raw) < -pi_32 else
+				roll_raw;
+	
+	--Correct for mounting angle
 	m_pitch <= std_logic_vector(signed(pitch) + signed(pitch_corr));
 	m_roll <= std_logic_vector(signed(roll) + signed(roll_corr));
 	
-	pitch_out <= m_pitch(34 downto 19);	--Radians, with thirteen fractional places CHECKME
+	--Correct range here, again
+	
+	pitch_out <= m_pitch(34 downto 19);	--Radians, with thirteen fractional places
 	roll_out <= m_roll(34 downto 19);	--Radians, with thirteen fractional places
 
+	
 
 
 
