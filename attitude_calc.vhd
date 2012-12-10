@@ -68,7 +68,16 @@ architecture Behavioral of attitude_calc is
 	signal clk_en: std_logic := '0';
 	signal atan_rst: std_logic;
 	signal sync_rst: std_logic := '0';
-
+	signal dsp_a: std_logic(17 downto 0);
+	signal dsp_b: std_logic(17 downto 0);
+	signal dsp_c: std_logic(47 downto 0);
+	signal dsp_d: std_logic(17 downto 0);
+	signal dsp_p: std_logic(47 downto 0);
+	signal dsp_op: std_logic(7 downto 0);
+	signal atan_x: std_logic(17 downto 0);
+	signal atan_y: std_logic(17 downto 0);
+	signal sin_cos_out: std_logic_vector(31 downto 0);
+	signal sin_out, cos_out: std_logic_vector(16 downto 0);
 
 	component arctan
 		port (
@@ -78,6 +87,17 @@ architecture Behavioral of attitude_calc is
 			rdy : OUT STD_LOGIC;
 			clk : IN STD_LOGIC;
 			sclr : IN STD_LOGIC	--Active high
+		);
+	end component;
+
+	component sin_cos
+		port (
+			aclk: in std_logic;
+			aclken: in std_logic;
+			s_axis_phase_tvalid: in std_logic;
+			s_axis_phase_tdata: in std_logic_vector(15 downto 0);
+			m_axis_data_tvalid: out std_logic;
+			m_axis_data_tdata: out std_logic_vector(31 downto 0)
 		);
 	end component;
 
@@ -102,27 +122,103 @@ begin
 				sync_rst <= '0';
 			end if;
 			
-			if counter = 26 then
+			
+			if reset = '1' or counter = 24999 then
+				dsp_a <= gyro_scale;
+				dsp_b <= gx_raw;
+				dsp_c <= (others => '0');
+				dsp_d <= gx_offset;
+				opmode <= X"11";
+				clk_en <= '1';
+				
+			elsif counter = 0 then
+				dsp_a <= gyro_scale;
+				dsp_b <= gy_raw;
+				dsp_c <= (others => '0');
+				dsp_d <= gy_offset;
+				opmode <= X"11";
+			
+			elsif counter = 1 then
+				gx <= dsp_p;
+				
+			elsif counter = 2 then
+				dsp_a <= gx(32 downto 15);
+				dsp_b <= Dt;
+				dsp_c <= last_pitch(41 downto 0) & "000000"; --rads with 38 fractional places
+				dsp_d <= (others => '0');
+				opmode <= X"0D";
+				gy <= dsp_p;
+				
+			elsif counter = 3 then
+				dsp_a <= gy(32 downto 15);
+				dsp_b <= Dt;
+				dsp_c <= last_roll(41 downto 0) & "000000"; --rads with 38 fractional places
+				dsp_d <= (others => '0');
+				opmode <= X"0D";
+				
+			elsif counter = 4 then
+				gx_int <= dsp_p;
+				
+			elsif counter = 5 then
+				dsp_a <= gx_int(40 downto 23);
+				dsp_b <= Kp;
+				dsp_c <= (others => '0');
+				dsp_d <= (others => '0');
+				opmode <= X"01";
+				gy_int <= dsp_p;
+				
+			elsif counter = 6 then
+				dsp_a <= gy_int(40 downto 23);
+				dsp_b <= Kp;
+				dsp_c <= (others => '0');
+				dsp_d <= (others => '0');
+				opmode <= X"01";
+				
+			elsif counter = 7 then
+				p_pitch <= dsp_p;
+				
+			elsif counter = 8 then
+				p_roll <= dsp_p;
+				
+			elsif counter = 21 then
+				dsp_a <= acc_pitch;
+				dsp_b <= Kd;
+				dsp_c <= p_pitch;
+				dsp_d <= (others => '0');
+				opmode <= X"0D";
+			
+			elsif counter = 22 then
+				dsp_a <= acc_roll;
+				dsp_b <= Kd;
+				dsp_c <= p_roll;
+				dsp_d <= (others => '0');
+				opmode <= X"0D";
+			
+			elsif counter = 24 then
+				pitch_raw <= dsp_p;
+				
+			elsif counter = 25 then
+				roll_raw <= dsp_p;
+				
+			elsif counter = 26 then
 				write_addr <= X"80";
 				write_data <= pitch_out;
 				write_en <= '1';
 				last_pitch <= pitch;
+				
 			elsif counter = 27 then
 				write_addr <= X"81";
 				write_data <= roll_out;
 				write_en <= '1';
 				last_roll <= roll;
+				
 			else
 				write_addr <= X"00";
 				write_data <= X"0000";
 				write_en <= '0';
-			end if;
-			
-			if (counter = 24999) OR (counter < 26) then
-				clk_en <= '1';
-			else
 				clk_en <= '0';
 			end if;
+
 		end if;
 	end process;
 
@@ -135,10 +231,10 @@ begin
 	-- Pitch:
 	
 	--Preadd-multiply: op=0x11; P=a*(b+d) = (gx_raw + gx_offset) * gx_scale
-	dsp_gx1: entity work.dsp48a1_wrapper(Behavioral)
+	dsp_slice: entity work.dsp48a1_wrapper(Behavioral)
 		port map(
-			a => gyro_scale,
-			b => gx_raw,
+			a => dsp_a,
+			b => dsp_b,
 			c => std_logic_vector(to_signed(0,48)),
 			d => gx_offset,
 			c_p_in => std_logic_vector(to_signed(0,48)),
@@ -149,100 +245,11 @@ begin
 			clk_en => clk_en,
 			opmode => X"11"
 		);
-	
-	--Multiply-postadd: op=0x1D; P=c+(a*b) = (gx * Dt) + last_pitch
-	dsp_gx2: entity work.dsp48a1_wrapper(Behavioral)
-		port map(
-			a => gx(32 downto 15), 	--rads/s, with 13 fractional places
-			b => Dt,						--s, with 25 fractional places
-			c => last_pitch(41 downto 0) & "000000", --rads with 38 fractional places
-			d => std_logic_vector(to_signed(0,18)),
-			c_p_in => std_logic_vector(to_signed(0,48)),
-			p => gx_int,	--rads, with 38 fractional places
-			--gx_int: 	      7654321098.76543210987654321098765432109876543210
-			--lp: 		7654321098765432.10987654321098765432109876543210000000
-			
-			rst => rst,
-			clk => clk,
-			clk_en => clk_en,
-			opmode => X"1D"	
-		);
-		
-	
-		
-	--Multiply: op=0x01; C_P_out=a*b = gx_int * Kp (cascade to dsp_pitch)
-	dsp_p_pitch: entity work.dsp48a1_wrapper(Behavioral)
-		port map(
-			a => gx_int(40 downto 23), --rads, with 15 fractional places
-			b => Kp,							--constant, with 17 fractional places
-			c => std_logic_vector(to_signed(0,48)),
-			d => std_logic_vector(to_signed(0,18)),
-			c_p_in => std_logic_vector(to_signed(0,48)),
-			c_p_out => p_pitch,	--rads, with 32 fractional places
-			
-			rst => rst,
-			clk => clk,
-			clk_en => clk_en,
-			opmode => X"01"
-		);
-		
-		
-	------------------------
-	--Roll:
 
-	--Preadd-multiply: op=0x11; P=a*(b+d) = (gy_raw + gy_offset) * gy_scale
-	dsp_gy1: entity work.dsp48a1_wrapper(Behavioral)
-		port map(
-			a => gyro_scale,
-			b => gy_raw,
-			c => std_logic_vector(to_signed(0,48)),
-			d => gy_offset,
-			c_p_in => std_logic_vector(to_signed(0,48)),
-			p => gy,
-			
-			rst => rst,
-			clk => clk,
-			clk_en => clk_en,
-			opmode => X"11"
-		);
-	
-	--Multiply-postadd: op=0x1D; P=c+(a*b) = (gy * Dt) + last_roll
-	dsp_gy2: entity work.dsp48a1_wrapper(Behavioral)
-		port map(
-			a => gy(32 downto 15),
-			b => Dt,
-			c => last_roll(41 downto 0) & "000000",
-			d => std_logic_vector(to_signed(0,18)),
-			c_p_in => std_logic_vector(to_signed(0,48)),
-			p => gy_int,
-			
-			rst => rst,
-			clk => clk,
-			clk_en => clk_en,
-			opmode => X"1D"	
-		);
-	
-	--Multiply: op=0x01; C_P_out=a*b = gy_int * Kp (cascade to dsp_roll)
-	dsp_p_roll: entity work.dsp48a1_wrapper(Behavioral)
-		port map(
-			a => gy_int(40 downto 23),
-			b => Kp,
-			c => std_logic_vector(to_signed(0,48)),
-			d => std_logic_vector(to_signed(0,18)),
-			c_p_in => std_logic_vector(to_signed(0,48)),
-			c_p_out => p_roll,
-			
-			rst => rst,
-			clk => clk,
-			clk_en => clk_en,
-			opmode => X"01"
-		);
-		
-	
 	--=========================--
 	-- Accelerometer section
 	
-	--Add stage: add constants to raw sensor values
+	--Add constants to raw sensor values
 	axc <= std_logic_vector(signed(ax_raw) + signed(ax_offset));
 	ayc <= std_logic_vector(signed(ay_raw) + signed(ay_offset));
 	azc <= std_logic_vector(signed(az_raw) + signed(az_offset));
@@ -252,7 +259,7 @@ begin
 	ayc_range <= std_logic_vector(signed(shift_right(signed(ayc),1)));
 	azc_range <= std_logic_vector(signed(shift_right(signed(azc),1)));
 	
-	--Trig stage: take arctangent of offset sensor values
+	--Take arctangent of offset sensor values
 	arctan_i1: arctan
 		port map(
 			x_in => azc_range,
@@ -273,45 +280,6 @@ begin
 			sclr => atan_rst
 		);
 	
-	
-	
-	
-	--=========================--
-	-- Combine gyro and accelerometer data
-	
-	--Multiply-postadd: op=0x0D; P=C+(a*b) = (atan_out1 * Kd) + p_pitch
-	dsp_pitch: entity work.dsp48a1_wrapper(Behavioral)
-		port map(
-			a => acc_pitch,	--rads, with 15 fractional places
-			b => Kd,				--constant, with 17 fractional placees
-			c => p_pitch, 		--rads, 32 fractional places
-			d => std_logic_vector(to_signed(0,18)),
-			c_p_in => std_logic_vector(to_signed(0,48)),
-			p => pitch_raw,	--rads, with 32 fractional places
-			
-			rst => rst,
-			clk => clk,
-			clk_en => clk_en,
-			opmode => X"0D"
-		);
-		
-	--Multiply-postadd: op=0x0D; P=C+(a*b) = (atan_out2 * Kd) + p_roll
-	dsp_roll: entity work.dsp48a1_wrapper(Behavioral)
-		port map(
-			a => acc_roll,
-			b => Kd,
-			c => p_pitch,
-			d => std_logic_vector(to_signed(0,18)),
-			c_p_in => std_logic_vector(to_signed(0,48)),
-			p => roll_raw,
-			
-			rst => rst,
-			clk => clk,
-			clk_en => clk_en,
-			opmode => X"0D"	
-		);
-	
-	
 	--Correct range of output
 	pitch <= std_logic_vector(signed(pitch_raw) - signed(pi_32)) when signed(pitch_raw) > pi_32 else
 				std_logic_vector(signed(pitch_raw) + signed(pi_32)) when signed(pitch_raw) < -pi_32 else
@@ -331,7 +299,16 @@ begin
 	roll_out <= m_roll(34 downto 19);	--Radians, with thirteen fractional places
 
 	
-
+	sin_cos_i : sin_cos
+		port map (
+			aclk => clk,
+			aclken => clken,
+			s_axis_phase_tdata => sin_cos_in,
+			m_axis_data_tvalid => sin_cos_valid,
+			m_axis_data_tdata => sin_cos_out
+		);
+	sin_out <= sin_cos_out(31 downto 16);
+	cos_out <= sin_coos_out(15 downto 0);
 
 
 end Behavioral;

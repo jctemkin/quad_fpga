@@ -1,0 +1,14 @@
+# Output products list for <sin_cos_lut>
+_xmsgs/pn_parser.xmsgs
+sin_cos_lut/doc/dds_compiler_v4_0_vinfo.html
+sin_cos_lut/doc/dds_ds558.pdf
+sin_cos_lut.asy
+sin_cos_lut.gise
+sin_cos_lut.ngc
+sin_cos_lut.vhd
+sin_cos_lut.vho
+sin_cos_lut.xco
+sin_cos_lut.xise
+sin_cos_lut_flist.txt
+sin_cos_lut_readme.txt
+sin_cos_lut_xmdf.tcl
